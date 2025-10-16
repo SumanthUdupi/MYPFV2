@@ -1,11 +1,18 @@
 import React, { useRef, useState } from 'react';
 
 interface BentoGridItemProps {
-  children: React.ReactNode;
   className?: string;
+  title: string;
+  description: string;
+  image: string;
 }
 
-const BentoGridItem: React.FC<BentoGridItemProps> = ({ children, className }) => {
+const BentoGridItem: React.FC<BentoGridItemProps> = ({
+  className,
+  title,
+  description,
+  image,
+}) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -38,7 +45,7 @@ const BentoGridItem: React.FC<BentoGridItemProps> = ({ children, className }) =>
       onBlur={handleBlur}
       onMouseEnter={handleFocus}
       onMouseLeave={handleBlur}
-      className={`relative overflow-hidden rounded-lg bg-gray-200 p-4 ${className}`}
+      className={`relative overflow-hidden rounded-lg bg-secondary p-4 ${className}`}
     >
       <div
         className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"
@@ -47,7 +54,9 @@ const BentoGridItem: React.FC<BentoGridItemProps> = ({ children, className }) =>
           background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(255,182,193,.1), transparent 40%)`,
         }}
       />
-      {children}
+      <img src={image} alt={title} className="w-full h-32 object-cover rounded-lg mb-4" />
+      <h3 className="text-xl font-bold text-primary">{title}</h3>
+      <p className="text-primary">{description}</p>
     </div>
   );
 };
