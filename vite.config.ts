@@ -6,6 +6,6 @@ export default defineConfig({
   // Replace '<REPO_NAME>' with the name of your GitHub repository
   // For example, if your repository is at https://github.com/your-username/my-portfolio,
   // then the base should be '/my-portfolio/'
-  base: "/",
+  base: "https://github.com/SumanthUdupi/MYPFV2",
   plugins: [react()],
 })
