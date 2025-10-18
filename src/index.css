@@ -1,3 +1,128 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  cursor: none;
+}
+
+.custom-cursor {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border: 2px solid #f87171; /* accent color */
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  transition: transform 0.1s ease-out;
+}
+
+.cursor-trail {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background-color: #f87171; /* accent color */
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+@layer components {
+  .logo-letter {
+    display: inline-block;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+
+  .logo-letter:hover {
+    transform: translateY(-5px) scale(1.1);
+    color: #f87171; /* accent color */
+  }
+
+  .link-underline-animate {
+    position: relative;
+    text-decoration: none;
+  }
+
+  .link-underline-animate::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #f87171; /* accent color */
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+
+  .link-underline-animate:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+
+  .btn-border-animate {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+
+  .btn-border-animate::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+  .btn-border-animate:hover::before {
+    animation: draw-border 0.5s forwards;
+  }
+
+  @keyframes draw-border {
+    0% {
+      width: 0;
+      height: 0;
+      border-top-color: #f87171; /* accent color */
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+    }
+    25% {
+      width: 100%;
+      height: 0;
+      border-top-color: #f87171;
+      border-right-color: #f87171;
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+    }
+    50% {
+      width: 100%;
+      height: 100%;
+      border-top-color: #f87171;
+      border-right-color: #f87171;
+      border-bottom-color: #f87171;
+      border-left-color: transparent;
+    }
+    75% {
+      width: 100%;
+      height: 100%;
+      border-top-color: #f87171;
+      border-right-color: #f87171;
+      border-bottom-color: #f87171;
+      border-left-color: #f87171;
+    }
+    100% {
+      width: 100%;
+      height: 100%;
+      border-color: #f87171;
+    }
+  }
+}
