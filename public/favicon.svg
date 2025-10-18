@@ -1,0 +1,57 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700" />
+      <stop offset="100%" stop-color="#B8860B" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+      <feMerge>
+        <feMergeNode in="coloredBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <style>
+    @keyframes chase {
+      0% { stroke-dashoffset: 600; }
+      50% { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: -600; }
+    }
+    @keyframes sunburst {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .monogram {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 8;
+      stroke: url(#goldGradient);
+      filter: url(#glow);
+      stroke-dasharray: 600; /* Estimated length of the complex path */
+      stroke-dashoffset: 600;
+      animation: chase 5s linear infinite;
+    }
+    .sunburst {
+      stroke: #B8860B;
+      stroke-width: 1;
+      stroke-opacity: 0.5;
+      transform-origin: center;
+      animation: sunburst 60s linear infinite;
+    }
+  </style>
+
+  <!-- Art Deco Sunburst Frame -->
+  <g class="sunburst">
+    <path d="M100 0 V40" /> <path d="M100 200 V160" />
+    <path d="M0 100 H40" /> <path d="M200 100 H160" />
+    <path d="M29 29 L57 57" /> <path d="M171 171 L143 143" />
+    <path d="M29 171 L57 143" /> <path d="M171 29 L143 57" />
+  </g>
+  <circle cx="100" cy="100" r="95" stroke="#B8860B" stroke-width="1.5" fill="none" stroke-opacity="0.7" />
+
+  <!-- Intertwined Art Nouveau "SU" Monogram -->
+  <path class="monogram" d="M 130 140 C 160 140, 160 90, 110 80 C 60 70, 60 20, 100 20 C 140 20, 140 70, 90 80 C 40 90, 40 140, 70 140" />
+</svg>

@@ -7,28 +7,26 @@ interface AnimatedLogoProps {
 
 const AnimatedLogo: React.FC<AnimatedLogoProps> = ({ size = 192 }) => {
 
-  const sPathLength = 260;
-  const uPathLength = 150;
+  const monogramPathLength = 600; // Estimated length of the complex path
 
-  const sVariants: Variants = {
+  const monogramVariants: Variants = {
     animate: {
-      strokeDashoffset: [sPathLength, 0, -sPathLength],
+      strokeDashoffset: [monogramPathLength, 0, -monogramPathLength],
       transition: {
-        duration: 4,
+        duration: 5,
         ease: "linear",
         repeat: Infinity,
       }
     }
   };
 
-  const uVariants: Variants = {
+  const sunburstVariants: Variants = {
     animate: {
-      strokeDashoffset: [uPathLength, 0, -uPathLength],
+      rotate: 360,
       transition: {
-        duration: 4,
+        duration: 60,
         ease: "linear",
         repeat: Infinity,
-        delay: 0.2, // Stagger the animation
       }
     }
   };
@@ -36,12 +34,12 @@ const AnimatedLogo: React.FC<AnimatedLogoProps> = ({ size = 192 }) => {
   const glowVariants: Variants = {
     glow: {
       filter: [
-        'drop-shadow(0 0 2px #FFD700)',
-        'drop-shadow(0 0 6px #B8860B)',
-        'drop-shadow(0 0 2px #FFD700)'
+        'drop-shadow(0 0 3px #FFD700)',
+        'drop-shadow(0 0 8px #B8860B)',
+        'drop-shadow(0 0 3px #FFD700)'
       ],
       transition: {
-        duration: 4,
+        duration: 5,
         ease: 'easeInOut',
         repeat: Infinity,
         repeatType: 'mirror'
@@ -60,7 +58,7 @@ const AnimatedLogo: React.FC<AnimatedLogoProps> = ({ size = 192 }) => {
       <motion.svg
         width="100%"
         height="100%"
-        viewBox="0 0 120 100"
+        viewBox="0 0 200 200"
         className="overflow-visible"
       >
         <defs>
@@ -70,28 +68,30 @@ const AnimatedLogo: React.FC<AnimatedLogoProps> = ({ size = 192 }) => {
           </linearGradient>
         </defs>
 
-        <motion.g variants={glowVariants} animate="glow">
-          {/* S - Art Nouveau Style */}
-          <motion.path
-            d="M 55 85 C 0 85, 0 45, 40 45 C 80 45, 80 10, 45 10"
-            fill="none"
-            stroke="url(#goldGradient)"
-            strokeWidth="7"
-            strokeLinecap="round"
-            strokeDasharray={sPathLength}
-            variants={sVariants}
-            animate="animate"
-          />
+        {/* Art Deco Sunburst Frame */}
+        <motion.g 
+          className="origin-center"
+          variants={sunburstVariants} 
+          animate="animate"
+          style={{ stroke: '#B8860B', strokeWidth: 1, strokeOpacity: 0.5 }}
+        >
+          <path d="M100 0 V40" /> <path d="M100 200 V160" />
+          <path d="M0 100 H40" /> <path d="M200 100 H160" />
+          <path d="M29 29 L57 57" /> <path d="M171 171 L143 143" />
+          <path d="M29 171 L57 143" /> <path d="M171 29 L143 57" />
+        </motion.g>
+        <motion.circle cx="100" cy="100" r="95" stroke="#B8860B" strokeWidth="1.5" fill="none" strokeOpacity="0.7" />
 
-          {/* U - Art Nouveau Style */}
+        {/* Intertwined Art Nouveau "SU" Monogram */}
+        <motion.g variants={glowVariants} animate="glow">
           <motion.path
-            d="M 75 15 V 60 C 75 95, 115 95, 115 60 V 15"
+            d="M 130 140 C 160 140, 160 90, 110 80 C 60 70, 60 20, 100 20 C 140 20, 140 70, 90 80 C 40 90, 40 140, 70 140"
             fill="none"
             stroke="url(#goldGradient)"
-            strokeWidth="7"
+            strokeWidth="8"
             strokeLinecap="round"
-            strokeDasharray={uPathLength}
-            variants={uVariants}
+            strokeDasharray={monogramPathLength}
+            variants={monogramVariants}
             animate="animate"
           />
         </motion.g>
