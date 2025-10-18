@@ -46,9 +46,8 @@ const Contact: React.FC = () => {
           </div>
           <div
             ref={card2.ref}
-            style={{ transform: card2.transform }}
+            style={{ transform: card2.transform, animationDelay: '0.4s' }}
             className="p-8 rounded-xl bg-gradient-to-br from-accent/15 to-accent/5 border border-accent/30 hover:border-accent/60 transition-all duration-300 backdrop-blur-sm fade-in-up group"
-            style={{ animationDelay: '0.4s' } as React.CSSProperties}
           >
             <div className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">⚡</div>
             <h3 className="text-accent-light font-bold mb-2">Development</h3>
