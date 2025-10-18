@@ -6,46 +6,42 @@ interface AnimatedLogoProps {
 }
 
 const AnimatedLogo: React.FC<AnimatedLogoProps> = ({ size = 192 }) => {
-  const svgVariants: Variants = {
-    hidden: { 
-      opacity: 0,
-      rotate: -90
-    },
-    visible: {
-      opacity: 1,
-      rotate: 0,
-      transition: { 
-        duration: 1,
-        ease: 'easeOut'
-      }
-    },
-  };
 
-  const pathVariants: Variants = {
-    hidden: {
-      pathLength: 0,
-    },
-    visible: {
-      pathLength: 1,
+  const sPathLength = 260;
+  const uPathLength = 150;
+
+  const sVariants: Variants = {
+    animate: {
+      strokeDashoffset: [sPathLength, 0, -sPathLength],
       transition: {
-        duration: 2,
-        ease: 'easeInOut',
+        duration: 4,
+        ease: "linear",
         repeat: Infinity,
-        repeatType: 'loop',
-        repeatDelay: 0.5
       }
     }
   };
-  
+
+  const uVariants: Variants = {
+    animate: {
+      strokeDashoffset: [uPathLength, 0, -uPathLength],
+      transition: {
+        duration: 4,
+        ease: "linear",
+        repeat: Infinity,
+        delay: 0.2, // Stagger the animation
+      }
+    }
+  };
+
   const glowVariants: Variants = {
     glow: {
       filter: [
-        'drop-shadow(0 0 2px #C5A35C)',
-        'drop-shadow(0 0 5px #C5A35C)',
-        'drop-shadow(0 0 2px #C5A35C)'
+        'drop-shadow(0 0 2px #FFD700)',
+        'drop-shadow(0 0 6px #B8860B)',
+        'drop-shadow(0 0 2px #FFD700)'
       ],
       transition: {
-        duration: 2.5,
+        duration: 4,
         ease: 'easeInOut',
         repeat: Infinity,
         repeatType: 'mirror'
@@ -57,44 +53,48 @@ const AnimatedLogo: React.FC<AnimatedLogoProps> = ({ size = 192 }) => {
     <motion.div
       style={{ width: size, height: size }}
       className="flex items-center justify-center"
-      initial="hidden"
-      animate="visible"
-      exit="hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transition: { duration: 1 } }}
+      exit={{ opacity: 0 }}
     >
       <motion.svg
         width="100%"
         height="100%"
-        viewBox="0 0 200 200"
-        variants={svgVariants}
+        viewBox="0 0 120 100"
         className="overflow-visible"
       >
-        {/* Art Deco Frame */}
+        <defs>
+          <linearGradient id="goldGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#FFD700" />
+            <stop offset="100%" stopColor="#B8860B" />
+          </linearGradient>
+        </defs>
+
         <motion.g variants={glowVariants} animate="glow">
-          {/* Outer circle */}
-          <circle cx="100" cy="100" r="90" stroke="#C5A35C" strokeWidth="2" fill="none" />
-          {/* Inner deco lines */}
-          <path d="M 100,20 L 100,40 M 100,180 L 100,160 M 20,100 L 40,100 M 180,100 L 160,100" stroke="#C5A35C" strokeWidth="1" />
+          {/* S - Art Nouveau Style */}
+          <motion.path
+            d="M 55 85 C 0 85, 0 45, 40 45 C 80 45, 80 10, 45 10"
+            fill="none"
+            stroke="url(#goldGradient)"
+            strokeWidth="7"
+            strokeLinecap="round"
+            strokeDasharray={sPathLength}
+            variants={sVariants}
+            animate="animate"
+          />
+
+          {/* U - Art Nouveau Style */}
+          <motion.path
+            d="M 75 15 V 60 C 75 95, 115 95, 115 60 V 15"
+            fill="none"
+            stroke="url(#goldGradient)"
+            strokeWidth="7"
+            strokeLinecap="round"
+            strokeDasharray={uPathLength}
+            variants={uVariants}
+            animate="animate"
+          />
         </motion.g>
-
-        {/* S - More legible */}
-        <motion.path
-          d="M 85,125 C 65,125 65,95 85,95 C 105,95 105,65 85,65"
-          fill="none"
-          stroke="#C5A35C"
-          strokeWidth="6"
-          strokeLinecap="round"
-          variants={pathVariants}
-        />
-
-        {/* U - More legible */}
-        <motion.path
-          d="M 115,75 V 115 C 115,135 135,135 135,115 V 75"
-          fill="none"
-          stroke="#C5A35C"
-          strokeWidth="6"
-          strokeLinecap="round"
-          variants={pathVariants}
-        />
       </motion.svg>
     </motion.div>
   );
