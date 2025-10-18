@@ -16,7 +16,7 @@ const FloatingParticles = () => {
     return positions;
   });
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     ref.current.rotation.x += delta / 25;
     ref.current.rotation.y += delta / 30;
   });

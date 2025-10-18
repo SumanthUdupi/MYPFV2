@@ -13,7 +13,7 @@ const containerVariants = {
     opacity: 0,
     transition: { duration: 0.5, ease: 'easeInOut' } 
   },
-};
+} as const;
 
 const letterVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -22,7 +22,7 @@ const letterVariants = {
     y: 0,
     transition: { duration: 0.5, ease: 'easeOut' }
   },
-};
+} as const;
 
 const name = "Sumanth Udupi";
 

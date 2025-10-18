@@ -29,7 +29,7 @@ const Hero: React.FC = () => {
         stiffness: 100,
       },
     },
-  };
+  } as const;
 
   return (
     <section id="hero" className="h-screen w-full relative flex items-center justify-center">

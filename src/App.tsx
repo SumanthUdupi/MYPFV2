@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -28,7 +28,7 @@ const App: React.FC = () => {
         ease: 'easeOut',
       },
     },
-  };
+  } as const;
 
   return (
     <>

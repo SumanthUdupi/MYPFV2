@@ -42,7 +42,7 @@ const BentoGridItem: React.FC<BentoGridItemProps> = ({
         default: return { opacity: 0, transition: { duration: 0.2 } };
       }
     },
-  };
+  } as const;
 
   return (
     <motion.div
