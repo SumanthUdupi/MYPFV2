@@ -15,7 +15,7 @@ const AnimatedLogo: React.FC = () => {
         ease: 'easeOut'
       }
     },
-  };
+  } as const;
 
   const pathVariants = {
     hidden: {
@@ -33,7 +33,7 @@ const AnimatedLogo: React.FC = () => {
         repeatDelay: 0.5
       }
     }
-  };
+  } as const;
   
   const glowVariants = {
     glow: {
@@ -49,7 +49,7 @@ const AnimatedLogo: React.FC = () => {
         repeatType: 'mirror'
       }
     }
-  }
+  } as const;
 
   return (
     <motion.div
