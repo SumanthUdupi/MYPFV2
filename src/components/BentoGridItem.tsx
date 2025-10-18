@@ -27,16 +27,27 @@ const BentoGridItem: React.FC<BentoGridItemProps> = ({
   return (
     <div
       ref={ref}
-      className={`relative overflow-hidden rounded-lg bg-secondary p-4 ${className}`}
-      style={{ '--accent-color': 'rgba(255, 182, 193, 0.8)' } as React.CSSProperties}
+      className={`relative overflow-hidden rounded-xl bg-gradient-to-br from-accent/10 to-accent/5 border border-accent/20 hover:border-accent/40 p-6 transition-all duration-300 group cursor-pointer ${className}`}
+      style={{ '--accent-color': 'rgba(0, 212, 255, 0.6)' } as React.CSSProperties}
     >
       <div className={`overlay ${getOverlayClass()}`} />
-      <div className="relative z-20">
-        <img src={image} alt={title} className="w-full h-32 object-cover rounded-lg mb-4" />
-        <h3 className="text-xl font-bold">
+      <div className="relative z-20 h-full flex flex-col">
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-48 object-cover rounded-lg mb-4 transition-transform duration-300 group-hover:scale-110"
+        />
+        <h3 className="text-xl font-bold text-accent-light mb-2 group-hover:text-accent-light transition-colors">
           <span>{title}</span>
         </h3>
-        <p className="text-white">{description}</p>
+        <p className="text-secondary/70 text-sm flex-grow group-hover:text-secondary/80 transition-colors">
+          {description}
+        </p>
+        <div className="mt-4 pt-4 border-t border-accent/20 group-hover:border-accent/40 transition-colors">
+          <button className="text-accent text-sm font-semibold hover:text-accent-light transition-colors">
+            Learn More →
+          </button>
+        </div>
       </div>
     </div>
   );
