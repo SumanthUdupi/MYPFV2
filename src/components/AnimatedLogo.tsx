@@ -7,45 +7,30 @@ interface AnimatedLogoProps {
 
 const AnimatedLogo: React.FC<AnimatedLogoProps> = ({ size = 192 }) => {
 
-  const monogramPathLength = 600; // Estimated length of the complex path
+  const monogramPathLength = 750; // Estimated length for the new ornate path
 
   const monogramVariants: Variants = {
     animate: {
       strokeDashoffset: [monogramPathLength, 0, -monogramPathLength],
       transition: {
-        duration: 5,
+        duration: 6,
         ease: "linear",
         repeat: Infinity,
       }
     }
   };
 
-  const sunburstVariants: Variants = {
-    animate: {
-      rotate: 360,
+  const logoVariants: Variants = {
+    breathe: {
+      scale: [1, 1.03, 1],
+      opacity: [0.9, 1, 0.9],
       transition: {
-        duration: 60,
-        ease: "linear",
+        duration: 5,
+        ease: "easeInOut",
         repeat: Infinity,
       }
     }
   };
-
-  const glowVariants: Variants = {
-    glow: {
-      filter: [
-        'drop-shadow(0 0 3px #FFD700)',
-        'drop-shadow(0 0 8px #B8860B)',
-        'drop-shadow(0 0 3px #FFD700)'
-      ],
-      transition: {
-        duration: 5,
-        ease: 'easeInOut',
-        repeat: Infinity,
-        repeatType: 'mirror'
-      }
-    }
-  }
 
   return (
     <motion.div
@@ -54,6 +39,7 @@ const AnimatedLogo: React.FC<AnimatedLogoProps> = ({ size = 192 }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { duration: 1 } }}
       exit={{ opacity: 0 }}
+      variants={logoVariants}
     >
       <motion.svg
         width="100%"
@@ -66,34 +52,33 @@ const AnimatedLogo: React.FC<AnimatedLogoProps> = ({ size = 192 }) => {
             <stop offset="0%" stopColor="#FFD700" />
             <stop offset="100%" stopColor="#B8860B" />
           </linearGradient>
+           <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
 
-        {/* Art Deco Sunburst Frame */}
-        <motion.g 
-          className="origin-center"
-          variants={sunburstVariants} 
-          animate="animate"
-          style={{ stroke: '#B8860B', strokeWidth: 1, strokeOpacity: 0.5 }}
-        >
-          <path d="M100 0 V40" /> <path d="M100 200 V160" />
-          <path d="M0 100 H40" /> <path d="M200 100 H160" />
-          <path d="M29 29 L57 57" /> <path d="M171 171 L143 143" />
-          <path d="M29 171 L57 143" /> <path d="M171 29 L143 57" />
-        </motion.g>
-        <motion.circle cx="100" cy="100" r="95" stroke="#B8860B" strokeWidth="1.5" fill="none" strokeOpacity="0.7" />
+        {/* Background Deco Pattern */}
+        <path d="M 100,50 L 125,100 L 100,150 L 75,100 Z" fill="#B8860B" opacity="0.1" />
 
-        {/* Intertwined Art Nouveau "SU" Monogram */}
-        <motion.g variants={glowVariants} animate="glow">
+        {/* Intertwined "SU" Monogram with Flourishes */}
+        <motion.g variants={logoVariants} animate="breathe">
           <motion.path
-            d="M 130 140 C 160 140, 160 90, 110 80 C 60 70, 60 20, 100 20 C 140 20, 140 70, 90 80 C 40 90, 40 140, 70 140"
+            d="M 100 180 C 40 180, 40 120, 100 120 C 160 120, 160 60, 100 60 C 40 60, 40 0, 100 0"
             fill="none"
             stroke="url(#goldGradient)"
-            strokeWidth="8"
+            strokeWidth="6"
             strokeLinecap="round"
             strokeDasharray={monogramPathLength}
             variants={monogramVariants}
             animate="animate"
+            filter="url(#glow)"
           />
+          {/* Vine/Leaf Flourish */}
+          <path d="M 100 180 C 110 160, 120 150, 140 150" fill="none" stroke="#B8860B" stroke-width="2" />
         </motion.g>
       </motion.svg>
     </motion.div>
