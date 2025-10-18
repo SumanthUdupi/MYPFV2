@@ -30,9 +30,8 @@ const About: React.FC = () => {
           <div className="space-y-4">
             <div
               ref={skillsCard.ref}
-              style={{ transform: skillsCard.transform }}
+              style={{ transform: skillsCard.transform, animationDelay: '0.2s' }}
               className="p-6 rounded-xl bg-gradient-to-br from-accent/15 to-accent/5 border border-accent/30 hover:border-accent/60 transition-all duration-300 backdrop-blur-sm fade-in-up"
-              style={{ animationDelay: '0.2s' } as React.CSSProperties}
             >
               <h3 className="text-accent-light font-bold mb-3 text-lg">✨ Skills</h3>
               <ul className="text-secondary/80 space-y-2 text-sm">
