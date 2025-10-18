@@ -1,6 +1,6 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { useTilt3D } from '../hooks/useTilt3D';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useDirectionalHover } from '../hooks/useDirectionalHover';
 
 interface BentoGridItemProps {
   className?: string;
@@ -15,40 +15,69 @@ const BentoGridItem: React.FC<BentoGridItemProps> = ({
   description,
   image,
 }) => {
-  const { ref, style, handleMouseMove, handleMouseLeave } = useTilt3D();
+  const { isHovering, direction, handleMouseEnter, handleMouseLeave } = useDirectionalHover();
+
+  const variants = {
+    initial: (direction: string) => {
+      switch (direction) {
+        case 'top': return { y: '-100%' };
+        case 'bottom': return { y: '100%' };
+        case 'left': return { x: '-100%' };
+        case 'right': return { x: '100%' };
+        default: return { opacity: 0 };
+      }
+    },
+    animate: {
+      x: 0,
+      y: 0,
+      opacity: 1,
+      transition: { type: 'spring', stiffness: 200, damping: 25 },
+    },
+    exit: (direction: string) => {
+      switch (direction) {
+        case 'top': return { y: '-100%', transition: { duration: 0.2 } };
+        case 'bottom': return { y: '100%', transition: { duration: 0.2 } };
+        case 'left': return { x: '-100%', transition: { duration: 0.2 } };
+        case 'right': return { x: '100%', transition: { duration: 0.2 } };
+        default: return { opacity: 0, transition: { duration: 0.2 } };
+      }
+    },
+  };
 
   return (
     <motion.div
-      ref={ref}
-      style={style}
-      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
-      className={`relative overflow-hidden rounded-xl bg-gradient-to-br from-accent/15 to-accent/5 border border-accent/30 p-6 cursor-pointer h-full shadow-lg hover:shadow-2xl hover:shadow-accent/20 ${className}`}
+      className={`relative overflow-hidden rounded-lg h-full group ${className}`}
+      style={{
+        backgroundImage: `url(${image})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+      data-interactive
     >
-      <div className="relative z-20 h-full flex flex-col">
-        <motion.img
-          src={image}
-          alt={title}
-          className="w-full h-48 object-cover rounded-lg mb-4"
-          style={{ transformStyle: 'preserve-3d', transform: 'translateZ(20px)' }}
-          whileHover={{ scale: 1.1, transition: { duration: 0.4 } }}
-        />
-        <h3 className="text-xl font-bold text-accent-light mb-2 transition-colors">
-          <span>{title}</span>
-        </h3>
-        <p className="text-secondary/70 text-sm flex-grow transition-colors">
-          {description}
-        </p>
-        <div className="mt-4 pt-4 border-t border-accent/20 transition-colors">
-          <motion.button 
-            className="text-accent text-sm font-semibold hover:text-accent-light transition-colors inline-block"
-            whileHover={{ x: 4, transition: { duration: 0.3 } }}
+      <AnimatePresence custom={direction}>
+        {isHovering && (
+          <motion.div
+            custom={direction}
+            variants={variants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="absolute inset-0 bg-primary/80 backdrop-blur-sm p-6 flex flex-col justify-center items-center text-center"
           >
-            Learn More →
-          </motion.button>
-        </div>
-      </div>
+            <h3 className="font-display text-2xl text-accent mb-2">{title}</h3>
+            <p className="text-text/90 text-sm mb-4">{description}</p>
+            <span className="font-body text-accent text-xs tracking-widest uppercase">
+              View Project
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      {/* Border glow effect */}
+      <div className="absolute inset-0 border-2 border-transparent group-hover:border-accent/50 transition-all duration-300 rounded-lg" />
+      <div className="absolute inset-0 group-hover:shadow-[0_0_20px_5px_rgba(197,163,92,0.2)] transition-all duration-300 rounded-lg" />
     </motion.div>
   );
 };

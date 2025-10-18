@@ -1,45 +1,74 @@
 import React, { useEffect, useState } from 'react';
-
-interface TrailPosition {
-  x: number;
-  y: number;
-}
+import { motion, useSpring } from 'framer-motion';
 
 const CustomCursor: React.FC = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [trails, setTrails] = useState<TrailPosition[]>([]);
+  const [isHovering, setIsHovering] = useState(false);
+
+  const mouseX = useSpring(0, { stiffness: 500, damping: 30 });
+  const mouseY = useSpring(0, { stiffness: 500, damping: 30 });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-      const newTrail = { x: e.clientX, y: e.clientY };
-      setTrails(prevTrails => [...prevTrails, newTrail].slice(-10)); // Shorter trail
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+
+    const handleMouseOver = (e: MouseEvent) => {
+      if (
+        e.target instanceof Element &&
+        (e.target.closest('a') ||
+          e.target.closest('button') ||
+          e.target.closest('[data-interactive]'))
+      ) {
+        setIsHovering(true);
+      }
+    };
+
+    const handleMouseOut = (e: MouseEvent) => {
+      if (
+        e.target instanceof Element &&
+        (e.target.closest('a') ||
+          e.target.closest('button') ||
+          e.target.closest('[data-interactive]'))
+      ) {
+        setIsHovering(false);
+      }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
+    document.body.addEventListener('mouseover', handleMouseOver);
+    document.body.addEventListener('mouseout', handleMouseOut);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      document.body.removeEventListener('mouseover', handleMouseOver);
+      document.body.removeEventListener('mouseout', handleMouseOut);
     };
-  }, []);
+  }, [mouseX, mouseY]);
+
+  const cursorSize = isHovering ? 60 : 20;
 
   return (
-    <>
-      <div className="custom-cursor" style={{ left: `${position.x}px`, top: `${position.y}px` }} />
-      {trails.map((trail, index) => (
-        <div
-          key={index}
-          className="cursor-trail"
-          style={{
-            left: `${trail.x}px`,
-            top: `${trail.y}px`,
-            transition: `opacity ${0.3 + index * 0.03}s, transform ${0.3 + index * 0.03}s`,
-            opacity: `${1 - (trails.length - index) / trails.length}`,
-            transform: `scale(${1 - (trails.length - index) / trails.length})`,
-          }}
-        />
-      ))}
-    </>
+    <motion.div
+      className="fixed top-0 left-0 rounded-full pointer-events-none z-50"
+      style={{
+        translateX: mouseX,
+        translateY: mouseY,
+      }}
+      animate={{
+        width: cursorSize,
+        height: cursorSize,
+        border: isHovering ? '2px solid #C5A35C' : '2px solid #EAEAEA',
+        backgroundColor: isHovering ? 'transparent' : '#C5A35C',
+        x: '-50%',
+        y: '-50%',
+      }}
+      transition={{
+        type: 'spring',
+        stiffness: 300,
+        damping: 20,
+      }}
+    />
   );
 };
 

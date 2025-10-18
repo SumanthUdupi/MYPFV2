@@ -8,11 +8,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'background': '#1a1a2e',
-        'primary': '#16213e',
-        'accent': '#e9d5a1',
-        'text': '#f0f0f0',
-        'secondary-accent': '#0f3460',
+        'background': '#121212',
+        'primary': '#1E1E1E',
+        'accent': '#C5A35C',
+        'text': '#EAEAEA',
+        'secondary-accent': '#8A8A8A',
       },
       fontFamily: {
         'display': ['"Cinzel Decorative"', ...defaultTheme.fontFamily.serif],

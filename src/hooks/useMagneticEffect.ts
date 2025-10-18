@@ -1,49 +1,36 @@
-import { useRef, useEffect } from 'react';
+import { useState, MouseEvent } from 'react';
+import { useSpring } from 'framer-motion';
 
-const useMagneticEffect = <T extends HTMLElement>() => {
-  const ref = useRef<T>(null);
+export const useMagneticEffect = () => {
+  const [isMagnetic, setIsMagnetic] = useState(false);
 
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
+  const x = useSpring(0, { stiffness: 150, damping: 10, mass: 0.1 });
+  const y = useSpring(0, { stiffness: 150, damping: 10, mass: 0.1 });
 
-    const handleMouseMove = (e: MouseEvent) => {
+  const handleMouseMove = (e: MouseEvent<HTMLElement>) => {
+    if (isMagnetic) {
       const { clientX, clientY } = e;
-      const { left, top, width, height } = element.getBoundingClientRect();
+      const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
       const centerX = left + width / 2;
       const centerY = top + height / 2;
-
+      
       const deltaX = clientX - centerX;
       const deltaY = clientY - centerY;
 
-      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+      x.set(deltaX * 0.5);
+      y.set(deltaY * 0.5);
+    }
+  };
 
-      if (distance < 100) { // Threshold
-        const pullFactor = 0.4;
-        element.style.transform = `translate(${deltaX * pullFactor}px, ${deltaY * pullFactor}px)`;
-        element.style.transition = 'transform 0.1s ease-out';
-      } else {
-        element.style.transform = 'translate(0, 0)';
-        element.style.transition = 'transform 0.3s ease-in-out';
-      }
-    };
+  const handleMouseEnter = () => {
+    setIsMagnetic(true);
+  };
 
-    const handleMouseLeave = () => {
-      if (element) {
-        element.style.transform = 'translate(0, 0)';
-      }
-    };
+  const handleMouseLeave = () => {
+    setIsMagnetic(false);
+    x.set(0);
+    y.set(0);
+  };
 
-    document.addEventListener('mousemove', handleMouseMove);
-    element.addEventListener('mouseleave', handleMouseLeave);
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      element.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
-
-  return ref;
+  return { x, y, handleMouseMove, handleMouseEnter, handleMouseLeave };
 };
-
-export default useMagneticEffect;

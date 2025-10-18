@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, Suspense } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -8,6 +8,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
 import Loader from './components/Loader';
+import StarryBackground from './components/StarryBackground';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -17,26 +18,63 @@ const App: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: 'easeOut',
+      },
+    },
+  };
+
   return (
-    <div className="relative min-h-screen">
+    <>
       <AnimatePresence>
-        {loading ? (
-          <Loader />
-        ) : (
-          <div className="relative z-10">
-            <CustomCursor />
-            <Header />
-            <main>
-              <Hero />
-              <About />
-              <BentoGrid />
-              <Contact />
-            </main>
-            <Footer />
-          </div>
-        )}
+        {loading && <Loader />}
       </AnimatePresence>
-    </div>
+
+      {!loading && (
+        <>
+          <CustomCursor />
+          <StarryBackground />
+          <Header />
+          <main className="relative z-10">
+            <Hero />
+            
+            <motion.div
+              variants={sectionVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              <About />
+            </motion.div>
+
+            <motion.div
+              variants={sectionVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              <BentoGrid />
+            </motion.div>
+
+            <motion.div
+              variants={sectionVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              <Contact />
+            </motion.div>
+          </main>
+          <Footer />
+        </>
+      )}
+    </>
   );
 };
 

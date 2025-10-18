@@ -1,11 +1,11 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, MouseEvent } from 'react';
 
 type Direction = 'top' | 'bottom' | 'left' | 'right';
 
 const getDirection = (
-  e: MouseEvent,
-  element: HTMLElement
+  e: MouseEvent<HTMLDivElement>,
 ): Direction => {
+  const element = e.currentTarget;
   const { width, height, left, top } = element.getBoundingClientRect();
   const x = e.clientX - left;
   const y = e.clientY - top;
@@ -21,32 +21,18 @@ const getDirection = (
 };
 
 export const useDirectionalHover = () => {
-  const [hovering, setHovering] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const [direction, setDirection] = useState<Direction>('top');
-  const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
+  const handleMouseEnter = (e: MouseEvent<HTMLDivElement>) => {
+    setDirection(getDirection(e));
+    setIsHovering(true);
+  };
 
-    const handleMouseEnter = (e: MouseEvent) => {
-      setDirection(getDirection(e, element));
-      setHovering(true);
-    };
+  const handleMouseLeave = (e: MouseEvent<HTMLDivElement>) => {
+    setDirection(getDirection(e));
+    setIsHovering(false);
+  };
 
-    const handleMouseLeave = (e: MouseEvent) => {
-      setDirection(getDirection(e, element));
-      setHovering(false);
-    };
-
-    element.addEventListener('mouseenter', handleMouseEnter);
-    element.addEventListener('mouseleave', handleMouseLeave);
-
-    return () => {
-      element.removeEventListener('mouseenter', handleMouseEnter);
-      element.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
-
-  return { ref, hovering, direction };
+  return { isHovering, direction, handleMouseEnter, handleMouseLeave };
 };
