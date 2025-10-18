@@ -6,11 +6,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary': '#0a0e27',
-        'secondary': '#e8f0ff',
-        'accent': '#00d4ff',
-        'accent-light': '#64ffff',
-        'dark': '#050a15',
+        'primary': '#0d0a08',
+        'secondary': '#f5f1e8',
+        'accent': '#d4af37',
+        'accent-light': '#e8d5a8',
+        'dark': '#000000',
+        'gold': '#d4af37',
+        'gold-light': '#e8d5a8',
       },
       fontFamily: {
         'sans': ['Inter', 'sans-serif'],
