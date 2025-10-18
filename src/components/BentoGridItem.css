@@ -1,0 +1,60 @@
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: var(--accent-color);
+  transition: transform 0.3s ease-in-out;
+  z-index: 10;
+  transform: translateY(-100%); /* Default starting position */
+}
+
+.overlay.in {
+  transform: translate(0, 0);
+}
+
+.overlay.out-top {
+  transform: translateY(-100%);
+}
+
+.overlay.out-bottom {
+  transform: translateY(100%);
+}
+
+.overlay.out-left {
+  transform: translateX(-100%);
+}
+
+.overlay.out-right {
+  transform: translateX(100%);
+}
+
+.bento-grid-item h3 {
+  position: relative;
+  color: white;
+}
+
+.bento-grid-item h3 span {
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  color: transparent;
+}
+
+.bento-grid-item h3 span::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  transform: translateX(-100%);
+  transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.bento-grid-item:hover h3 span {
+  color: white;
+}
+
+.bento-grid-item:hover h3 span::after {
+  transform: translateX(100%);
+}
