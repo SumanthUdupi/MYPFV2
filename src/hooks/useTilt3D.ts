@@ -1,46 +1,56 @@
-import { useEffect, useRef, useState } from 'react';
+import { useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 
 export const useTilt3D = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const [rotation, setRotation] = useState({ x: 0, y: 0 });
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!ref.current) return;
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
-      const rect = ref.current.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 20, mass: 0.5 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 20, mass: 0.5 });
 
-      const rotateX = (e.clientY - centerY) * 0.05;
-      const rotateY = (e.clientX - centerX) * 0.05;
+  const rotateX = useTransform(
+    mouseYSpring,
+    [-0.5, 0.5],
+    ['10deg', '-10deg']
+  );
+  const rotateY = useTransform(
+    mouseXSpring,
+    [-0.5, 0.5],
+    ['-10deg', '10deg']
+  );
 
-      setRotation({
-        x: rotateX,
-        y: rotateY,
-      });
-    };
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (!ref.current) return;
 
-    const handleMouseLeave = () => {
-      setRotation({ x: 0, y: 0 });
-    };
+    const rect = ref.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
 
-    const element = ref.current;
-    if (element) {
-      element.addEventListener('mousemove', handleMouseMove);
-      element.addEventListener('mouseleave', handleMouseLeave);
-    }
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
 
-    return () => {
-      if (element) {
-        element.removeEventListener('mousemove', handleMouseMove);
-        element.removeEventListener('mouseleave', handleMouseLeave);
-      }
-    };
-  }, []);
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
 
   return {
     ref,
-    transform: `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+    style: { 
+      transform: 'perspective(1000px)',
+      rotateX,
+      rotateY,
+      transformStyle: 'preserve-3d' as const
+    },
+    handleMouseMove,
+    handleMouseLeave,
   };
 };

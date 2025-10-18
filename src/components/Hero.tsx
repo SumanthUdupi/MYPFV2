@@ -1,41 +1,66 @@
-import React from 'react';
-import { useTilt3D } from '../hooks/useTilt3D';
+import React, { Suspense } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { Text } from '@react-three/drei';
+import { motion } from 'framer-motion';
+
+// Placeholder for the Art Nouveau vine animation
+const FlowingVines = () => {
+  // In the future, this will contain the animated vine logic
+  return null;
+};
 
 const Hero: React.FC = () => {
-  const { ref, transform } = useTilt3D();
-
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center text-center px-6 relative overflow-hidden">
-      {/* Decorative golden elements */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-accent rounded-full opacity-5 blur-3xl"></div>
-      <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent rounded-full opacity-5 blur-3xl"></div>
+    <section id="hero" className="h-screen w-full relative">
+      {/* 3D Canvas Scene */}
+      <Canvas camera={{ position: [0, 0, 8], fov: 45 }} style={{ background: 'transparent' }}>
+        <Suspense fallback={null}>
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 10, 10]} intensity={1} color="rgb(182, 146, 83)" />
 
-      <div ref={ref} style={{ transform }} className="space-y-8 max-w-4xl transition-transform duration-100">
-        <div className="space-y-4 fade-in-up">
-          <h1 className="text-7xl md:text-8xl font-bold bg-gradient-to-r from-accent-light via-accent to-secondary bg-clip-text text-transparent">
-            Jules
-          </h1>
-          <div className="h-1 w-24 bg-gradient-to-r from-accent to-accent-light mx-auto rounded-full"></div>
-        </div>
-        <p className="text-2xl md:text-3xl text-secondary font-light tracking-wide fade-in-up" style={{ animationDelay: '0.1s' }}>
-          Creative Developer & Designer
-        </p>
-        <p className="text-lg text-secondary/80 max-w-2xl mx-auto leading-relaxed fade-in-up" style={{ animationDelay: '0.2s' }}>
-          Crafting beautiful digital experiences with cutting-edge technology and thoughtful design. A journey through the cosmos of creativity.
-        </p>
-        <div className="pt-8 fade-in-up" style={{ animationDelay: '0.3s' }}>
-          <button className="px-8 py-4 bg-gradient-to-r from-accent to-accent-light text-dark font-bold rounded-lg hover:shadow-2xl hover:shadow-accent/60 transition-all duration-300 transform hover:scale-110 relative group overflow-hidden">
-            <span className="relative z-10">Explore My Work</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-accent-light to-accent opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
-          </button>
-        </div>
-      </div>
+          {/* Art Deco 3D Text */}
+          <Text
+            font="/fonts/CinzelDecorative-Bold.ttf" // NOTE: You'll need to add this font file to your /public/fonts directory
+            fontSize={2.5}
+            color="rgb(182, 146, 83)"
+            material-metalness={0.9}
+            material-roughness={0.2}
+            anchorX="center"
+            anchorY="middle"
+          >
+            JULES
+          </Text>
 
-      {/* Animated scroll indicator */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
+          {/* Art Nouveau animated element */}
+          <FlowingVines />
+        </Suspense>
+      </Canvas>
+
+      {/* HTML UI Overlay */}
+      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center pointer-events-none">
+        <motion.div
+          className="space-y-8 max-w-4xl"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { delay: 1, duration: 1.5 } }}
+        >
+          <div className="h-48 md:h-64" /> {/* Spacer to push content below the 3D text */}
+          <motion.p
+            className="text-2xl md:text-3xl text-ivory font-body tracking-wider"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0, transition: { delay: 1.5, duration: 1 } }}
+          >
+            Creative Developer & Designer
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0, transition: { delay: 2, duration: 1 } }}
+            className="pt-8 pointer-events-auto"
+          >
+            <button className="px-8 py-3 font-display text-lg tracking-widest uppercase text-background bg-gold rounded-sm border-2 border-gold hover:bg-transparent hover:text-gold transition-all duration-300 ease-in-out">
+              Explore My Work
+            </button>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

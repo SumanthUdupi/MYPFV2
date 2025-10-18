@@ -1,7 +1,9 @@
 import React from 'react';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import AnchorLink from './AnchorLink'; // Assuming AnchorLink is in the same directory
 import useMagneticEffect from '../hooks/useMagneticEffect';
 import useSound from '../hooks/useSound';
+import { portfolioData } from '../../config';
 
 const Footer: React.FC = () => {
   const githubRef = useMagneticEffect<HTMLAnchorElement>();
@@ -16,10 +18,10 @@ const Footer: React.FC = () => {
           <div className="fade-in-up">
             <h3 className="text-accent-light font-bold mb-4 text-lg">Navigation</h3>
             <ul className="space-y-2 text-secondary/70 text-sm">
-              <li><a href="#hero" className="hover:text-accent hover:translate-x-1 transition-all duration-300 inline-block">Home</a></li>
-              <li><a href="#about" className="hover:text-accent hover:translate-x-1 transition-all duration-300 inline-block">About</a></li>
-              <li><a href="#projects" className="hover:text-accent hover:translate-x-1 transition-all duration-300 inline-block">Projects</a></li>
-              <li><a href="#contact" className="hover:text-accent hover:translate-x-1 transition-all duration-300 inline-block">Contact</a></li>
+              <li><AnchorLink href="#hero" className="hover:text-accent hover:translate-x-1 transition-all duration-300 inline-block">Home</AnchorLink></li>
+              <li><AnchorLink href="#about" className="hover:text-accent hover:translate-x-1 transition-all duration-300 inline-block">About</AnchorLink></li>
+              <li><AnchorLink href="#projects" className="hover:text-accent hover:translate-x-1 transition-all duration-300 inline-block">Projects</AnchorLink></li>
+              <li><AnchorLink href="#contact" className="hover:text-accent hover:translate-x-1 transition-all duration-300 inline-block">Contact</AnchorLink></li>
             </ul>
           </div>
           <div className="fade-in-up" style={{ animationDelay: '0.1s' }}>
@@ -39,7 +41,7 @@ const Footer: React.FC = () => {
           <div className="fade-in-up" style={{ animationDelay: '0.2s' }}>
             <h3 className="text-accent-light font-bold mb-4 text-lg">Contact</h3>
             <p className="text-secondary/70 text-sm">
-              <a href="mailto:jules@example.com" className="hover:text-accent transition-colors">jules@example.com</a>
+              <a href={`mailto:${portfolioData.email}`} className="hover:text-accent transition-colors">{portfolioData.email}</a>
             </p>
           </div>
         </div>

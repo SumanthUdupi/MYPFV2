@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
   content: [
     "./index.html",
@@ -6,16 +8,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary': '#0d0a08',
-        'secondary': '#f5f1e8',
-        'accent': '#d4af37',
-        'accent-light': '#e8d5a8',
-        'dark': '#000000',
-        'gold': '#d4af37',
-        'gold-light': '#e8d5a8',
+        'background': '#1a1a2e',
+        'primary': '#16213e',
+        'accent': '#e9d5a1',
+        'text': '#f0f0f0',
+        'secondary-accent': '#0f3460',
       },
       fontFamily: {
-        'sans': ['Inter', 'sans-serif'],
+        'display': ['"Cinzel Decorative"', ...defaultTheme.fontFamily.serif],
+        'body': ['"Poppins"', ...defaultTheme.fontFamily.sans],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
