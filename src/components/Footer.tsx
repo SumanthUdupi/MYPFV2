@@ -25,13 +25,13 @@ const Footer: React.FC = () => {
           <div className="fade-in-up" style={{ animationDelay: '0.1s' }}>
             <h3 className="text-accent-light font-bold mb-4 text-lg">Social</h3>
             <div className="flex gap-4">
-              <a ref={githubRef} href="https://github.com" target="_blank" rel="noopener noreferrer" className="p-3 rounded-lg bg-gradient-to-br from-accent/20 to-accent/10 hover:from-accent/40 hover:to-accent/20 text-secondary hover:text-accent-light transition-all duration-300 transform hover:scale-125 shadow-lg hover:shadow-accent/30" onMouseEnter={playHoverSound}>
+              <a ref={githubRef} href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="p-3 rounded-lg bg-gradient-to-br from-accent/20 to-accent/10 hover:from-accent/40 hover:to-accent/20 text-secondary hover:text-accent-light transition-all duration-300 transform hover:scale-125 shadow-lg hover:shadow-accent/30" onMouseEnter={playHoverSound}>
                 <FaGithub size={20} />
               </a>
-              <a ref={linkedinRef} href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-3 rounded-lg bg-gradient-to-br from-accent/20 to-accent/10 hover:from-accent/40 hover:to-accent/20 text-secondary hover:text-accent-light transition-all duration-300 transform hover:scale-125 shadow-lg hover:shadow-accent/30" onMouseEnter={playHoverSound}>
+              <a ref={linkedinRef} href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-3 rounded-lg bg-gradient-to-br from-accent/20 to-accent/10 hover:from-accent/40 hover:to-accent/20 text-secondary hover:text-accent-light transition-all duration-300 transform hover:scale-125 shadow-lg hover:shadow-accent/30" onMouseEnter={playHoverSound}>
                 <FaLinkedin size={20} />
               </a>
-              <a ref={twitterRef} href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-3 rounded-lg bg-gradient-to-br from-accent/20 to-accent/10 hover:from-accent/40 hover:to-accent/20 text-secondary hover:text-accent-light transition-all duration-300 transform hover:scale-125 shadow-lg hover:shadow-accent/30" onMouseEnter={playHoverSound}>
+              <a ref={twitterRef} href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="p-3 rounded-lg bg-gradient-to-br from-accent/20 to-accent/10 hover:from-accent/40 hover:to-accent/20 text-secondary hover:text-accent-light transition-all duration-300 transform hover:scale-125 shadow-lg hover:shadow-accent/30" onMouseEnter={playHoverSound}>
                 <FaTwitter size={20} />
               </a>
             </div>

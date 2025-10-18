@@ -6,9 +6,7 @@ import useSound from '../hooks/useSound';
 const Contact: React.FC = () => {
   const magneticRef = useMagneticEffect<HTMLAnchorElement>();
   const playClickSound = useSound(880, 0.05, 0.2);
-  const card1 = useTilt3D();
-  const card2 = useTilt3D();
-  const card3 = useTilt3D();
+  const cardTilt = useTilt3D();
 
   return (
     <section id="contact" className="min-h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
@@ -36,8 +34,8 @@ const Contact: React.FC = () => {
         </div>
         <div className="mt-16 grid md:grid-cols-3 gap-8">
           <div
-            ref={card1.ref}
-            style={{ transform: card1.transform, animationDelay: '0.3s' }}
+            ref={cardTilt.ref}
+            style={{ transform: cardTilt.transform, animationDelay: '0.3s' }}
             className="p-8 rounded-xl bg-gradient-to-br from-accent/15 to-accent/5 border border-accent/30 hover:border-accent/60 transition-all duration-300 backdrop-blur-sm fade-in-up group"
           >
             <div className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">💻</div>
@@ -45,8 +43,8 @@ const Contact: React.FC = () => {
             <p className="text-secondary/70 text-sm">Beautiful, responsive designs</p>
           </div>
           <div
-            ref={card2.ref}
-            style={{ transform: card2.transform, animationDelay: '0.4s' }}
+            ref={cardTilt.ref}
+            style={{ transform: cardTilt.transform, animationDelay: '0.4s' }}
             className="p-8 rounded-xl bg-gradient-to-br from-accent/15 to-accent/5 border border-accent/30 hover:border-accent/60 transition-all duration-300 backdrop-blur-sm fade-in-up group"
           >
             <div className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">⚡</div>
@@ -54,8 +52,8 @@ const Contact: React.FC = () => {
             <p className="text-secondary/70 text-sm">Fast, scalable applications</p>
           </div>
           <div
-            ref={card3.ref}
-            style={{ transform: card3.transform, animationDelay: '0.5s' }}
+            ref={cardTilt.ref}
+            style={{ transform: cardTilt.transform, animationDelay: '0.5s' }}
             className="p-8 rounded-xl bg-gradient-to-br from-accent/15 to-accent/5 border border-accent/30 hover:border-accent/60 transition-all duration-300 backdrop-blur-sm fade-in-up group"
           >
             <div className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">🎨</div>
