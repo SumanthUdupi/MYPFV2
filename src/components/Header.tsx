@@ -1,13 +1,15 @@
 import React from 'react';
 import MagneticLink from './MagneticLink';
+import AnimatedLogo from './AnimatedLogo';
 
 const Header: React.FC = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       <div className="absolute inset-0 bg-primary/50 backdrop-blur-lg border-b border-white/10" />
       <nav className="relative z-10 max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-        <a href="#hero" className="font-display text-2xl font-bold text-accent tracking-wider">
-          Sumanth Udupi
+        <a href="#hero" className="flex items-center gap-3 font-display text-2xl font-bold text-accent tracking-wider">
+          <AnimatedLogo size={40} />
+          <span>Sumanth Udupi</span>
         </a>
         <div className="flex gap-10">
           <MagneticLink href="#about" className="text-text hover:text-accent transition-colors duration-300 relative group">

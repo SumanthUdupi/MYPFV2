@@ -1,7 +1,11 @@
 import React from 'react';
 import { motion, type Variants } from 'framer-motion';
 
-const AnimatedLogo: React.FC = () => {
+interface AnimatedLogoProps {
+  size?: number;
+}
+
+const AnimatedLogo: React.FC<AnimatedLogoProps> = ({ size = 192 }) => {
   const svgVariants: Variants = {
     hidden: { 
       opacity: 0,
@@ -20,16 +24,14 @@ const AnimatedLogo: React.FC = () => {
   const pathVariants: Variants = {
     hidden: {
       pathLength: 0,
-      pathOffset: 1,
     },
     visible: {
       pathLength: 1,
-      pathOffset: 0,
       transition: {
         duration: 2,
         ease: 'easeInOut',
         repeat: Infinity,
-        repeatType: 'mirror',
+        repeatType: 'loop',
         repeatDelay: 0.5
       }
     }
@@ -38,9 +40,9 @@ const AnimatedLogo: React.FC = () => {
   const glowVariants: Variants = {
     glow: {
       filter: [
-        'drop-shadow(0 0 3px #C5A35C)',
-        'drop-shadow(0 0 8px #C5A35C)',
-        'drop-shadow(0 0 3px #C5A35C)'
+        'drop-shadow(0 0 2px #C5A35C)',
+        'drop-shadow(0 0 5px #C5A35C)',
+        'drop-shadow(0 0 2px #C5A35C)'
       ],
       transition: {
         duration: 2.5,
@@ -53,7 +55,8 @@ const AnimatedLogo: React.FC = () => {
 
   return (
     <motion.div
-      className="flex items-center justify-center w-48 h-48"
+      style={{ width: size, height: size }}
+      className="flex items-center justify-center"
       initial="hidden"
       animate="visible"
       exit="hidden"
@@ -67,39 +70,28 @@ const AnimatedLogo: React.FC = () => {
       >
         {/* Art Deco Frame */}
         <motion.g variants={glowVariants} animate="glow">
-          <motion.path
-            d="M 100, 20 a 80,80 0 1,1 0,160 a 80,80 0 1,1 0,-160"
-            fill="none"
-            stroke="#C5A35C"
-            strokeWidth="3"
-            variants={pathVariants}
-          />
-          <motion.path
-            d="M 100,30 a 70,70 0 1,1 0,140 a 70,70 0 1,1 0,-140"
-            fill="none"
-            stroke="#C5A35C"
-            strokeWidth="1"
-            strokeDasharray="4 8"
-            variants={pathVariants}
-          />
+          {/* Outer circle */}
+          <circle cx="100" cy="100" r="90" stroke="#C5A35C" strokeWidth="2" fill="none" />
+          {/* Inner deco lines */}
+          <path d="M 100,20 L 100,40 M 100,180 L 100,160 M 20,100 L 40,100 M 180,100 L 160,100" stroke="#C5A35C" strokeWidth="1" />
         </motion.g>
 
-        {/* S - Art Nouveau Style */}
+        {/* S - More legible */}
         <motion.path
-          d="M 125,80 C 125,50 75,50 75,80 C 75,110 125,110 125,140"
+          d="M 85,125 C 65,125 65,95 85,95 C 105,95 105,65 85,65"
           fill="none"
           stroke="#C5A35C"
-          strokeWidth="5"
+          strokeWidth="6"
           strokeLinecap="round"
           variants={pathVariants}
         />
 
-        {/* U - Art Nouveau Style */}
+        {/* U - More legible */}
         <motion.path
-          d="M 75,120 C 75,150 125,150 125,120"
+          d="M 115,75 V 115 C 115,135 135,135 135,115 V 75"
           fill="none"
           stroke="#C5A35C"
-          strokeWidth="5"
+          strokeWidth="6"
           strokeLinecap="round"
           variants={pathVariants}
         />
