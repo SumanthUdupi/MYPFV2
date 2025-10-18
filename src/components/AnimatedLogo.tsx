@@ -1,8 +1,8 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 
 const AnimatedLogo: React.FC = () => {
-  const svgVariants = {
+  const svgVariants: Variants = {
     hidden: { 
       opacity: 0,
       rotate: -90
@@ -15,9 +15,9 @@ const AnimatedLogo: React.FC = () => {
         ease: 'easeOut'
       }
     },
-  } as const;
+  };
 
-  const pathVariants = {
+  const pathVariants: Variants = {
     hidden: {
       pathLength: 0,
       pathOffset: 1,
@@ -33,9 +33,9 @@ const AnimatedLogo: React.FC = () => {
         repeatDelay: 0.5
       }
     }
-  } as const;
+  };
   
-  const glowVariants = {
+  const glowVariants: Variants = {
     glow: {
       filter: [
         'drop-shadow(0 0 3px #C5A35C)',
@@ -49,7 +49,7 @@ const AnimatedLogo: React.FC = () => {
         repeatType: 'mirror'
       }
     }
-  } as const;
+  }
 
   return (
     <motion.div
