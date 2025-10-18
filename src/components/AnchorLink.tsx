@@ -4,9 +4,10 @@ interface AnchorLinkProps {
   href: string;
   children: React.ReactNode;
   className?: string;
+  onMouseEnter?: () => void;
 }
 
-const AnchorLink: React.FC<AnchorLinkProps> = ({ href, children, className }) => {
+const AnchorLink: React.FC<AnchorLinkProps> = ({ href, children, className, onMouseEnter }) => {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const targetId = href.substring(1);
@@ -17,7 +18,7 @@ const AnchorLink: React.FC<AnchorLinkProps> = ({ href, children, className }) =>
   };
 
   return (
-    <a href={href} onClick={handleClick} className={className}>
+    <a href={href} onClick={handleClick} className={className} onMouseEnter={onMouseEnter}>
       {children}
     </a>
   );
