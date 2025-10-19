@@ -1,46 +1,73 @@
-import React, { useState, useRef, Suspense } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Points, PointMaterial, Points as PointsType } from '@react-three/drei';
-// @ts-ignore
-import * as random from 'maath/random/dist/maath-random.esm';
+import { Points, PointMaterial } from '@react-three/drei';
+import type { Points as PointsType } from 'three';
 
-const Starfield: React.FC<any> = (props) => {
-  const ref = useRef<PointsType>(null);
-  const [sphere] = useState(() => random.inSphere(new Float32Array(5000), { radius: 1.2 }));
+const GeometricParticles: React.FC = () => {
+  const ref = useRef<PointsType>(null!);
+
+  const particles = useMemo(() => {
+    const count = 5000;
+    const positions = new Float32Array(count * 3);
+    const grid_size = 4;
+
+    for (let i = 0; i < count; i++) {
+      const i3 = i * 3;
+      positions[i3] = (Math.random() - 0.5) * grid_size;
+      positions[i3 + 1] = (Math.random() - 0.5) * grid_size;
+      positions[i3 + 2] = (Math.random() - 0.5) * 0.2; // Keep it relatively flat
+    }
+    return positions;
+  }, []);
+
+  const originalPositions = useMemo(() => new Float32Array(particles), [particles]);
 
   useFrame((state, delta) => {
+    const { pointer, clock } = state;
+    const time = clock.getElapsedTime();
+
     if (ref.current) {
-      ref.current.rotation.x -= delta / 15;
-      ref.current.rotation.y -= delta / 20;
-      // Make particles react to mouse
-      const { pointer } = state;
-      ref.current.rotation.y += pointer.x * 0.01;
-      ref.current.rotation.x += pointer.y * 0.01;
+      const positions = ref.current.geometry.attributes.position.array as Float32Array;
+
+      for (let i = 0; i < positions.length; i += 3) {
+        const x = originalPositions[i];
+        const y = originalPositions[i + 1];
+
+        // Shimmer effect
+        const shimmer = Math.sin(time * 0.5 + x * 2) * 0.05;
+        positions[i + 2] = originalPositions[i + 2] + shimmer;
+
+        // Mouse warp effect
+        const distance = Math.sqrt(Math.pow(pointer.x * 2 - x, 2) + Math.pow(pointer.y * 2 - y, 2));
+        const warpFactor = Math.max(0, 1 - distance / 2) * 0.2;
+        positions[i + 2] += warpFactor;
+      }
+
+      ref.current.geometry.attributes.position.needsUpdate = true;
+      ref.current.rotation.y += delta / 20;
     }
   });
 
   return (
-    <group rotation={[0, 0, Math.PI / 4]}>
-      <Points ref={ref} positions={sphere} stride={3} frustumCulled={false} {...props}>
-        <PointMaterial
-          transparent
-          color="#D4AF37" // Antique Gold
-          size={0.004}
-          sizeAttenuation={true}
-          depthWrite={false}
-        />
-      </Points>
-    </group>
+    <Points ref={ref} positions={particles} stride={3} frustumCulled={false}>
+      <PointMaterial
+        transparent
+        color="#D4AF37" // Liquid Gold
+        size={0.008}
+        sizeAttenuation={true}
+        depthWrite={false}
+        opacity={0.7}
+      />
+    </Points>
   );
 };
 
 const GenerativeBackground: React.FC = () => {
   return (
-    <div className="absolute inset-0 z-0">
-      <Canvas camera={{ position: [0, 0, 1] }}>
-        <Suspense fallback={null}>
-          <Starfield />
-        </Suspense>
+    <div className="absolute inset-0 z-0 bg-background">
+      <Canvas camera={{ position: [0, 0, 2] }}>
+        <ambientLight intensity={0.5} />
+        <GeometricParticles />
       </Canvas>
     </div>
   );
