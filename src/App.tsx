@@ -13,6 +13,7 @@ import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
 import Loader from './components/Loader';
 import PageTransition from './components/PageTransition';
+import NebulaPotential from './components/nebula/NebulaPotential.tsx';
 
 const sectionVariants: Variants = {
   hidden: { opacity: 0, y: 100, scale: 0.9 },
@@ -45,7 +46,8 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-background min-h-screen overflow-x-hidden font-body text-text cursor-none" style={{ perspective: '1000px' }}>
+    <div className="min-h-screen overflow-x-hidden font-body text-text cursor-none" style={{ perspective: '1000px' }}>
+      <NebulaPotential />
       <CustomCursor />
       <AnimatePresence mode="wait">
         {loading ? (
