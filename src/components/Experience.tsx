@@ -60,8 +60,6 @@ const Experience: React.FC = () => {
               key={item.role}
               item={item}
               isLeft={index % 2 !== 0}
-              isOpen={openItem === item.role}
-              onToggle={() => setOpenItem(openItem === item.role ? null : item.role)}
             />
           ))}
         </div>
