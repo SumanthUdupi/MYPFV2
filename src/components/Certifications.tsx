@@ -19,17 +19,18 @@ const Certifications: React.FC = () => {
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
     >
-      <h2 className="font-display text-4xl text-accent text-center mb-12">Certifications</h2>
-      <div className="max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+      <h2 className="font-display text-6xl text-accent text-center mb-16">Certifications</h2>
+      <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
         {certifications.map((cert, index) => (
           <motion.div
             key={index}
             variants={cardVariants}
-            className="p-6 bg-primary/20 border border-secondary-accent/20 rounded-lg text-center"
+            className="p-8 bg-primary border border-secondary/10 text-center"
+            style={{ clipPath: 'polygon(0 15px, 15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)' }}
           >
-            <p className="font-body text-secondary-accent text-sm">{cert.date}</p>
-            <h3 className="font-display text-lg text-accent mt-1">{cert.name}</h3>
-            <p className="font-body text-text/90 text-sm">{cert.issuer}</p>
+            <p className="font-body text-secondary-accent text-base">{cert.date}</p>
+            <h3 className="font-display text-2xl text-accent mt-2">{cert.name}</h3>
+            <p className="font-body text-text/90 text-base mt-1">{cert.issuer}</p>
           </motion.div>
         ))}
       </div>

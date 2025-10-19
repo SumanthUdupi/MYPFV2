@@ -2,6 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { portfolioData } from '../../portfolioData';
+import Chevron from '../assets/Chevron';
 
 const About: React.FC = () => {
   const { about: professionalSummary } = portfolioData;
@@ -23,8 +24,9 @@ const About: React.FC = () => {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h2 className="font-display text-4xl text-accent mb-4">About Me</h2>
-          <div className="w-24 h-1 bg-accent"></div>
+          <h2 className="font-display text-6xl text-accent mb-4">About Me</h2>
+          <div className="w-32 h-1 bg-accent mb-4"></div>
+          <Chevron className="w-32" />
         </motion.div>
         <motion.div 
           className="md:col-span-2"
@@ -33,9 +35,11 @@ const About: React.FC = () => {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <p className="font-body text-lg leading-relaxed text-text">
-            {professionalSummary}
-          </p>
+          <div className="prose prose-lg prose-invert">
+            <p className="font-body text-xl leading-relaxed text-text">
+              {professionalSummary}
+            </p>
+          </div>
         </motion.div>
       </div>
     </motion.section>

@@ -20,7 +20,7 @@ const PersonalProjects: React.FC = () => {
       viewport={{ once: true, amount: 0.1 }}
       variants={containerVariants}
     >
-      <h2 className="font-display text-4xl text-accent text-center mb-12">Personal Projects</h2>
+      <h2 className="font-display text-6xl text-accent text-center mb-16">Personal Projects</h2>
       <div>Personal Projects Carousel Placeholder</div>
     </motion.section>
   );
