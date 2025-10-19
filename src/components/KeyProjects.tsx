@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useTransform, Variants } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
 
 const ProjectCard: React.FC<{ project: typeof portfolioData.keyProjects[0] }> = ({ project }) => {
@@ -15,9 +15,9 @@ const ProjectCard: React.FC<{ project: typeof portfolioData.keyProjects[0] }> = 
     y.set(event.clientY - rect.top);
   }
 
-  const cardVariants = {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.6, 0.01, -0.05, 0.95] } },
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, scale: 0.95 } as const,
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.6, 0.01, -0.05, 0.95] as const } },
   };
 
   return (
@@ -33,11 +33,9 @@ const ProjectCard: React.FC<{ project: typeof portfolioData.keyProjects[0] }> = 
     >
       <motion.div
         style={{ rotateX, rotateY }}
-        className="bg-[#111111] p-6 h-full flex flex-col border border-secondary/10 transition-all duration-300 hover:border-accent/80"
-        // Using a custom clip-path for the Art Deco style
-        // You can generate your own at https://bennettfeely.com/clippy/
-        // This one creates a simple corner cut.
-        css={{ clipPath: 'polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%)' }}
+        className="bg-[#111111] p-6 h-full flex flex-col border border-secondary/10 transition-all duration-300 hover:border-accent/80"        
+        // Using a custom clip-path for the Art Deco style. You can generate your own at https://bennettfeely.com/clippy/
+        style={{ clipPath: 'polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%)' }}
       >
         <h3 className="font-display text-xl text-accent mb-3">{project.title}</h3>
         <p className="font-body text-secondary/80 text-sm leading-relaxed flex-grow">

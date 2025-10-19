@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
 
 const skillPillVariants = {
@@ -19,9 +19,8 @@ const SkillCategory: React.FC<{ category: string; skills: string[] }> = ({ categ
         {skills.map((skill) => (
           <motion.li
             key={skill}
-            className="bg-[#111111] text-secondary/90 px-4 py-2 border border-secondary/20 text-sm transition-colors duration-300 hover:border-accent/80 hover:text-accent"
-            // A more geometric shape for the pills
-            css={{ clipPath: 'polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px)' }}
+            className="bg-[#111111] text-secondary/90 px-4 py-2 border border-secondary/20 text-sm transition-colors duration-300 hover:border-accent/80 hover:text-accent"            
+            style={{ clipPath: 'polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px)' }}
             variants={skillPillVariants}
             initial="hidden"
             whileInView="visible"
@@ -39,7 +38,7 @@ const SkillCategory: React.FC<{ category: string; skills: string[] }> = ({ categ
 const Skills: React.FC = () => {
   const { skills } = portfolioData;
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,

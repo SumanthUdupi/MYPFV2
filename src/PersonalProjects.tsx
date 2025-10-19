@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { portfolioData } from '../data/portfolioData';
+import { portfolioData } from '../../data/portfolioData';
 
 const ProjectCard: React.FC<{ project: typeof portfolioData.personalProjects[0] }> = ({ project }) => {
   const x = useMotionValue(200);
@@ -23,9 +23,8 @@ const ProjectCard: React.FC<{ project: typeof portfolioData.personalProjects[0] 
       className="relative h-full"
     >
       <motion.div
-        style={{ rotateX, rotateY }}
+        style={{ rotateX, rotateY, clipPath: 'polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%)' }}
         className="bg-[#111111] p-6 h-full flex flex-col border border-secondary/10 transition-all duration-300 hover:border-accent/80"
-        css={{ clipPath: 'polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%)' }}
       >
         <h3 className="font-display text-xl text-accent mb-3">{project.title}</h3>
         <p className="font-body text-secondary/80 text-sm leading-relaxed flex-grow">{project.description}</p>
@@ -38,7 +37,7 @@ const PersonalProjects: React.FC = () => (
   <section id="personal-projects">
     <h2 className="font-display text-4xl text-accent text-center mb-12">Personal Projects</h2>
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {portfolioData.personalProjects.map((project, index) => <ProjectCard key={index} project={project} />)}
+      {portfolioData.personalProjects.map((project: typeof portfolioData.personalProjects[0], index: number) => <ProjectCard key={index} project={project} />)}
     </div>
   </section>
 );

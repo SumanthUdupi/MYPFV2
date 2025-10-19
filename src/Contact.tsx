@@ -37,7 +37,7 @@ const Contact: React.FC = () => {
           <motion.button
             type="submit"
             className="font-display text-lg bg-accent text-primary px-12 py-3 relative overflow-hidden"
-            css={{ clipPath: 'polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)' }}
+            style={{ clipPath: 'polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)' }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

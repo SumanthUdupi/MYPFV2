@@ -1,14 +1,14 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { portfolioData } from '../data/portfolioData';
+import { motion, Variants } from 'framer-motion';
+import { portfolioData } from '../../data/portfolioData';
 
 const TimelineItem: React.FC<{
   item: typeof portfolioData.education[0];
   isLeft: boolean;
 }> = ({ item, isLeft }) => {
-  const itemVariants = {
-    hidden: { opacity: 0, x: isLeft ? -50 : 50 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, x: isLeft ? -50 : 50 } as const,
+    visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' as const } },
   };
 
   return (
@@ -17,9 +17,9 @@ const TimelineItem: React.FC<{
         <motion.div
           variants={itemVariants}
           className={`p-6 bg-[#111111] border border-secondary/10 ${isLeft ? 'text-right' : 'text-left'}`}
-          css={{ clipPath: 'polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%)' }}
+          style={{ clipPath: 'polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%)' }}
         >
-          <p className="font-body text-sm text-secondary/60 mb-1">{item.date}</p>
+          <p className="font-body text-sm text-secondary/60 mb-1">{item.year}</p>
           <h3 className="font-display text-xl text-accent mb-2">{item.degree}</h3>
           <p className="font-body text-md text-secondary/90">{item.institution}</p>
         </motion.div>

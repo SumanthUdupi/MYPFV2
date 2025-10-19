@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
 import GenerativeBackground from './GenerativeBackground';
 
@@ -41,12 +41,12 @@ const Hero: React.FC = () => {
     },
   } as const;
 
-  const titleVariants = {
+  const titleVariants: Variants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.8, ease: 'easeOut' },
+      transition: { duration: 0.8, ease: 'easeOut' as const },
     },
   };
 
