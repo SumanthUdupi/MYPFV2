@@ -22,10 +22,8 @@ const PersonalProjects: React.FC = () => {
       viewport={{ once: true, amount: 0.1 }}
       variants={containerVariants}
     >
-      <h2 className="font-deco text-4xl text-accent text-center mb-16 uppercase tracking-widest">Personal Explorations</h2>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {personalProjects.map((project, index) => <ProjectCard key={index} project={project} />)}
-      </div>
+      <h2 className="font-display text-4xl text-accent text-center mb-12">Personal Projects</h2>
+      <div>Personal Projects Carousel Placeholder</div>
     </motion.section>
   );
 };

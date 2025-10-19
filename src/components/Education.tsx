@@ -12,20 +12,20 @@ const TimelineItem: React.FC<{
   };
 
   return (
-    <div className={`flex ${isLeft ? 'flex-row-reverse' : 'flex-row'} items-center w-full mb-8`}>
+    <div className={`flex ${isLeft ? 'flex-row-reverse' : 'flex-row'} items-center w-full mb-12`}>
       <div className="w-1/2">
         <motion.div
           variants={itemVariants}
-          className={`p-6 bg-[#111111] border border-secondary/10 ${isLeft ? 'text-right' : 'text-left'}`}
-          style={{ clipPath: 'polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%)' }}
+          className={`p-8 bg-primary border border-secondary/10 ${isLeft ? 'text-right' : 'text-left'}`}
+          style={{ clipPath: 'polygon(0 15px, 15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)' }}
         >
-          <p className="font-body text-sm text-secondary/60 mb-1">{item.year}</p>
-          <h3 className="font-display text-xl text-accent mb-2">{item.degree}</h3>
-          <p className="font-body text-md text-secondary/90">{item.institution}</p>
+          <p className="font-body text-base text-secondary/60 mb-2">{item.year}</p>
+          <h3 className="font-display text-3xl text-accent mb-3">{item.degree}</h3>
+          <p className="font-body text-lg text-secondary/90">{item.institution}</p>
         </motion.div>
       </div>
-      <div className="w-12 flex-shrink-0 flex justify-center">
-        <div className="w-1 h-1 bg-accent rounded-full" />
+      <div className="w-16 flex-shrink-0 flex justify-center">
+        <div className="w-2 h-2 bg-accent rounded-full" />
       </div>
       <div className="w-1/2" />
     </div>
@@ -37,7 +37,7 @@ const Education: React.FC = () => {
 
   return (
     <section id="education">
-      <h2 className="font-display text-4xl text-accent text-center mb-16">Education</h2>
+      <h2 className="font-display text-6xl text-accent text-center mb-24">Education</h2>
       <div className="relative">
         {/* The central timeline spine */}
         <motion.div

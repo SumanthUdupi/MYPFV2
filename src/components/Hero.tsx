@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { portfolioData } from '../../portfolioData';
 import GenerativeBackground from './GenerativeBackground';
+import Sunburst from '../assets/Sunburst';
 
 const Hero: React.FC = () => {
   const { name, title } = portfolioData;
@@ -58,6 +59,7 @@ const Hero: React.FC = () => {
       initial="hidden"
       animate="visible"
     >
+      <Sunburst />
       <GenerativeBackground />
 
       <motion.h1

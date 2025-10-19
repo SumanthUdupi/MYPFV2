@@ -1,26 +1,12 @@
 import React, { useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Points, PointMaterial } from '@react-three/drei';
-import type { Points as PointsType } from 'three';
+import { Points, PointMaterial, Points as PointsType } from '@react-three/drei';
+// @ts-ignore
+import * as random from 'maath/random/dist/maath-random.esm';
 
-const GeometricParticles: React.FC = () => {
-  const ref = useRef<PointsType>(null!);
-
-  const particles = useMemo(() => {
-    const count = 5000;
-    const positions = new Float32Array(count * 3);
-    const grid_size = 4;
-
-    for (let i = 0; i < count; i++) {
-      const i3 = i * 3;
-      positions[i3] = (Math.random() - 0.5) * grid_size;
-      positions[i3 + 1] = (Math.random() - 0.5) * grid_size;
-      positions[i3 + 2] = (Math.random() - 0.5) * 0.2; // Keep it relatively flat
-    }
-    return positions;
-  }, []);
-
-  const originalPositions = useMemo(() => new Float32Array(particles), [particles]);
+const Starfield: React.FC<any> = (props) => {
+  const ref = useRef<PointsType>(null);
+  const [sphere] = useState(() => random.inSphere(new Float32Array(5000), { radius: 1.2 }));
 
   useFrame((state, delta) => {
     const { pointer, clock } = state;

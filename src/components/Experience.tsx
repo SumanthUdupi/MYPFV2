@@ -24,48 +24,25 @@ const TimelineItem: React.FC<{
   };
 
   return (
-    <div className={`flex ${isLeft ? 'flex-row-reverse' : 'flex-row'} items-start w-full mb-8`}>
+    <div className={`flex ${isLeft ? 'flex-row-reverse' : 'flex-row'} items-center w-full mb-8`}>
       <div className="w-1/2">
         <motion.div
           variants={itemVariants}
-          className={`p-6 bg-primary border border-secondary-accent/10 cursor-pointer`}
+          className={`p-6 bg-[#111111] border border-secondary/10 ${isLeft ? 'text-right' : 'text-left'}`}
           style={{ clipPath: 'polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%)' }}
-          onClick={onToggle}
         >
-          <div className={`flex justify-between items-center ${isLeft ? 'text-right' : 'text-left'}`}>
-            <div>
-              <p className="font-body text-sm text-text/60 mb-1">{item.period}</p>
-              <h3 className="font-heading text-xl text-accent mb-1">{item.role}</h3>
-              <p className="font-body text-md text-text/90">{item.company}</p>
-            </div>
-            <motion.div 
-              className="ml-4 flex-shrink-0"
-              animate={{ rotate: isOpen ? 45 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <span className="text-accent text-3xl">+</span>
-            </motion.div>
-          </div>
-          <AnimatePresence initial={false}>
-            {isOpen && (
-              <motion.ul
-                key="content"
-                variants={detailsVariants}
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-                className={`list-disc list-inside text-sm text-text/70 ${isLeft ? 'text-right' : 'text-left'}`}
-              >
-                {item.points.map((point: string, i: number) => (
-                  <li key={i} className="mb-1">{point}</li>
-                ))}
-              </motion.ul>
-            )}
-          </AnimatePresence>
+          <p className="font-body text-sm text-secondary/60 mb-1">{item.period}</p>
+          <h3 className="font-display text-xl text-accent mb-2">{item.role}</h3>
+          <p className="font-body text-md text-secondary/90 mb-3">{item.company}</p>
+          <ul className="list-disc list-inside text-sm text-secondary/70">
+            {item.points.map((point: string, i: number) => (
+              <li key={i} className="mb-1">{point}</li>
+            ))}
+          </ul>
         </motion.div>
       </div>
       <div className="w-12 flex-shrink-0 flex justify-center">
-        <div className="w-1 h-1 bg-accent rounded-full mt-8" />
+        <div className="w-1 h-1 bg-accent rounded-full" />
       </div>
       <div className="w-1/2" />
     </div>
@@ -78,7 +55,7 @@ const Experience: React.FC = () => {
 
   return (
     <section id="experience">
-      <h2 className="font-deco text-4xl text-accent text-center mb-16 uppercase tracking-widest">Career Journey</h2>
+      <h2 className="font-display text-4xl text-accent text-center mb-16">Experience</h2>
       <div className="relative">
         <motion.div
           className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-secondary-accent/20"
