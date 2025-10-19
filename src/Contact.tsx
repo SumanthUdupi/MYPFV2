@@ -7,30 +7,30 @@ const Contact: React.FC = () => {
       <h2 className="font-display text-4xl text-accent text-center mb-12">Get In Touch</h2>
       <form className="space-y-8">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-secondary/80 mb-2">Name</label>
+          <label htmlFor="name" className="block text-sm font-medium text-text/80 mb-2">Name</label>
           <input
             type="text"
             name="name"
             id="name"
-            className="w-full bg-transparent border-b-2 border-secondary/20 focus:border-accent focus:ring-0 transition-colors duration-300 py-2"
+            className="w-full bg-transparent border-b-2 border-text/20 focus:border-accent focus:ring-0 transition-colors duration-300 py-2"
           />
         </div>
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-secondary/80 mb-2">Email</label>
+          <label htmlFor="email" className="block text-sm font-medium text-text/80 mb-2">Email</label>
           <input
             type="email"
             name="email"
             id="email"
-            className="w-full bg-transparent border-b-2 border-secondary/20 focus:border-accent focus:ring-0 transition-colors duration-300 py-2"
+            className="w-full bg-transparent border-b-2 border-text/20 focus:border-accent focus:ring-0 transition-colors duration-300 py-2"
           />
         </div>
         <div>
-          <label htmlFor="message" className="block text-sm font-medium text-secondary/80 mb-2">Message</label>
+          <label htmlFor="message" className="block text-sm font-medium text-text/80 mb-2">Message</label>
           <textarea
             name="message"
             id="message"
             rows={4}
-            className="w-full bg-transparent border-b-2 border-secondary/20 focus:border-accent focus:ring-0 transition-colors duration-300 py-2"
+            className="w-full bg-transparent border-b-2 border-text/20 focus:border-accent focus:ring-0 transition-colors duration-300 py-2"
           />
         </div>
         <div className="text-center pt-4">

@@ -19,9 +19,9 @@ const TimelineItem: React.FC<{
           className={`p-8 bg-primary border border-secondary/10 ${isLeft ? 'text-right' : 'text-left'}`}
           style={{ clipPath: 'polygon(0 15px, 15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)' }}
         >
-          <p className="font-body text-base text-secondary/60 mb-2">{item.year}</p>
+          <p className="font-body text-base text-text/60 mb-2">{item.year}</p>
           <h3 className="font-display text-3xl text-accent mb-3">{item.degree}</h3>
-          <p className="font-body text-lg text-secondary/90">{item.institution}</p>
+          <p className="font-body text-lg text-text/90">{item.institution}</p>
         </motion.div>
       </div>
       <div className="w-16 flex-shrink-0 flex justify-center">

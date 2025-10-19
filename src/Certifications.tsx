@@ -11,8 +11,8 @@ const Certifications: React.FC = () => {
       <div className="space-y-6">
         {certifications.map((cert: typeof portfolioData.certifications[0], index: number) => (
           <motion.div key={index} className="text-center" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, amount: 0.5 }} transition={{ delay: index * 0.1 }}>
-            <h3 className="font-display text-xl text-secondary">{cert.name}</h3>
-            <p className="text-secondary/60">{cert.issuer} - {cert.date}</p>
+            <h3 className="font-display text-text">{cert.name}</h3>
+            <p className="text-text/60">{cert.issuer} - {cert.date}</p>
           </motion.div>
         ))}
       </div>

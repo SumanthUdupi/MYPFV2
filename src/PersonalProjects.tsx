@@ -27,7 +27,7 @@ const ProjectCard: React.FC<{ project: typeof portfolioData.personalProjects[0] 
         className="bg-[#111111] p-6 h-full flex flex-col border border-secondary/10 transition-all duration-300 hover:border-accent/80"
       >
         <h3 className="font-display text-xl text-accent mb-3">{project.title}</h3>
-        <p className="font-body text-secondary/80 text-sm leading-relaxed flex-grow">{project.description}</p>
+        <p className="font-body text-text/80 text-sm leading-relaxed flex-grow">{project.description}</p>
       </motion.div>
     </motion.div>
   );

@@ -37,7 +37,7 @@ const ProjectCard: React.FC<{ project: typeof portfolioData.keyProjects[0] }> = 
         // Using a custom clip-path for the Art Deco style. You can generate your own at https://bennettfeely.com/clippy/
       >
         <h3 className="font-display text-xl text-accent mb-3">{project.title}</h3>
-        <p className="font-body text-secondary/80 text-sm leading-relaxed flex-grow">
+        <p className="font-body text-text/80 text-sm leading-relaxed flex-grow">
           {project.description}
         </p>
       </motion.div>

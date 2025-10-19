@@ -17,13 +17,13 @@ const TimelineItem: React.FC<{
       <div className="w-1/2">
         <motion.div
           variants={itemVariants}
-          className={`p-6 bg-[#111111] border border-secondary/10 ${isLeft ? 'text-right' : 'text-left'}`}
+          className={`p-6 bg-[#111111] border border-text/10 ${isLeft ? 'text-right' : 'text-left'}`}
           style={{ clipPath: 'polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%)' }}
         >
-          <p className="font-body text-sm text-secondary/60 mb-1">{item.period}</p>
+          <p className="font-body text-sm text-text/60 mb-1">{item.period}</p>
           <h3 className="font-display text-xl text-accent mb-2">{item.role}</h3>
-          <p className="font-body text-md text-secondary/90 mb-3">{item.company}</p>
-          <ul className="list-disc list-inside text-sm text-secondary/70">
+          <p className="font-body text-md text-text/90 mb-3">{item.company}</p>
+          <ul className="list-disc list-inside text-sm text-text/70">
             {item.points.map((point: string, i: number) => (
               <li key={i} className="mb-1">{point}</li>
             ))}

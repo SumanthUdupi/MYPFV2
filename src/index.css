@@ -6,7 +6,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-primary text-secondary font-body;
+  @apply bg-primary text-text font-body;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
