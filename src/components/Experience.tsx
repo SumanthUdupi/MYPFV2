@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { portfolioData } from '../../portfolioData';
 
@@ -40,7 +40,6 @@ const TimelineItem: React.FC<{
 
 const Experience: React.FC = () => {
   const { experience } = portfolioData;
-  const [openItem, setOpenItem] = useState<string | null>(experience.length > 0 ? experience[0].role : null);
 
   return (
     <section id="experience">
