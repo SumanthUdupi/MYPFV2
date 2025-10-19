@@ -46,7 +46,7 @@ const GeometricParticles: React.FC = () => {
         depthWrite={false}
         opacity={0.7}
       />
-    </Points>.
+    </Points>
   );
 };
 
