@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { portfolioData } from '../../data/portfolioData';
+import { portfolioData } from '../portfolioData';
 
 const ProjectCard: React.FC<{ project: typeof portfolioData.personalProjects[0] }> = ({ project }) => {
   const x = useMotionValue(200);
