@@ -1,12 +1,14 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Points, PointMaterial, Points as PointsType } from '@react-three/drei';
+import { Points, PointMaterial } from '@react-three/drei';
 // @ts-ignore
 import * as random from 'maath/random/dist/maath-random.esm';
+import * as THREE from 'three';
 
-const Starfield: React.FC<any> = (props) => {
-  const ref = useRef<PointsType>(null);
-  const [sphere] = useState(() => random.inSphere(new Float32Array(5000), { radius: 1.2 }));
+const GeometricParticles: React.FC = () => {
+  const ref = useRef<THREE.Points>(null);
+  const [particles] = useState(() => random.inSphere(new Float32Array(5000), { radius: 1.2 }));
+  const originalPositions = useMemo(() => particles.slice(), [particles]);
 
   useFrame((state, delta) => {
     const { pointer, clock } = state;
@@ -44,7 +46,7 @@ const Starfield: React.FC<any> = (props) => {
         depthWrite={false}
         opacity={0.7}
       />
-    </Points>
+    </Points>.
   );
 };
 

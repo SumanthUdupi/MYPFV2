@@ -47,10 +47,8 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
           {project.description}
         </p>
         <div className="mt-auto">
-          <MagneticLink>
-            <a href="#" className="inline-block bg-accent/90 text-background font-heading text-xs uppercase tracking-widest py-3 px-6 transition-colors hover:bg-accent">
-              View Details
-            </a>
+          <MagneticLink href="#" className="inline-block bg-accent/90 text-background font-heading text-xs uppercase tracking-widest py-3 px-6 transition-colors hover:bg-accent">
+            View Details
           </MagneticLink>
         </div>
       </motion.div>

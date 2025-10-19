@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 
 const logoVariants = {
   hidden: { pathLength: 0, opacity: 0 },

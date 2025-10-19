@@ -1,26 +1,15 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence, type Variants } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import { portfolioData } from '../../portfolioData';
 
 const TimelineItem: React.FC<{
   item: typeof portfolioData.experience[0];
   isLeft: boolean;
-  isOpen: boolean;
-  onToggle: () => void;
-}> = ({ item, isLeft, isOpen, onToggle }) => {
+
+}> = ({ item, isLeft }) => {
   const itemVariants: Variants = {
     hidden: { opacity: 0, x: isLeft ? -50 : 50 },
     visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-  };
-
-  const detailsVariants: Variants = {
-    hidden: { opacity: 0, height: 0, marginTop: 0 },
-    visible: { 
-      opacity: 1, 
-      height: 'auto', 
-      marginTop: '1rem', 
-      transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] }
-    },
   };
 
   return (

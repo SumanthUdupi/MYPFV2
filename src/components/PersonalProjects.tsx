@@ -1,10 +1,10 @@
 import React from 'react';
 import { portfolioData } from '../../portfolioData';
-import ProjectCard from './ProjectCard';
+
 import { motion } from 'framer-motion';
 
 const PersonalProjects: React.FC = () => {
-  const { personalProjects } = portfolioData;
+  
 
   const containerVariants = {
     hidden: { opacity: 0 },
