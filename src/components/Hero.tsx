@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { portfolioData } from '../../portfolioData';
-import GenerativeBackground from './GenerativeBackground';
 import Sunburst from '../assets/Sunburst';
 
 const Hero: React.FC = () => {
@@ -12,13 +11,12 @@ const Hero: React.FC = () => {
     visible: {
       opacity: 1,
       transition: {
-        delayChildren: 0.8, // Delay the start of children animations
-        staggerChildren: 0.1, // Stagger each child (h1, h2)
+        delayChildren: 0.8,
+        staggerChildren: 0.1,
       },
     },
   };
 
-  // Variants for the main title, animating each letter
   const nameVariants = {
     hidden: {},
     visible: {
@@ -28,16 +26,16 @@ const Hero: React.FC = () => {
     },
   };
 
-  // Variants for each individual letter
   const letterVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 40, opacity: 0, filter: 'blur(8px)' },
     visible: {
       y: 0,
       opacity: 1,
+      filter: 'blur(0px)',
       transition: {
         type: 'spring',
         damping: 12,
-        stiffness: 200,
+        stiffness: 100,
       },
     },
   } as const;
@@ -47,24 +45,27 @@ const Hero: React.FC = () => {
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.8, ease: 'easeOut' as const },
+      transition: { duration: 0.8, ease: 'easeOut', delay: 1.5 },
     },
   };
 
   return (
     <motion.section
       id="hero"
-      className="relative flex flex-col items-center justify-center h-screen text-center text-text overflow-hidden"
+      className="relative flex flex-col items-center justify-center h-screen text-center text-text overflow-hidden bg-background"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
+      <div className="absolute inset-0 border-8 border-accent/50 pointer-events-none" />
+      <div className="absolute inset-8 border-2 border-accent/50 pointer-events-none" />
+
       <Sunburst />
-      <GenerativeBackground />
 
       <motion.h1
-        className="font-display text-5xl md:text-7xl lg:text-8xl text-accent mb-4 z-10"
+        className="font-display text-6xl md:text-8xl lg:text-9xl text-accent mb-6 z-10"
         variants={nameVariants}
+        style={{ textShadow: '0 0 15px rgba(196, 166, 98, 0.4)' }}
       >
         {name.split('').map((char, index) => (
           <motion.span key={`${char}-${index}`} className="inline-block" variants={letterVariants}>
@@ -73,18 +74,18 @@ const Hero: React.FC = () => {
         ))}
       </motion.h1>
       <motion.h2
-        className="font-body text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto z-10"
+        className="font-sans text-lg md:text-xl lg:text-2xl max-w-4xl mx-auto z-10 text-text/80 tracking-widest uppercase"
         variants={titleVariants}
       >
         {title}
       </motion.h2>
-      <motion.div
-        className="absolute bottom-12 w-0.5 h-16 bg-accent"
-        initial={{ height: 0, opacity: 0 }}
-        animate={{ height: [0, 64, 0], opacity: [0, 1, 0] }}
-        transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut', delay: 2 }}
-      >
-      </motion.div>
+      
+      <motion.div 
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/3 h-1 bg-accent/30"
+        initial={{ scaleX: 0, opacity: 0 }}
+        animate={{ scaleX: 1, opacity: 1 }}
+        transition={{ duration: 1.5, ease: [0.6, 0.01, -0.05, 0.95], delay: 0.5 }}
+      />
     </motion.section>
   );
 };

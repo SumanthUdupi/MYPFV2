@@ -1,29 +1,30 @@
 import React from 'react';
-
 import { motion } from 'framer-motion';
+import { portfolioData } from '../../portfolioData';
+import ProjectCard from './ProjectCard';
+import ArtDecoElement from './ArtDecoElement';
 
 const PersonalProjects: React.FC = () => {
-  
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2, delayChildren: 0.2 },
-    },
-  };
+  const { personalProjects } = portfolioData;
 
   return (
-    <motion.section
-      id="personal-projects"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
-      variants={containerVariants}
-    >
-      <h2 className="font-display text-4xl text-accent text-center mb-12">Personal Projects</h2>
-      <div>Personal Projects Carousel Placeholder</div>
-    </motion.section>
+    <section id="personal-projects" className="py-32">
+      <h2 className="font-display text-6xl text-accent text-center mb-6">Personal Projects</h2>
+      <ArtDecoElement className="w-64 h-8 mx-auto text-accent/50 mb-24" />
+      <motion.div
+        className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-7xl mx-auto"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={{
+          visible: { transition: { staggerChildren: 0.15 } },
+        }}
+      >
+        {personalProjects.map((project, index) => (
+          <ProjectCard key={index} project={project} />
+        ))}
+      </motion.div>
+    </section>
   );
 };
 

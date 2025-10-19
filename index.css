@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add a smooth scroll behavior for the whole page */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-gray-900 text-gray-100 antialiased;
+}
+
+/*
+  A reusable CSS animation for a simple fade-in.
+  We will primarily use Framer Motion, but this is good to have.
+*/
+.fade-in {
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

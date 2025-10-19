@@ -1,14 +1,8 @@
 import React from 'react';
 import { motion, useMotionValue, useTransform, type Variants } from 'framer-motion';
-import MagneticLink from './MagneticLink';
+import { portfolioData } from '../../portfolioData';
 
-// Define a generic project type to be used by both Key and Personal projects
-interface Project {
-  title: string;
-  description: string;
-}
-
-const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
+const ProjectCard: React.FC<{ project: typeof portfolioData.keyProjects[0] | typeof portfolioData.personalProjects[0] }> = ({ project }) => {
   const x = useMotionValue(200);
   const y = useMotionValue(200);
 
@@ -22,35 +16,46 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   }
 
   const cardVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.6, 0.01, -0.05, 0.95] } },
+    hidden: { opacity: 0, y: 50, scale: 0.9 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.95] } },
   };
 
   return (
     <motion.div
-      style={{ perspective: 400 }}
+      style={{ perspective: 600 }}
       onMouseMove={handleMouse}
-      onMouseLeave={() => { x.set(200); y.set(200); }}
+      onMouseLeave={() => {
+        x.set(200);
+        y.set(200);
+      }}
       variants={cardVariants}
-      className="relative h-full"
+      className="relative h-full group"
     >
       <motion.div
-        style={{
-          rotateX,
-          rotateY,
-          clipPath: 'polygon(0% 5%, 5% 0%, 95% 0%, 100% 5%, 100% 95%, 95% 100%, 5% 100%, 0% 95%)',
+        style={{ 
+          rotateX, 
+          rotateY, 
+          clipPath: 'polygon(0 25px, 25px 0, 100% 0, 100% calc(100% - 25px), calc(100% - 25px) 100%, 0 100%)' 
         }}
-        className="bg-primary p-8 h-full flex flex-col border border-secondary-accent/10 transition-all duration-300 hover:border-accent/80"
+        className="bg-secondary p-8 h-full flex flex-col border-2 border-transparent group-hover:border-accent/50 transition-all duration-300"
+        whileHover={{ 
+          y: -10,
+          boxShadow: "0 25px 50px -12px rgba(196, 166, 98, 0.25)",
+        }}
       >
-        <h3 className="font-heading text-xl text-accent mb-3 uppercase tracking-wider">{project.title}</h3>
-        <p className="font-body text-text/80 text-sm leading-relaxed flex-grow mb-6">
+        <h3 className="font-display text-2xl text-accent mb-3">{project.title}</h3>
+        <p className="font-sans text-text/80 text-base leading-relaxed flex-grow">
           {project.description}
         </p>
-        <div className="mt-auto">
-          <MagneticLink href="#" className="inline-block bg-accent/90 text-background font-heading text-xs uppercase tracking-widest py-3 px-6 transition-colors hover:bg-accent">
-            View Details
-          </MagneticLink>
-        </div>
+        {'tags' in project && (
+          <div className="flex flex-wrap gap-2 mt-6">
+            {project.tags.map((tag, i) => (
+              <span key={i} className="bg-background text-secondary-accent text-xs px-3 py-1 font-sans tracking-widest uppercase">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </motion.div>
     </motion.div>
   );

@@ -7,7 +7,24 @@ import * as THREE from 'three';
 
 const GeometricParticles: React.FC = () => {
   const ref = useRef<THREE.Points>(null);
-  const [particles] = useState(() => random.inSphere(new Float32Array(5000), { radius: 1.2 }));
+  const [particles] = useState(() => {
+    const numParticles = 5000;
+    const positions = new Float32Array(numParticles * 3);
+    const numRays = 50;
+    const particlesPerRay = numParticles / numRays;
+
+    for (let i = 0; i < numRays; i++) {
+      const angle = (i / numRays) * Math.PI * 2;
+      for (let j = 0; j < particlesPerRay; j++) {
+        const radius = j / particlesPerRay * 1.5;
+        const index = (i * particlesPerRay + j) * 3;
+        positions[index] = Math.cos(angle) * radius;
+        positions[index + 1] = Math.sin(angle) * radius;
+        positions[index + 2] = (Math.random() - 0.5) * 0.1; // Add some depth
+      }
+    }
+    return positions;
+  });
   const originalPositions = useMemo(() => particles.slice(), [particles]);
 
   useFrame((state, delta) => {
@@ -32,7 +49,7 @@ const GeometricParticles: React.FC = () => {
       }
 
       ref.current.geometry.attributes.position.needsUpdate = true;
-      ref.current.rotation.y += delta / 20;
+      ref.current.rotation.z += delta / 20; // Rotate around Z for a 2D effect
     }
   });
 
@@ -40,7 +57,7 @@ const GeometricParticles: React.FC = () => {
     <Points ref={ref} positions={particles} stride={3} frustumCulled={false}>
       <PointMaterial
         transparent
-        color="#D4AF37" // Liquid Gold
+        color="#00ffff" // Secondary Accent
         size={0.008}
         sizeAttenuation={true}
         depthWrite={false}

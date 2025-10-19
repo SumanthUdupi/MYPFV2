@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { portfolioData } from '../../portfolioData';
-import Chevron from '../assets/Chevron';
+import ArtDecoElement from './ArtDecoElement';
 
 const About: React.FC = () => {
   const { about: professionalSummary } = portfolioData;
@@ -10,38 +9,35 @@ const About: React.FC = () => {
   return (
     <motion.section
       id="about"
-      className="py-24"
+      className="py-32 text-center"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.8 }}
+      transition={{ duration: 1 }}
     >
-      <div className="grid md:grid-cols-3 gap-8 items-center">
-        <motion.div 
-          className="md:col-span-1"
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <h2 className="font-display text-6xl text-accent mb-4">About Me</h2>
-          <div className="w-32 h-1 bg-accent mb-4"></div>
-          <Chevron className="w-32" />
-        </motion.div>
-        <motion.div 
-          className="md:col-span-2"
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          <div className="prose prose-lg prose-invert">
-            <p className="font-body text-xl leading-relaxed text-text">
-              {professionalSummary}
-            </p>
-          </div>
-        </motion.div>
-      </div>
+      <motion.h2 
+        className="font-display text-6xl text-accent mb-6"
+        initial={{ y: 20, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
+        About Me
+      </motion.h2>
+      
+      <ArtDecoElement className="w-64 h-8 mx-auto text-accent/50 mb-12" />
+
+      <motion.div 
+        className="max-w-3xl mx-auto"
+        initial={{ y: 20, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+      >
+        <p className="font-sans text-xl leading-relaxed text-text/90">
+          {professionalSummary}
+        </p>
+      </motion.div>
     </motion.section>
   );
 };
