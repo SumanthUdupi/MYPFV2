@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { motion, Variants } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';

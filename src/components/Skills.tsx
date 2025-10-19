@@ -1,6 +1,6 @@
 import React from 'react';
-import { motion, Variants } from 'framer-motion';
-import { portfolioData } from '../data/portfolioData';
+import { motion, type Variants } from 'framer-motion';
+import { portfolioData } from '../../portfolioData';
 
 const skillPillVariants = {
   hidden: { y: 10, opacity: 0 },
@@ -38,22 +38,14 @@ const SkillCategory: React.FC<{ category: string; skills: string[] }> = ({ categ
 const Skills: React.FC = () => {
   const { skills } = portfolioData;
 
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2 },
-    },
-  };
-
   return (
     <section id="skills">
       <h2 className="font-display text-4xl text-accent text-center mb-12">Skills</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+      <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
         {Object.entries(skills).map(([category, skillList]) => (
           <SkillCategory key={category} category={category} skills={skillList} />
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
-import { motion, Variants } from 'framer-motion';
-import { portfolioData } from '../data/portfolioData';
-import GenerativeBackground from './GenerativeBackground';
+import { motion, type Variants } from 'framer-motion';
+import { portfolioData } from '../../portfolioData';
+import GenerativeBackground from './GenerativeBackground.tsx';
 
 const Hero: React.FC = () => {
   const { name, title } = portfolioData;

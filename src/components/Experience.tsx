@@ -1,6 +1,6 @@
 import React from 'react';
-import { motion, Variants } from 'framer-motion';
-import { portfolioData } from '../../data/portfolioData';
+import { motion, type Variants } from 'framer-motion';
+import { portfolioData } from '../../portfolioData';
 
 const TimelineItem: React.FC<{
   item: typeof portfolioData.experience[0];
@@ -54,7 +54,7 @@ const Experience: React.FC = () => {
           transition={{ duration: 1.5, ease: 'easeOut' }}
         />
         <div className="relative flex flex-col items-center">
-          {experience.map((item, index) => (
+          {experience.map((item: typeof portfolioData.experience[0], index: number) => (
             <TimelineItem
               key={item.company}
               item={item}

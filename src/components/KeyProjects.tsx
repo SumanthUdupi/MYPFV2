@@ -1,6 +1,6 @@
 import React from 'react';
-import { motion, useMotionValue, useTransform, Variants } from 'framer-motion';
-import { portfolioData } from '../data/portfolioData';
+import { motion, useMotionValue, useTransform, type Variants } from 'framer-motion';
+import { portfolioData } from '../../portfolioData';
 
 const ProjectCard: React.FC<{ project: typeof portfolioData.keyProjects[0] }> = ({ project }) => {
   const x = useMotionValue(200);
@@ -32,10 +32,9 @@ const ProjectCard: React.FC<{ project: typeof portfolioData.keyProjects[0] }> = 
       className="relative h-full"
     >
       <motion.div
-        style={{ rotateX, rotateY }}
+        style={{ rotateX, rotateY, clipPath: 'polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%)' }}
         className="bg-[#111111] p-6 h-full flex flex-col border border-secondary/10 transition-all duration-300 hover:border-accent/80"        
         // Using a custom clip-path for the Art Deco style. You can generate your own at https://bennettfeely.com/clippy/
-        style={{ clipPath: 'polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%)' }}
       >
         <h3 className="font-display text-xl text-accent mb-3">{project.title}</h3>
         <p className="font-body text-secondary/80 text-sm leading-relaxed flex-grow">
