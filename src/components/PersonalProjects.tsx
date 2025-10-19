@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import ProjectCarousel from './ProjectCarousel';
+import { portfolioData } from '../../portfolioData';
 
 const PersonalProjects: React.FC = () => {
   const containerVariants = {
@@ -22,10 +22,9 @@ const PersonalProjects: React.FC = () => {
       variants={containerVariants}
     >
       <h2 className="font-display text-4xl text-accent text-center mb-12">Personal Projects</h2>
-      <ProjectCarousel />
+      <div>Personal Projects Carousel Placeholder</div>
     </motion.section>
   );
 };
 
 export default PersonalProjects;
-

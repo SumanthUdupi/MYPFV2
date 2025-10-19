@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { portfolioData } from '../data/portfolioData';
+import { portfolioData } from '../../portfolioData';
 import { FiMail, FiPhone, FiMapPin, FiLinkedin, FiGithub } from 'react-icons/fi';
 import { useMagneticEffect } from '../hooks/useMagneticEffect';
 

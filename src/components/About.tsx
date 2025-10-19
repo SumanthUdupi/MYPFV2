@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { portfolioData } from '../data/portfolioData';
+import { portfolioData } from '../../portfolioData';
 
 const About: React.FC = () => {
   const { professionalSummary } = portfolioData;
