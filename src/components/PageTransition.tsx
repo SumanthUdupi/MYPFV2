@@ -3,7 +3,7 @@ import { motion, type Variants } from 'framer-motion';
 
 const transitionConfig = {
   duration: 1,
-  ease: [0.6, 0.01, 0.05, 0.95],
+  ease: [0.6, 0.01, 0.05, 0.95] as const,
 };
 
 const animationVariants: Variants = {

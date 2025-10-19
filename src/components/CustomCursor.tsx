@@ -29,7 +29,7 @@ const CustomCursor: React.FC = () => {
   }, []);
 
   const cursorVariants = {
-    default: {
+    'default': {
       x: position.x - 12,
       y: position.y - 12,
       width: 24,

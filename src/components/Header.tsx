@@ -36,7 +36,7 @@ const Header: React.FC = () => {
 
   const menuVariants = {
     hidden: { opacity: 0, clipPath: 'circle(0% at 50% 0)' },
-    visible: { opacity: 1, clipPath: 'circle(150% at 50% 0)', transition: { duration: 0.7, ease: [0.83, 0, 0.17, 1] } },
+    visible: { opacity: 1, clipPath: 'circle(150% at 50% 0)', transition: { duration: 0.7, ease: [0.83, 0, 0.17, 1] as const } },
   };
 
   return (
