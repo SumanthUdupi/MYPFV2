@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { portfolioData } from '../../portfolioData';
 
 const About: React.FC = () => {
-  const { professionalSummary } = portfolioData;
+  const { about: professionalSummary } = portfolioData;
 
   return (
     <motion.section

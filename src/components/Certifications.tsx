@@ -27,7 +27,7 @@ const Certifications: React.FC = () => {
             variants={cardVariants}
             className="p-6 bg-primary/20 border border-secondary-accent/20 rounded-lg text-center"
           >
-            <p className="font-body text-secondary-accent text-sm">{cert.year}</p>
+            <p className="font-body text-secondary-accent text-sm">{cert.date}</p>
             <h3 className="font-display text-lg text-accent mt-1">{cert.name}</h3>
             <p className="font-body text-text/90 text-sm">{cert.issuer}</p>
           </motion.div>

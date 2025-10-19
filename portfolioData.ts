@@ -30,6 +30,13 @@ export interface PortfolioData {
     issuer: string;
     date: string;
   }[];
+  contact: {
+    email: string;
+    phone: string;
+    location: string;
+    linkedin: string;
+    github: string;
+  };
 }
 
 export const portfolioData: PortfolioData = {
@@ -42,4 +49,11 @@ export const portfolioData: PortfolioData = {
   personalProjects: [],
   education: [],
   certifications: [],
+  contact: {
+    email: "your.email@example.com",
+    phone: "+1234567890",
+    location: "Your City, Country",
+    linkedin: "linkedin.com/in/yourprofile",
+    github: "github.com/yourprofile",
+  },
 };

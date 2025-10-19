@@ -55,8 +55,8 @@ const Contact: React.FC = () => {
         </div>
       </div>
       <div className="flex justify-center items-center gap-8">
-        <MagneticIcon href={`https://www.${contact.linkedin}`}><FiLinkedin /></MagneticIcon>
-        <MagneticIcon href={`https://www.${contact.github}`}><FiGithub /></MagneticIcon>
+        <MagneticIcon href={`${contact.linkedin}`}><FiLinkedin /></MagneticIcon>
+        <MagneticIcon href={`${contact.github}`}><FiGithub /></MagneticIcon>
       </div>
     </motion.section>
   );
