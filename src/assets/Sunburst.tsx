@@ -8,7 +8,7 @@ const Sunburst: React.FC = () => (
     className="absolute inset-0 w-full h-full opacity-10 pointer-events-none"
     initial={{ opacity: 0, scale: 1.5 }}
     animate={{ opacity: 0.1, scale: 1 }}
-    transition={{ duration: 2, ease: [0.6, 0.01, -0.05, 0.95] }}
+    transition={{ duration: 2, ease: [0.6, 0.01, 0.05, 0.95] }}
   >
     <defs>
       <radialGradient id="sunburst-gradient" cx="50%" cy="50%" r="50%">

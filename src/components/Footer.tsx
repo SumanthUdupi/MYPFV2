@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.5 }}
-      transition={{ duration: 1, ease: [0.6, 0.01, -0.05, 0.95] }}
+      transition={{ duration: 1, ease: [0.6, 0.01, 0.05, 0.95] }}
     >
       <ArtDecoElement className="w-48 h-6 mx-auto text-accent/30 mb-8" />
       <p className="font-sans text-base text-text/70 z-10 relative tracking-widest">

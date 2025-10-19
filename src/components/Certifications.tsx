@@ -8,7 +8,7 @@ const Certifications: React.FC = () => {
 
   const cardVariants = {
     hidden: { opacity: 0, y: 50, scale: 0.9 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.95] as const } },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: [0.6, 0.01, 0.05, 0.95] as const } },
   };
 
   return (
