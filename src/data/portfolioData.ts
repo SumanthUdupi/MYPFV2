@@ -105,17 +105,20 @@ export const portfolioData: PortfolioData = {
       {
         title: "Project Alpha",
         description: "A brief description of Project Alpha.",
-        tags: ["React", "Node.js", "MongoDB"]
+        tags: ["React", "Node.js", "MongoDB"],
+        link: "#"
       },
       {
         title: "Project Beta",
         description: "A brief description of Project Beta.",
-        tags: ["Python", "Flask", "SQLAlchemy"]
+        tags: ["Python", "Flask", "SQLAlchemy"],
+        link: "#"
       },
       {
         title: "Project Gamma",
         description: "A brief description of Project Gamma.",
-        tags: ["Vue", "Firebase", "Vuetify"]
+        tags: ["Vue", "Firebase", "Vuetify"],
+        link: "#"
       }
   ],
   education: [

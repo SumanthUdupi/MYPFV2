@@ -36,7 +36,7 @@ const CustomCursor: React.FC = () => {
       height: 24,
       backgroundColor: '#D4AF37',
       mixBlendMode: 'screen' as const,
-      transition: { type: 'spring', stiffness: 500, damping: 30 },
+      transition: { type: 'spring' as const, stiffness: 500, damping: 30 },
     },
     hover: {
       x: position.x - 16,
@@ -45,7 +45,7 @@ const CustomCursor: React.FC = () => {
       height: 32,
       backgroundColor: '#00ffff',
       mixBlendMode: 'screen' as const,
-      transition: { type: 'spring', stiffness: 500, damping: 30 },
+      transition: { type: 'spring' as const, stiffness: 500, damping: 30 },
     },
   };
 
