@@ -20,6 +20,7 @@ export interface PortfolioData {
     title: string;
     description: string;
     tags: string[];
+    link?: string;
   }[];
   education: {
     degree: string;
