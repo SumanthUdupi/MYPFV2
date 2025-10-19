@@ -1,11 +1,12 @@
 import React, { useState, useRef, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Points, PointMaterial, Points as PointsType } from '@react-three/drei';
-// @ts-ignore
+import { Points, PointMaterial } from '@react-three/drei';
+import * as THREE from 'three';
+// @ts-expect-error: maath/random has no type definitions
 import * as random from 'maath/random/dist/maath-random.esm';
 
-const Starfield: React.FC<any> = (props) => {
-  const ref = useRef<PointsType>(null);
+const Starfield: React.FC<React.ComponentProps<typeof Points>> = (props) => {
+  const ref = useRef<THREE.Points>(null);
   const [sphere] = useState(() => random.inSphere(new Float32Array(5000), { radius: 1.2 }));
 
   useFrame((state, delta) => {

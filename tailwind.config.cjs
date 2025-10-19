@@ -12,6 +12,7 @@ module.exports = {
         'primary': '#1E1E1E',
         'accent': '#C5A35C',
         'text': '#EAEAEA',
+        'secondary': '#8A8A8A',
         'secondary-accent': '#8A8A8A',
       },
       fontFamily: {
