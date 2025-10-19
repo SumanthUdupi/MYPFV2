@@ -17,7 +17,7 @@ const ProjectCard: React.FC<{ project: typeof portfolioData.keyProjects[0] | typ
 
   const cardVariants: Variants = {
     hidden: { opacity: 0, y: 50, scale: 0.9 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.95] } },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: [0.6, 0.01, 0.05, 0.95] } },
   };
 
   return (

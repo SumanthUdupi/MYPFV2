@@ -9,7 +9,7 @@ const TimelineItem: React.FC<{
 }> = ({ item, isLeft }) => {
   const itemVariants: Variants = {
     hidden: { opacity: 0, x: isLeft ? -100 : 100, scale: 0.9 },
-    visible: { opacity: 1, x: 0, scale: 1, transition: { duration: 0.8, ease: [0.6, 0.01, -0.05, 0.95] } },
+    visible: { opacity: 1, x: 0, scale: 1, transition: { duration: 0.8, ease: [0.6, 0.01, 0.05, 0.95] } },
   };
 
   return (

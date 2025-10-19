@@ -84,7 +84,7 @@ const Hero: React.FC = () => {
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/3 h-1 bg-accent/30"
         initial={{ scaleX: 0, opacity: 0 }}
         animate={{ scaleX: 1, opacity: 1 }}
-        transition={{ duration: 1.5, ease: [0.6, 0.01, -0.05, 0.95], delay: 0.5 }}
+        transition={{ duration: 1.5, ease: [0.6, 0.01, 0.05, 0.95], delay: 0.5 }}
       />
     </motion.section>
   );
