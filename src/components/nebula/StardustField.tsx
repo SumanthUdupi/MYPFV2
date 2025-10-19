@@ -26,7 +26,7 @@ const StarInstance: React.FC<{ count: number, size: number, mousePos: THREE.Vect
 
   useFrame((state) => {
     particles.forEach((particle, i) => {
-      let { factor, speed, x, y, z, twinkleSpeed } = particle;
+      const { factor, speed, x, y, z, twinkleSpeed } = particle;
 
       const t = (particle.time += speed);
 
@@ -56,7 +56,7 @@ const StarInstance: React.FC<{ count: number, size: number, mousePos: THREE.Vect
     meshRef.current.instanceColor!.needsUpdate = true;
   });
 
-  const texture = useLoader(THREE.TextureLoader, '/star.png');
+  const texture = useLoader(THREE.TextureLoader, `${import.meta.env.BASE_URL}star.png`);
 
   return (
     <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
