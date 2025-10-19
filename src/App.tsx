@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { portfolioData } from './data/portfolioData';
 import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
