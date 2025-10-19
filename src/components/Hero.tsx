@@ -1,82 +1,60 @@
-import React, { Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+
+import React from 'react';
 import { motion } from 'framer-motion';
-import ArtDecoElement from './ArtDecoElement'; // Import the new 3D element
+import { portfolioData } from '../data/portfolioData';
+import { FiArrowDown } from 'react-icons/fi';
 
 const Hero: React.FC = () => {
-  const name = "SUMANTH UDUPI";
-  const letters = name.split('');
+  const { name, title } = portfolioData;
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.3,
         delayChildren: 0.5,
       },
     },
   };
 
-  const letterVariants = {
-    hidden: { opacity: 0, y: 50 },
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
     visible: {
-      opacity: 1,
       y: 0,
-      transition: {
-        type: 'spring',
-        damping: 12,
-        stiffness: 100,
-      },
+      opacity: 1,
+      transition: { type: 'spring', stiffness: 100 },
     },
-  } as const;
+  };
 
   return (
-    <section id="hero" className="h-screen w-full relative flex items-center justify-center">
-      {/* 3D Canvas Scene */}
-      <div className="absolute inset-0 z-0">
-        <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-          <Suspense fallback={null}>
-            <ambientLight intensity={0.5} />
-            <pointLight position={[10, 10, 10]} intensity={1.5} color="#C5A35C" />
-            <ArtDecoElement />
-          </Suspense>
-        </Canvas>
-      </div>
-
-      {/* HTML UI Overlay */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center pointer-events-none">
-        <motion.h1
-          className="font-display text-6xl md:text-8xl text-text tracking-widest"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          aria-label={name}
-        >
-          {letters.map((letter, index) => (
-            <motion.span key={index} variants={letterVariants} className="inline-block">
-              {letter === ' ' ? '\u00A0' : letter}
-            </motion.span>
-          ))}
-        </motion.h1>
-        <motion.p
-          className="text-xl md:text-2xl text-text/80 font-body tracking-wider mt-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0, transition: { delay: 2, duration: 1 } }}
-        >
-          Creative Developer & Designer
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0, transition: { delay: 2.5, duration: 1 } }}
-          className="pt-12 pointer-events-auto"
-        >
-          <button className="px-8 py-3 font-display text-lg tracking-widest uppercase text-background bg-accent rounded-sm border-2 border-accent hover:bg-transparent hover:text-accent transition-all duration-300 ease-in-out" data-interactive>
-            Explore My Work
-          </button>
-        </motion.div>
-      </div>
-    </section>
+    <motion.section
+      id="hero"
+      className="relative flex flex-col items-center justify-center h-screen text-center text-text"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.h1
+        className="font-display text-5xl md:text-7xl lg:text-8xl text-accent mb-4"
+        variants={itemVariants}
+      >
+        {name}
+      </motion.h1>
+      <motion.h2
+        className="font-body text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto"
+        variants={itemVariants}
+      >
+        {title}
+      </motion.h2>
+      <motion.div
+        className="absolute bottom-10"
+        animate={{ y: [0, 10, 0] }}
+        transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
+      >
+        <FiArrowDown className="text-3xl text-secondary-accent" />
+      </motion.div>
+    </motion.section>
   );
 };
 

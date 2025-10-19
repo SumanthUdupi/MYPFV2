@@ -27,19 +27,19 @@
   transform: translateX(100%);
 }
 
-.bento-grid-item h3 {
+.experience-item h3 {
   position: relative;
   color: white;
 }
 
-.bento-grid-item h3 span {
+.experience-item h3 span {
   display: inline-block;
   overflow: hidden;
   position: relative;
   color: transparent;
 }
 
-.bento-grid-item h3 span::after {
+.experience-item h3 span::after {
   content: '';
   position: absolute;
   top: 0;
@@ -51,10 +51,10 @@
   transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-.bento-grid-item:hover h3 span {
+.experience-item:hover h3 span {
   color: white;
 }
 
-.bento-grid-item:hover h3 span::after {
+.experience-item:hover h3 span::after {
   transform: translateX(100%);
 }

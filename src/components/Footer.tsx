@@ -1,39 +1,23 @@
+
 import React from 'react';
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
-import AnimatedLogo from './AnimatedLogo';
+import { motion } from 'framer-motion';
+import { portfolioData } from '../data/portfolioData';
 
 const Footer: React.FC = () => {
-  const socialLinks = [
-    { icon: FaGithub, href: 'https://github.com' },
-    { icon: FaLinkedin, href: 'https://linkedin.com' },
-    { icon: FaTwitter, href: 'https://twitter.com' },
-  ];
+  const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative z-10 border-t border-white/10 mt-24">
-      <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div className="flex flex-col items-center md:items-start gap-4">
-          <AnimatedLogo size={32} />
-          <p className="text-text/50 text-sm text-center md:text-left">
-            &copy; {new Date().getFullYear()} Sumanth Udupi. All rights reserved.
-          </p>
-        </div>
-        <div className="flex gap-6">
-          {socialLinks.map((link, index) => (
-            <a
-              key={index}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-text/60 hover:text-accent transition-colors duration-300"
-              data-interactive
-            >
-              <link.icon size={22} />
-            </a>
-          ))}
-        </div>
-      </div>
-    </footer>
+    <motion.footer
+      className="py-8 text-center"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ duration: 1 }}
+    >
+      <p className="font-body text-sm text-secondary-accent">
+        &copy; {currentYear} {portfolioData.name}. All Rights Reserved.
+      </p>
+    </motion.footer>
   );
 };
 

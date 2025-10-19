@@ -16,12 +16,20 @@ const Header: React.FC = () => {
             About
             <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
           </MagneticLink>
+          <MagneticLink href="#experience" className="text-text hover:text-accent transition-colors duration-300 relative group">
+            Experience
+            <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          </MagneticLink>
           <MagneticLink href="#projects" className="text-text hover:text-accent transition-colors duration-300 relative group">
             Projects
             <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
           </MagneticLink>
-          <MagneticLink href="#contact" className="text-text hover:text-accent transition-colors duration-300 relative group">
-            Contact
+          <MagneticLink href="#key-projects" className="text-text hover:text-accent transition-colors duration-300 relative group">
+            Key Projects
+            <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          </MagneticLink>
+          <MagneticLink href="#certifications" className="text-text hover:text-accent transition-colors duration-300 relative group">
+            Certifications
             <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
           </MagneticLink>
         </div>
