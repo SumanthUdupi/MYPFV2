@@ -1,39 +1,64 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
 
-const Education: React.FC = () => {
-  const { education } = portfolioData;
-
-  const cardVariants = {
-    hidden: { opacity: 0, x: -50 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.6 } },
+const TimelineItem: React.FC<{
+  item: typeof portfolioData.education[0];
+  isLeft: boolean;
+}> = ({ item, isLeft }) => {
+  const itemVariants = {
+    hidden: { opacity: 0, x: isLeft ? -50 : 50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
   };
 
   return (
-    <motion.section
-      id="education"
-      className="py-24"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-    >
-      <h2 className="font-display text-4xl text-accent text-center mb-12">Education</h2>
-      <div className="max-w-2xl mx-auto">
-        {education.map((edu, index) => (
-          <motion.div
-            key={index}
-            variants={cardVariants}
-            className="mb-8 p-6 bg-primary/20 border border-secondary-accent/20 rounded-lg"
-          >
-            <p className="font-body text-secondary-accent text-sm">{edu.year}</p>
-            <h3 className="font-display text-xl text-accent mt-1">{edu.degree}</h3>
-            <p className="font-body text-text/90">{edu.institution}</p>
-          </motion.div>
-        ))}
+    <div className={`flex ${isLeft ? 'flex-row-reverse' : 'flex-row'} items-center w-full mb-8`}>
+      <div className="w-1/2">
+        <motion.div
+          variants={itemVariants}
+          className={`p-6 bg-[#111111] border border-secondary/10 ${isLeft ? 'text-right' : 'text-left'}`}
+          css={{ clipPath: 'polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%)' }}
+        >
+          <p className="font-body text-sm text-secondary/60 mb-1">{item.date}</p>
+          <h3 className="font-display text-xl text-accent mb-2">{item.degree}</h3>
+          <p className="font-body text-md text-secondary/90">{item.institution}</p>
+        </motion.div>
       </div>
-    </motion.section>
+      <div className="w-12 flex-shrink-0 flex justify-center">
+        <div className="w-1 h-1 bg-accent rounded-full" />
+      </div>
+      <div className="w-1/2" />
+    </div>
+  );
+};
+
+const Education: React.FC = () => {
+  const { education } = portfolioData;
+
+  return (
+    <section id="education">
+      <h2 className="font-display text-4xl text-accent text-center mb-16">Education</h2>
+      <div className="relative">
+        {/* The central timeline spine */}
+        <motion.div
+          className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-secondary/20"
+          style={{ transform: 'translateX(-50%)' }}
+          initial={{ scaleY: 0, originY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 1.5, ease: 'easeOut' }}
+        />
+        <div className="relative flex flex-col items-center">
+          {education.map((item, index) => (
+            <TimelineItem
+              key={item.institution}
+              item={item}
+              isLeft={index % 2 !== 0}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 

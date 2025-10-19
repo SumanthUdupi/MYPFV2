@@ -1,57 +1,69 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
-import { FaBriefcase } from 'react-icons/fa';
+
+const TimelineItem: React.FC<{
+  item: typeof portfolioData.experience[0];
+  isLeft: boolean;
+}> = ({ item, isLeft }) => {
+  const itemVariants = {
+    hidden: { opacity: 0, x: isLeft ? -50 : 50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+  };
+
+  return (
+    <div className={`flex ${isLeft ? 'flex-row-reverse' : 'flex-row'} items-center w-full mb-8`}>
+      <div className="w-1/2">
+        <motion.div
+          variants={itemVariants}
+          className={`p-6 bg-[#111111] border border-secondary/10 ${isLeft ? 'text-right' : 'text-left'}`}
+          css={{ clipPath: 'polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%)' }}
+        >
+          <p className="font-body text-sm text-secondary/60 mb-1">{item.date}</p>
+          <h3 className="font-display text-xl text-accent mb-2">{item.title}</h3>
+          <p className="font-body text-md text-secondary/90 mb-3">{item.company}</p>
+          <ul className="list-disc list-inside text-sm text-secondary/70">
+            {item.description.map((point, i) => (
+              <li key={i} className="mb-1">{point}</li>
+            ))}
+          </ul>
+        </motion.div>
+      </div>
+      <div className="w-12 flex-shrink-0 flex justify-center">
+        <div className="w-1 h-1 bg-accent rounded-full" />
+      </div>
+      <div className="w-1/2" />
+    </div>
+  );
+};
 
 const Experience: React.FC = () => {
   const { experience } = portfolioData;
 
-  const timelineItemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  };
-
   return (
-    <motion.section
-      id="experience"
-      className="py-24"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8 }}
-    >
-      <h2 className="font-display text-4xl text-accent text-center mb-16">Professional Experience</h2>
-      <div className="relative max-w-3xl mx-auto">
-        <div className="absolute left-1/2 -translate-x-1/2 h-full w-0.5 bg-secondary-accent/30"></div>
-        {experience.map((job, index) => (
-          <motion.div
-            key={index}
-            className="relative mb-12"
-            variants={timelineItemVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-          >
-            <div className={`flex items-center ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}>
-              <div className={`w-5/12 ${index % 2 === 0 ? 'text-right pr-8' : 'text-left pl-8'}`}>
-                <p className="font-body text-sm text-secondary-accent">{job.period}</p>
-                <h3 className="font-display text-xl text-accent mt-1">{job.role}</h3>
-                <p className="font-body text-md text-text">{job.company}</p>
-              </div>
-            </div>
-            <div className="absolute left-1/2 -translate-x-1/2 top-1 w-6 h-6 bg-background border-2 border-accent rounded-full flex items-center justify-center">
-              <FaBriefcase className="text-accent text-xs"/>
-            </div>
-            <div className={`mt-4 w-full flex ${index % 2 === 0 ? 'justify-end' : 'justify-start'}`}>
-                <ul className="list-disc list-inside w-5/12 font-body text-sm text-text/80 leading-relaxed">
-                  {job.points.slice(0, 3).map((point, i) => <li key={i} className="mb-2">{point}</li>)} 
-                </ul>
-            </div>
-          </motion.div>
-        ))}
+    <section id="experience">
+      <h2 className="font-display text-4xl text-accent text-center mb-16">Experience</h2>
+      <div className="relative">
+        {/* The central timeline spine */}
+        <motion.div
+          className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-secondary/20"
+          style={{ transform: 'translateX(-50%)' }}
+          initial={{ scaleY: 0, originY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 1.5, ease: 'easeOut' }}
+        />
+        <div className="relative flex flex-col items-center">
+          {experience.map((item, index) => (
+            <TimelineItem
+              key={item.company}
+              item={item}
+              isLeft={index % 2 !== 0}
+            />
+          ))}
+        </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

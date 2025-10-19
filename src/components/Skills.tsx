@@ -1,7 +1,40 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
+
+const skillPillVariants = {
+  hidden: { y: 10, opacity: 0 },
+  visible: { y: 0, opacity: 1 },
+};
+
+const SkillCategory: React.FC<{ category: string; skills: string[] }> = ({ category, skills }) => {
+  return (
+    <div className="group">
+      <h3 className="font-display text-2xl text-accent mb-4 relative inline-block">
+        {category}
+        {/* Art Deco line accent that animates on hover */}
+        <span className="absolute bottom-[-4px] left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
+      </h3>
+      <ul className="flex flex-wrap gap-3">
+        {skills.map((skill) => (
+          <motion.li
+            key={skill}
+            className="bg-[#111111] text-secondary/90 px-4 py-2 border border-secondary/20 text-sm transition-colors duration-300 hover:border-accent/80 hover:text-accent"
+            // A more geometric shape for the pills
+            css={{ clipPath: 'polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px)' }}
+            variants={skillPillVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: [0.6, 0.01, -0.05, 0.95] }}
+          >
+            {skill}
+          </motion.li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 const Skills: React.FC = () => {
   const { skills } = portfolioData;
@@ -10,46 +43,19 @@ const Skills: React.FC = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.3 },
+      transition: { staggerChildren: 0.2 },
     },
   };
 
-  const skillItemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1 },
-  };
-
   return (
-    <motion.section
-      id="skills"
-      className="py-24"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      variants={containerVariants}
-    >
+    <section id="skills">
       <h2 className="font-display text-4xl text-accent text-center mb-12">Skills</h2>
-      <div className="bg-primary/30 backdrop-blur-sm p-8 rounded-lg shadow-lg border border-secondary-accent/20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {Object.entries(skills).map(([category, skillList]) => (
-            <motion.div key={category} variants={containerVariants}>
-              <h3 className="font-display text-2xl text-accent mb-4">{category}</h3>
-              <motion.ul className="flex flex-wrap gap-2" variants={containerVariants}>
-                {skillList.map((skill) => (
-                  <motion.li
-                    key={skill}
-                    className="bg-background/50 text-text px-3 py-1 rounded-full text-sm border border-secondary-accent/50"
-                    variants={skillItemVariants}
-                  >
-                    {skill}
-                  </motion.li>
-                ))}
-              </motion.ul>
-            </motion.div>
-          ))}
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+        {Object.entries(skills).map(([category, skillList]) => (
+          <SkillCategory key={category} category={category} skills={skillList} />
+        ))}
       </div>
-    </motion.section>
+    </section>
   );
 };
 
