@@ -1,8 +1,7 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial } from '@react-three/drei';
-// @ts-ignore
-import * as random from 'maath/random/dist/maath-random.esm';
+// @ts-expect-error: 'maath/random/dist/maath-random.esm' has no type declarations
 import * as THREE from 'three';
 
 const GeometricParticles: React.FC = () => {
