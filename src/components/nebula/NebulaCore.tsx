@@ -4,27 +4,30 @@ import * as THREE from 'three';
 import vertexShader from './shaders/nebula.vert?raw';
 import fragmentShader from './shaders/nebula.frag?raw';
 
-const NebulaLayer: React.FC<{ speed: number, scale: number, z: number, mousePos: THREE.Vector2 }> = ({ speed, scale, z, mousePos }) => {
+type MouseProp = { x: number; y: number } | null;
+
+const NebulaLayer: React.FC<{ speed: number; scale: number; z: number; mouse?: MouseProp }> = ({ speed, scale, z, mouse }) => {
   const meshRef = useRef<THREE.Mesh>(null!);
 
   const uniforms = useMemo(() => ({
     u_time: { value: 0 },
     u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-    u_mouse: { value: new THREE.Vector2() },
+    u_mouse: { value: new THREE.Vector2(0, 0) },
   }), []);
 
   useFrame((state) => {
-    const { clock } = state;
+    const t = state.clock.getElapsedTime();
     if (meshRef.current) {
-      meshRef.current.rotation.z = clock.getElapsedTime() * speed;
-      (meshRef.current.material as THREE.ShaderMaterial).uniforms.u_time.value = clock.getElapsedTime();
-      (meshRef.current.material as THREE.ShaderMaterial).uniforms.u_mouse.value.lerp(mousePos, 0.05);
+      meshRef.current.rotation.z = t * speed * 0.01;
+      (meshRef.current.material as THREE.ShaderMaterial).uniforms.u_time.value = t;
+      const target = mouse ? new THREE.Vector2(mouse.x, mouse.y) : new THREE.Vector2(0, 0);
+      (meshRef.current.material as THREE.ShaderMaterial).uniforms.u_mouse.value.lerp(target, 0.05);
     }
   });
 
   return (
-    <mesh ref={meshRef} scale={[scale, scale, scale]} position-z={z}>
-      <planeGeometry args={[1, 1, 128, 128]} />
+    <mesh ref={meshRef} scale={[scale, scale, scale]} position={[0, 0, z]}>
+      <planeGeometry args={[1, 1, 32, 32]} />
       <shaderMaterial
         uniforms={uniforms}
         vertexShader={vertexShader}
@@ -37,14 +40,12 @@ const NebulaLayer: React.FC<{ speed: number, scale: number, z: number, mousePos:
   );
 };
 
-const NebulaCore: React.FC<{ mousePos: THREE.Vector2 }> = ({ mousePos }) => {
+export default function NebulaCore({ mouse }: { mouse?: MouseProp }) {
   return (
-    <>
-      <NebulaLayer speed={0.1} scale={10} z={-100} mousePos={mousePos} />
-      <NebulaLayer speed={0.2} scale={12} z={-200} mousePos={mousePos} />
-      <NebulaLayer speed={0.3} scale={15} z={-300} mousePos={mousePos} />
-    </>
+    <group>
+      <NebulaLayer speed={0.05} scale={30} z={-50} mouse={mouse} />
+      <NebulaLayer speed={0.08} scale={35} z={-80} mouse={mouse} />
+      <NebulaLayer speed={0.12} scale={45} z={-110} mouse={mouse} />
+    </group>
   );
-};
-
-export default NebulaCore;
+}

@@ -1,86 +1,64 @@
-import React, { useMemo, useRef } from 'react';
-import { useFrame, useLoader } from '@react-three/fiber';
+import { useRef, useMemo, useEffect } from 'react';
 import * as THREE from 'three';
+import { useFrame } from '@react-three/fiber';
+import starFrag from './shaders/star.frag?raw';
+import starVert from './shaders/nebula.vert?raw';
 
-const StarInstance: React.FC<{ count: number, size: number, mousePos: THREE.Vector2 }> = ({ count, size, mousePos }) => {
-  const meshRef = useRef<THREE.InstancedMesh>(null!);
+export interface StardustFieldProps {
+  positions: Array<[number, number, number]>;
+  accentColor?: string;
+}
 
-  const particles = useMemo(() => {
-    const temp = [];
+const tmp = new THREE.Object3D();
+
+export default function StardustField({ positions, accentColor = '#C4A662' }: StardustFieldProps) {
+  const ref = useRef<THREE.InstancedMesh>(null!);
+  const materialRef = useRef<THREE.ShaderMaterial>(null!);
+  const count = positions.length;
+
+  const phases = useMemo(() => new Float32Array(count), [count]);
+
+  useEffect(() => {
+    if (!ref.current) return;
     for (let i = 0; i < count; i++) {
-      const time = Math.random() * 100;
-      const factor = 20 + Math.random() * 100;
-      const speed = 0.01 + Math.random() / 200;
-      const x = (Math.random() - 0.5) * 100;
-      const y = (Math.random() - 0.5) * 100;
-      const z = (Math.random() - 0.5) * 100;
-      const twinkleSpeed = Math.random() * 2 + 1;
-
-      temp.push({ time, factor, speed, x, y, z, twinkleSpeed });
+      const [x, y, z] = positions[i];
+      tmp.position.set(x, y, z);
+      const s = 0.08 + Math.random() * 0.18;
+      tmp.scale.set(s, s, s);
+      tmp.updateMatrix();
+      ref.current.setMatrixAt(i, tmp.matrix);
+      phases[i] = Math.random() * Math.PI * 2;
     }
-    return temp;
-  }, [count]);
-
-  const dummy = useMemo(() => new THREE.Object3D(), []);
-  const color = useMemo(() => new THREE.Color(), []);
+    ref.current.instanceMatrix.needsUpdate = true;
+  }, [positions, count, phases]);
 
   useFrame((state) => {
-    particles.forEach((particle, i) => {
-      const { factor, speed, x, y, z, twinkleSpeed } = particle;
-
-      const t = (particle.time += speed);
-
-      dummy.position.set(
-        x + Math.cos((t / 10) * factor) + (Math.sin(t * 1) * factor) / 10,
-        y + Math.sin((t / 10) * factor) + (Math.cos(t * 2) * factor) / 10,
-        z + Math.cos((t / 10) * factor) + (Math.sin(t * 3) * factor) / 10
-      );
-
-      const distance = dummy.position.distanceTo(new THREE.Vector3(mousePos.x * 50, mousePos.y * 50, 0));
-      const s = Math.cos(t) * size * (distance < 2 ? 1.3 : 1);
-      dummy.scale.set(s, s, s);
-
-      if (distance < 2) {
-        dummy.position.add(new THREE.Vector3(0.1, 0.1, 0));
-      }
-
-      dummy.updateMatrix();
-
-      meshRef.current.setMatrixAt(i, dummy.matrix);
-      meshRef.current.setColorAt(i, distance < 2 ? color.set(0x00ffff) : color.set(0xC4A662));
-
-      const mat = meshRef.current.material as THREE.MeshStandardMaterial;
-      mat.opacity = Math.sin(state.clock.getElapsedTime() * twinkleSpeed) * 0.5 + 0.5;
-    });
-    meshRef.current.instanceMatrix.needsUpdate = true;
-    meshRef.current.instanceColor!.needsUpdate = true;
+    const t = state.clock.getElapsedTime();
+    if (materialRef.current) materialRef.current.uniforms.u_time.value = t;
+    if (!ref.current) return;
+    // small per-instance rotations
+    for (let i = 0; i < Math.min(count, 2000); i++) {
+      ref.current.getMatrixAt(i, tmp.matrix);
+      tmp.rotation.z = Math.sin(t * 0.2 + phases[i]) * 0.1;
+      tmp.updateMatrix();
+      ref.current.setMatrixAt(i, tmp.matrix);
+    }
+    ref.current.instanceMatrix.needsUpdate = true;
   });
 
-  const texture = useLoader(THREE.TextureLoader, `${import.meta.env.BASE_URL}star.png`);
-
   return (
-    <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
+    <instancedMesh ref={ref} args={[undefined, undefined, positions.length]}>
       <planeGeometry args={[1, 1]} />
-      <meshStandardMaterial
-        emissive="#A48642"
-        emissiveIntensity={0.5}
-        map={texture}
+      <shaderMaterial
+        ref={materialRef}
+        uniforms={{ u_time: { value: 0 }, u_phase: { value: 0 }, u_color: { value: new THREE.Color(accentColor) } }}
+        vertexShader={starVert}
+        fragmentShader={starFrag}
         transparent
         depthWrite={false}
         blending={THREE.AdditiveBlending}
       />
     </instancedMesh>
   );
-};
-
-const StardustField: React.FC<{ mousePos: THREE.Vector2 }> = ({ mousePos }) => {
-  return (
-    <>
-      <StarInstance count={100} size={0.1} mousePos={mousePos} />
-      <StarInstance count={1000} size={0.05} mousePos={mousePos} />
-      <StarInstance count={2000} size={0.02} mousePos={mousePos} />
-    </>
-  );
-};
-
-export default StardustField;
+}
+// end of StardustField
