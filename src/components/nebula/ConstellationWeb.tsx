@@ -1,16 +1,16 @@
 /* eslint-disable */
 /* eslint-disable */
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, type RefObject } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import './nebula.css';
 
 export interface ConstellationWebProps {
   positions?: Array<[number, number, number]>;
-  mouse?: { x: number; y: number } | null;
+  mouse: RefObject<THREE.Vector2> | null;
 }
 
-export default function ConstellationWeb({ positions = [], mouse = null }: ConstellationWebProps) {
+export default function ConstellationWeb({ positions = [], mouse }: ConstellationWebProps) {
   const groupRef = useRef<THREE.Group>(null!);
 
   const connections = useMemo(() => {
@@ -26,8 +26,8 @@ export default function ConstellationWeb({ positions = [], mouse = null }: Const
 
   useFrame(() => {
     if (!groupRef.current || !mouse) return;
-    const mx = (mouse.x / window.innerWidth) * 2 - 1;
-    const my = -(mouse.y / window.innerHeight) * 2 + 1;
+    const mx = mouse.current.x;
+    const my = mouse.current.y;
     groupRef.current.children.forEach((child) => {
       const mat = ((child as unknown) as { material?: any }).material;
       if (mat && typeof mat.opacity === 'number') mat.opacity = 0.12 + Math.abs(mx) * 0.04 + Math.abs(my) * 0.04;

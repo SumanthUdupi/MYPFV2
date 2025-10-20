@@ -3,10 +3,11 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import vertexShader from './shaders/nebula.vert?raw';
 import fragmentShader from './shaders/nebula.frag?raw';
+import type { RefObject } from 'react';
 
-type MouseProp = { x: number; y: number } | null;
+type MouseProp = RefObject<THREE.Vector2> | null;
 
-const NebulaLayer: React.FC<{ speed: number; scale: number; z: number; mouse?: MouseProp }> = ({ speed, scale, z, mouse }) => {
+const NebulaLayer: React.FC<{ speed: number; scale: number; z: number; mouse: MouseProp }> = ({ speed, scale, z, mouse }) => {
   const meshRef = useRef<THREE.Mesh>(null!);
 
   const uniforms = useMemo(() => ({
@@ -20,7 +21,7 @@ const NebulaLayer: React.FC<{ speed: number; scale: number; z: number; mouse?: M
     if (meshRef.current) {
       meshRef.current.rotation.z = t * speed * 0.01;
       (meshRef.current.material as THREE.ShaderMaterial).uniforms.u_time.value = t;
-      const target = mouse ? new THREE.Vector2(mouse.x, mouse.y) : new THREE.Vector2(0, 0);
+      const target = mouse?.current ?? new THREE.Vector2(0, 0);
       (meshRef.current.material as THREE.ShaderMaterial).uniforms.u_mouse.value.lerp(target, 0.05);
     }
   });
@@ -40,7 +41,7 @@ const NebulaLayer: React.FC<{ speed: number; scale: number; z: number; mouse?: M
   );
 };
 
-export default function NebulaCore({ mouse }: { mouse?: MouseProp }) {
+export default function NebulaCore({ mouse }: { mouse: MouseProp }) {
   return (
     <group>
       <NebulaLayer speed={0.05} scale={30} z={-50} mouse={mouse} />

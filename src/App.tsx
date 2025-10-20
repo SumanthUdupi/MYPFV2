@@ -11,7 +11,6 @@ import Education from './components/Education';
 import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import CustomCursor from './components/CustomCursor';
 import Loader from './components/Loader';
 import PageTransition from './components/PageTransition';
 import NebulaPotential from './components/nebula/NebulaPotential.tsx';
@@ -58,9 +57,8 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen overflow-x-hidden font-body text-text cursor-none" style={{ perspective: '1000px' }}>
+    <div className="min-h-screen overflow-x-hidden font-body text-text app-perspective">
       <NebulaPotential />
-      <CustomCursor />
       <AnimatePresence mode="wait">
         {loading ? (
           <Loader />

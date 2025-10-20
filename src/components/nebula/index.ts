@@ -1,4 +1,4 @@
 export { default as NebulaPotential } from './NebulaPotential';
 export { default as StardustField } from './StardustField';
-export { default as InteractionOrchestrator } from './InteractionOrchestrator';
+// InteractionOrchestrator removed — no cursor orchestration required
 export { default as ConstellationWeb } from './ConstellationWeb';

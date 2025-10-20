@@ -39,13 +39,7 @@
   backface-visibility: hidden;
 }
 
-/* Enhanced cursor styles */
-.custom-cursor {
-  mix-blend-mode: difference;
-  pointer-events: none;
-  will-change: transform;
-  transition-timing-function: cubic-bezier(0.43, 0.13, 0.23, 0.96);
-}
+/* Enhanced cursor styles removed (custom cursor feature disabled) */
 
 /* Page transition effects */
 .page-transition {
@@ -55,4 +49,21 @@
   transform-origin: center;
   background-color: var(--color-background);
   will-change: transform;
+}
+
+/* Utilities moved from inline styles to satisfy linter */
+.app-perspective {
+  perspective: 1000px;
+}
+
+.nebula-canvas-fixed {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.nebula-canvas-absolute {
+  position: absolute;
+  inset: 0;
 }

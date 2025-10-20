@@ -1,7 +1,9 @@
-export function normalizeCursor(clientX: number, clientY: number, width: number, height: number) {
-  const nx = (clientX / width) * 2 - 1;
-  const ny = -((clientY / height) * 2 - 1);
-  return { x: nx, y: ny };
+// normalizeCursor removed
+// Utility for normalizing client coordinates to [-1,1] was used by cursor features.
+// Left as a stub in case it's needed later.
+
+export function normalizeCursor() {
+  throw new Error('normalizeCursor has been removed as part of cursor cleanup');
 }
 
 export function falloffQuadratic(r: number, R: number) {
