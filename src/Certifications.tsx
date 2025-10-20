@@ -6,8 +6,8 @@ const Certifications: React.FC = () => {
   const { certifications } = portfolioData;
 
   return (
-    <section id="certifications" className="max-w-4xl mx-auto">
-      <h2 className="font-display text-4xl text-accent text-center mb-12">Certifications</h2>
+    <section id="certifications" className="max-w-4xl mx-auto py-24 md:py-32">
+      <h2 className="font-display text-3xl sm:text-4xl text-accent text-center mb-12">Certifications</h2>
       <div className="space-y-6">
         {certifications.map((cert: typeof portfolioData.certifications[0], index: number) => (
           <motion.div key={index} className="text-center" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, amount: 0.5 }} transition={{ delay: index * 0.1 }}>

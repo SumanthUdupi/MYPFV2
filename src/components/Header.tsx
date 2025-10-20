@@ -1,83 +1,96 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { portfolioData } from '../../portfolioData';
+import { ChevronRight, ChevronsRight, X } from 'lucide-react';
 
-const NavLink: React.FC<{ href: string; children: React.ReactNode; onClick?: () => void }> = ({ href, children, onClick }) => (
-  <a href={href} onClick={onClick} className="font-sans uppercase tracking-widest text-sm text-text/80 hover:text-accent transition-colors duration-300 relative group">
+const NavLink: React.FC<{ href: string; children: React.ReactNode; onClick: () => void }> = ({ href, children, onClick }) => (
+  <a href={href} onClick={onClick} className="block px-4 py-2 text-lg text-text hover:text-accent transition-colors duration-300">
     {children}
-    <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
   </a>
-);
-
-const NavLinks: React.FC<{ onClick?: () => void }> = ({ onClick }) => (
-  <>
-    <NavLink href="#about" onClick={onClick}>About</NavLink>
-    <NavLink href="#skills" onClick={onClick}>Skills</NavLink>
-    <NavLink href="#experience" onClick={onClick}>Experience</NavLink>
-    <NavLink href="#key-projects" onClick={onClick}>Projects</NavLink>
-    <NavLink href="#education" onClick={onClick}>Education</NavLink>
-    <NavLink href="#contact" onClick={onClick}>Contact</NavLink>
-  </>
 );
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   const menuVariants = {
-    hidden: { opacity: 0, clipPath: 'circle(0% at 50% 0)' },
-    visible: { opacity: 1, clipPath: 'circle(150% at 50% 0)', transition: { duration: 0.7, ease: [0.83, 0, 0.17, 1] as const } },
+    closed: {
+      x: '100%',
+      transition: {
+        type: 'spring',
+        stiffness: 400,
+        damping: 40,
+      },
+    },
+    open: {
+      x: '0%',
+      transition: {
+        type: 'spring',
+        stiffness: 400,
+        damping: 40,
+      },
+    },
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'py-4' : 'py-8'}`}>
-      <div className={`absolute inset-0 bg-background transition-opacity duration-300 ${isScrolled ? 'opacity-90' : 'opacity-50'}`} style={{ backdropFilter: 'blur(10px)' }} />
-      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
-      
-      <nav className="relative z-10 max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <a href="#hero" className="font-display text-3xl text-accent tracking-wider">
-          {portfolioData.name.split(' ').map(n => n[0]).join('')}
-        </a>
-        <div className="hidden md:flex items-center gap-10">
-          <NavLinks />
-        </div>
+    <>
+      <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center p-6 text-text bg-background/80 backdrop-blur-sm">
+        <motion.a
+          href="#hero"
+          className="font-display text-2xl text-accent"
+          whileHover={{ scale: 1.05, textShadow: '0 0 8px rgba(196, 166, 98, 0.5)' }}
+        >
+          S.U.
+        </motion.a>
+        <nav className="hidden md:flex space-x-8">
+          <a href="#about" className="hover:text-accent transition-colors duration-300">About</a>
+          <a href="#skills" className="hover:text-accent transition-colors duration-300">Skills</a>
+          <a href="#experience" className="hover:text-accent transition-colors duration-300">Experience</a>
+          <a href="#projects" className="hover:text-accent transition-colors duration-300">Projects</a>
+          <a href="#contact" className="hover:text-accent transition-colors duration-300">Contact</a>
+        </nav>
         <div className="md:hidden">
-          <button onClick={toggleMenu} className="text-text focus:outline-none z-50 relative">
-            <div className="w-6 h-6 flex flex-col justify-around items-center">
-              <motion.span animate={{ rotate: isOpen ? 45 : 0, y: isOpen ? 8 : 0 }} className="w-full h-0.5 bg-text rounded-full" />
-              <motion.span animate={{ opacity: isOpen ? 0 : 1 }} className="w-full h-0.5 bg-text rounded-full" />
-              <motion.span animate={{ rotate: isOpen ? -45 : 0, y: isOpen ? -8 : 0 }} className="w-full h-0.5 bg-text rounded-full" />
-            </div>
+          <button onClick={toggleMenu} className="p-2 focus:outline-none">
+            <ChevronsRight size={28} />
           </button>
         </div>
-      </nav>
-
+      </header>
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            variants={menuVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            className="fixed inset-0 bg-background z-40 flex items-center justify-center"
+            className="fixed inset-0 z-40 bg-background/80 backdrop-blur-lg"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={toggleMenu}
           >
-            <div className="flex flex-col items-center gap-12">
-              <NavLinks onClick={toggleMenu} />
-            </div>
+            <motion.div
+              className="fixed top-0 right-0 h-full w-64 bg-[#1a1a1a] p-8 shadow-2xl"
+              variants={menuVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button onClick={toggleMenu} className="absolute top-6 right-6 focus:outline-none">
+                <X size={28} />
+              </button>
+              <nav className="mt-16 flex flex-col space-y-4">
+                <NavLink href="#about" onClick={toggleMenu}>About</NavLink>
+                <NavLink href="#skills" onClick={toggleMenu}>Skills</NavLink>
+                <NavLink href="#experience" onClick={toggleMenu}>Experience</NavLink>
+                <NavLink href="#projects" onClick={toggleMenu}>Projects</NavLink>
+                <NavLink href="#education" onClick={toggleMenu}>Education</NavLink>
+                <NavLink href="#certifications" onClick={toggleMenu}>Certifications</NavLink>
+                <NavLink href="#contact" onClick={toggleMenu}>Contact</NavLink>
+              </nav>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 };
 

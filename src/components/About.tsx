@@ -19,14 +19,14 @@ const About: React.FC = () => {
     <motion.section
       ref={ref}
       id="about"
-      className="py-32 text-center relative"
+      className="py-24 md:py-32 text-center relative"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       style={{ opacity, scale }}
     >
       <CinematicScroll intensity={0.2}>
         <motion.h2 
-          className="font-display text-6xl text-accent mb-6"
+          className="font-display text-5xl sm:text-6xl text-accent mb-6"
           initial={{ y: 40, opacity: 0, filter: "blur(10px)" }}
           whileInView={{ y: 0, opacity: 1, filter: "blur(0px)" }}
           viewport={{ once: true }}
@@ -45,7 +45,7 @@ const About: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.2 }}
         >
-          <ArtDecoElement className="w-64 h-8 mx-auto text-accent/50 mb-12" />
+          <ArtDecoElement className="w-48 sm:w-64 h-8 mx-auto text-accent/50 mb-12" />
         </motion.div>
 
         <motion.div 
@@ -59,7 +59,7 @@ const About: React.FC = () => {
             ease: [0.43, 0.13, 0.23, 0.96]
           }}
         >
-          <p className="font-sans text-xl leading-relaxed text-text/90 relative">
+          <p className="font-sans text-lg sm:text-xl leading-relaxed text-text/90 relative">
             <motion.span
               className="block"
               initial={{ opacity: 0, y: 20 }}

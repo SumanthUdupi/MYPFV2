@@ -34,9 +34,9 @@ const ProjectCard: React.FC<{ project: typeof portfolioData.personalProjects[0] 
 };
 
 const PersonalProjects: React.FC = () => (
-  <section id="personal-projects">
-    <h2 className="font-display text-4xl text-accent text-center mb-12">Personal Projects</h2>
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+  <section id="personal-projects" className="py-24 md:py-32">
+    <h2 className="font-display text-3xl sm:text-4xl text-accent text-center mb-16">Personal Projects</h2>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {portfolioData.personalProjects.map((project: typeof portfolioData.personalProjects[0], index: number) => <ProjectCard key={index} project={project} />)}
     </div>
   </section>

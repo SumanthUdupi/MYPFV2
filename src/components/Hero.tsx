@@ -83,7 +83,7 @@ const Hero: React.FC = () => {
       </motion.div>
 
       <motion.h1
-        className="font-display text-6xl md:text-8xl lg:text-9xl text-accent mb-6 z-10"
+        className="font-display text-5xl sm:text-6xl md:text-8xl lg:text-9xl text-accent mb-6 z-10"
         variants={nameVariants}
         style={{ textShadow: '0 0 15px rgba(196, 166, 98, 0.4)' }}
       >
@@ -94,7 +94,7 @@ const Hero: React.FC = () => {
         ))}
       </motion.h1>
       <motion.h2
-        className="font-sans text-lg md:text-xl lg:text-2xl max-w-4xl mx-auto z-10 text-text/80 tracking-widest uppercase"
+        className="font-sans text-base sm:text-lg md:text-xl lg:text-2xl max-w-4xl mx-auto z-10 text-text/80 tracking-widest uppercase"
         variants={titleVariants}
       >
         {title}
