@@ -8,9 +8,9 @@ const KeyProjects: React.FC = () => {
   const { keyProjects } = portfolioData;
 
   return (
-    <section id="key-projects" className="py-32">
-      <h2 className="font-display text-6xl text-accent text-center mb-6">Key Projects Delivered</h2>
-      <ArtDecoElement className="w-64 h-8 mx-auto text-accent/50 mb-24" />
+    <section id="key-projects" className="py-24 md:py-32">
+      <h2 className="font-display text-5xl sm:text-6xl text-accent text-center mb-6">Key Projects Delivered</h2>
+      <ArtDecoElement className="w-48 sm:w-64 h-8 mx-auto text-accent/50 mb-16 sm:mb-24" />
       <motion.div
         className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-7xl mx-auto"
         initial="hidden"

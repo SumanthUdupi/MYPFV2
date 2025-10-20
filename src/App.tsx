@@ -14,6 +14,7 @@ import Footer from './components/Footer';
 import Loader from './components/Loader';
 import PageTransition from './components/PageTransition';
 import NebulaPotential from './components/nebula/NebulaPotential.tsx';
+import Header from './components/Header';
 
 const sectionVariants: Variants = {
   hidden: { 
@@ -58,6 +59,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden font-body text-text app-perspective">
+      <Header />
       <NebulaPotential />
       <AnimatePresence mode="wait">
         {loading ? (
@@ -66,7 +68,7 @@ const App: React.FC = () => {
           <>
             <PageTransition />
             <motion.main
-              className="relative z-10 px-6 sm:px-12 md:px-24 lg:px-32"
+              className="relative z-10 px-4 sm:px-8 md:px-16 lg:px-24"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
