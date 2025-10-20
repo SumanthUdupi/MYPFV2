@@ -32,27 +32,38 @@ const ConstellationWeb: React.FC<{ mousePos: THREE.Vector2 }> = ({ mousePos }) =
   }), []);
 
   useFrame((state) => {
-    groupRef.current.children.forEach((child) => {
-      if (child instanceof THREE.Line) {
-        const line = child;
-        const start = line.geometry.attributes.position.array.slice(0, 3);
-        const end = line.geometry.attributes.position.array.slice(3, 6);
-        const startVec = new THREE.Vector3().fromArray(start);
-        const endVec = new THREE.Vector3().fromArray(end);
-        const closestPoint = new THREE.Line3(startVec, endVec).closestPointToPoint(new THREE.Vector3(mousePos.x * 10, mousePos.y * 10, 0), true, new THREE.Vector3());
-        const distance = closestPoint.distanceTo(new THREE.Vector3(mousePos.x * 10, mousePos.y * 10, 0));
+    if (groupRef.current) {
+      groupRef.current.children.forEach((child) => {
+        if (child instanceof THREE.Line) {
+          const line = child;
+          const position = line.geometry.attributes.position;
+          if (position && position.count === 2) {
+            const start = new THREE.Vector3().fromBufferAttribute(position, 0);
+            const end = new THREE.Vector3().fromBufferAttribute(position, 1);
+            const closestPoint = new THREE.Line3(start, end).closestPointToPoint(new THREE.Vector3(mousePos.x * 10, mousePos.y * 10, 0), true, new THREE.Vector3());
+            const distance = closestPoint.distanceTo(new THREE.Vector3(mousePos.x * 10, mousePos.y * 10, 0));
 
-        (line.material as THREE.ShaderMaterial).uniforms.u_opacity.value = distance < 2 ? 0.6 : 0.2;
-        (line.material as THREE.ShaderMaterial).uniforms.u_time.value = state.clock.getElapsedTime();
-      }
-    });
+            (line.material as THREE.ShaderMaterial).uniforms.u_opacity.value = distance < 2 ? 0.6 : 0.2;
+            (line.material as THREE.ShaderMaterial).uniforms.u_time.value = state.clock.getElapsedTime();
+          }
+        }
+      });
+    }
   });
+
 
   return (
     <group ref={groupRef}>
-      {lines.map((line, index) => (
+      {lines.map((points, index) => (
         <line key={index}>
-          <bufferGeometry attach="geometry" setFromPoints={line} />
+          <bufferGeometry attach="geometry">
+            <bufferAttribute
+              attach="attributes-position"
+              count={points.length}
+              array={new Float32Array(points.flatMap(p => p.toArray()))}
+              itemSize={3}
+            />
+          </bufferGeometry>
           <shaderMaterial
             attach="material"
             uniforms={uniforms}
