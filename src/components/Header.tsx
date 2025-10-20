@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, ChevronsRight, X } from 'lucide-react';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { ChevronsRight, X } from 'lucide-react';
 
 const NavLink: React.FC<{ href: string; children: React.ReactNode; onClick: () => void }> = ({ href, children, onClick }) => (
   <a href={href} onClick={onClick} className="block px-4 py-2 text-lg text-text hover:text-accent transition-colors duration-300">
@@ -15,7 +15,7 @@ const Header: React.FC = () => {
     setIsOpen(!isOpen);
   };
 
-  const menuVariants = {
+  const menuVariants: Variants = {
     closed: {
       x: '100%',
       transition: {
@@ -48,7 +48,7 @@ const Header: React.FC = () => {
           <a href="#about" className="hover:text-accent transition-colors duration-300">About</a>
           <a href="#skills" className="hover:text-accent transition-colors duration-300">Skills</a>
           <a href="#experience" className="hover:text-accent transition-colors duration-300">Experience</a>
-          <a href="#projects" className="hover:text-accent transition-colors duration-300">Projects</a>
+          <a href="#key-projects" className="hover:text-accent transition-colors duration-300">Projects</a>
           <a href="#contact" className="hover:text-accent transition-colors duration-300">Contact</a>
         </nav>
         <div className="md:hidden">
@@ -81,7 +81,7 @@ const Header: React.FC = () => {
                 <NavLink href="#about" onClick={toggleMenu}>About</NavLink>
                 <NavLink href="#skills" onClick={toggleMenu}>Skills</NavLink>
                 <NavLink href="#experience" onClick={toggleMenu}>Experience</NavLink>
-                <NavLink href="#projects" onClick={toggleMenu}>Projects</NavLink>
+                <NavLink href="#key-projects" onClick={toggleMenu}>Projects</NavLink>
                 <NavLink href="#education" onClick={toggleMenu}>Education</NavLink>
                 <NavLink href="#certifications" onClick={toggleMenu}>Certifications</NavLink>
                 <NavLink href="#contact" onClick={toggleMenu}>Contact</NavLink>
