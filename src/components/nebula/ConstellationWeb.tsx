@@ -59,9 +59,7 @@ const ConstellationWeb: React.FC<{ mousePos: THREE.Vector2 }> = ({ mousePos }) =
           <bufferGeometry attach="geometry">
             <bufferAttribute
               attach="attributes-position"
-              count={points.length}
-              array={new Float32Array(points.flatMap(p => p.toArray()))}
-              itemSize={3}
+              args={[new Float32Array(points.flatMap(p => p.toArray())), 3]}
             />
           </bufferGeometry>
           <shaderMaterial
