@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import Hero from './components/Hero';
 import About from './components/About';
+import './styles/cinematic.css';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
 import KeyProjects from './components/KeyProjects';
@@ -16,12 +17,23 @@ import PageTransition from './components/PageTransition';
 import NebulaPotential from './components/nebula/NebulaPotential.tsx';
 
 const sectionVariants: Variants = {
-  hidden: { opacity: 0, y: 100, scale: 0.9 },
+  hidden: { 
+    opacity: 0, 
+    y: 60, 
+    scale: 0.98,
+    filter: 'blur(10px)',
+  },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { duration: 0.8, ease: [0.6, 0.01, 0.05, 0.95] },
+    filter: 'blur(0px)',
+    transition: { 
+      duration: 1.2,
+      ease: [0.43, 0.13, 0.23, 0.96],
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
   },
 };
 

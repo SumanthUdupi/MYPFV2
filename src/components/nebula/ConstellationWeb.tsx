@@ -8,11 +8,11 @@ const ConstellationWeb: React.FC<{ mousePos: THREE.Vector2 }> = ({ mousePos }) =
   const groupRef = useRef<THREE.Group>(null!);
 
   const lines = useMemo(() => {
-    const heroStars = 12;
+    const heroStars = 18; // Increased number of stars
     const points = Array.from({ length: heroStars }, () => new THREE.Vector3(
-      (Math.random() - 0.5) * 20,
-      (Math.random() - 0.5) * 20,
-      (Math.random() - 0.5) * 20
+      (Math.random() - 0.5) * 25,
+      (Math.random() - 0.5) * 25,
+      (Math.random() - 0.5) * 15 // Reduced Z depth for better visibility
     ));
 
     const connections = [];

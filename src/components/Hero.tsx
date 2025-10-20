@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion, type Variants } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, type Variants, useScroll, useTransform } from 'framer-motion';
 import { portfolioData } from '../../portfolioData';
 import Sunburst from '../assets/Sunburst';
 
@@ -49,18 +49,38 @@ const Hero: React.FC = () => {
     },
   };
 
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
+
   return (
     <motion.section
+      ref={ref}
       id="hero"
       className="relative flex flex-col items-center justify-center h-screen text-center text-text overflow-hidden bg-background"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
+      style={{ perspective: "1000px" }}
     >
-      <div className="absolute inset-0 border-8 border-accent/50 pointer-events-none" />
-      <div className="absolute inset-8 border-2 border-accent/50 pointer-events-none" />
+      <motion.div 
+        className="absolute inset-0 border-8 border-accent/50 pointer-events-none"
+        style={{ scale, opacity }}
+      />
+      <motion.div 
+        className="absolute inset-8 border-2 border-accent/50 pointer-events-none"
+        style={{ scale, opacity }}
+      />
 
-      <Sunburst />
+      <motion.div style={{ y }}>
+        <Sunburst />
+      </motion.div>
 
       <motion.h1
         className="font-display text-6xl md:text-8xl lg:text-9xl text-accent mb-6 z-10"

@@ -2,16 +2,24 @@ import React, { useState } from 'react';
 import { motion, type Variants } from 'framer-motion';
 
 const transitionConfig = {
-  duration: 1,
-  ease: [0.6, 0.01, 0.05, 0.95] as const,
+  duration: 1.2,
+  ease: [0.43, 0.13, 0.23, 0.96] as const,
 };
 
 const animationVariants: Variants = {
   initial: {
     scaleY: 1,
+    backgroundColor: 'var(--color-background)',
   },
   animate: {
     scaleY: 0,
+    transition: {
+      ...transitionConfig,
+      backgroundColor: {
+        duration: 0.8,
+        ease: 'easeOut'
+      }
+    }
   },
 };
 
