@@ -40,7 +40,7 @@ const sectionVariants: Variants = {
 
 const MotionSection: React.FC<{ children: React.ReactNode, className?: string }> = ({ children, className }) => (
   <motion.section
-    className={className}
+    className={`${className} bg-primary/10 backdrop-blur-sm border border-accent/10 rounded-lg p-8`}
     variants={sectionVariants}
     initial="hidden"
     whileInView="visible"
@@ -70,7 +70,7 @@ const App: React.FC = () => {
           <>
             <PageTransition />
             <motion.main
-              className="relative z-10 px-4 sm:px-8 md:px-16 lg:px-24"
+              className="relative px-4 sm:px-8 md:px-16 lg:px-24"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
