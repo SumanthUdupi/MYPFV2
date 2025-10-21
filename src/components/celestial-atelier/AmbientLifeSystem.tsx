@@ -89,11 +89,15 @@ const AmbientLifeSystem: React.FC<AmbientLifeSystemProps> = ({
 
     // Curve network pulsing
     if (curveNetworkRef.current && !reduceMotion) {
-      curveNetworkRef.current.children.forEach((child, index) => {
-        const baseMaterial = (child as THREE.Mesh).material as THREE.ShaderMaterial;
-        if (baseMaterial.uniforms) {
-          const pulseIntensity = 0.5 + Math.sin(time * 0.8 + index * 0.3) * 0.3;
-          baseMaterial.uniforms.uPulseIntensity = { value: pulseIntensity };
+      let meshIndex = 0;
+      curveNetworkRef.current.traverse((child) => {
+        if (child instanceof THREE.Mesh && child.material && 'uniforms' in child.material) {
+          const baseMaterial = child.material as THREE.ShaderMaterial;
+          if (baseMaterial.uniforms) {
+            const pulseIntensity = 0.5 + Math.sin(time * 0.8 + meshIndex * 0.3) * 0.3;
+            baseMaterial.uniforms.uPulseIntensity = { value: pulseIntensity };
+          }
+          meshIndex++;
         }
       });
     }
