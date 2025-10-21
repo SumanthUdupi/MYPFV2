@@ -22,7 +22,7 @@ function SingleCurve({ initialPoints, color, pulse }: { initialPoints: number[][
 }
 
 function Node({ position, color, onHover }: { position: [number, number, number], color: string, onHover: (hovered: boolean) => void }) {
-  const nodeRef = useRef<any>(null);
+  const nodeRef = useRef<THREE.Mesh>(null);
 
   useFrame(() => {
     if (nodeRef.current) {
