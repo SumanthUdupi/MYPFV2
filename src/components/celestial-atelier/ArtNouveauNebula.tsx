@@ -1,4 +1,3 @@
-
 import { useMemo, forwardRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
@@ -39,7 +38,7 @@ const ArtNouveauNebula = forwardRef<THREE.ShaderMaterial, ArtNouveauNebulaProps>
 
   return (
     <mesh material={shaderMaterial}>
-      <planeGeometry args={[10, 10, 128, 128]} />
+      <planeGeometry args={[10, 10, 2, 2]} />
     </mesh>
   );
 });
