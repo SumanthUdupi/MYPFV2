@@ -2,6 +2,7 @@
 import { useMemo, forwardRef, useEffect, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import vertexShader from './shaders/nebula.vert?raw';
 import fragmentShader from './shaders/nebula.frag?raw';
 
@@ -13,6 +14,7 @@ interface ArtNouveauNebulaProps {
 const ArtNouveauNebula = forwardRef<THREE.ShaderMaterial, ArtNouveauNebulaProps>(({ isMobile, reduceMotion }, ref) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const { size, camera } = useThree();
+  const { scrollYProgress } = useScroll();
 
   const shaderMaterial = useMemo(() => {
     return new THREE.ShaderMaterial({
@@ -22,6 +24,7 @@ const ArtNouveauNebula = forwardRef<THREE.ShaderMaterial, ArtNouveauNebulaProps>
         uMouse: { value: new THREE.Vector2(0, 0) },
         uReduceMotion: { value: reduceMotion },
         uIsMobile: { value: isMobile },
+        uScroll: { value: 0.0 },
       },
       vertexShader,
       fragmentShader,
@@ -29,6 +32,13 @@ const ArtNouveauNebula = forwardRef<THREE.ShaderMaterial, ArtNouveauNebulaProps>
       depthWrite: false,
     });
   }, [reduceMotion, size.width, size.height, isMobile]);
+
+  const colorTemp = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  useMotionValueEvent(colorTemp, 'change', (latest) => {
+    if (shaderMaterial) {
+      shaderMaterial.uniforms.uScroll.value = latest;
+    }
+  });
 
   useEffect(() => {
     if (shaderMaterial) {

@@ -9,6 +9,7 @@ import AmbientLifeSystem from './AmbientLifeSystem';
 import useMedia from '../../hooks/useMedia';
 import * as THREE from 'three';
 import CameraAnimator from './CameraAnimator';
+import './AtmosphericEffects.css';
 
 const CelestialAtelierBackground = () => {
   const nebulaMaterialRef = useRef<THREE.ShaderMaterial>(null);
@@ -20,49 +21,62 @@ const CelestialAtelierBackground = () => {
   const curveCount = isMobile ? 4 : 10;
 
   return (
-    <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 0, pointerEvents: 'none' }}>
-      <Canvas dpr={[1, 1.5]} shadows={false} camera={{ position: [0, 0, 5] }}>
-        <Suspense fallback={null}>
-          <CameraAnimator />
-          {/* Core background layers */}
-          <ArtNouveauNebula ref={nebulaMaterialRef} isMobile={isMobile} reduceMotion={reduceMotion} />
+    <>
+      {/* Atmospheric Overlays */}
+      {!reduceMotion && (
+        <>
+          <div className="film-grain" />
+          <div className="vignette-overlay" />
+          <div className="letterbox-top" />
+          <div className="letterbox-bottom" />
+          <div className="volumetric-light" />
+        </>
+      )}
 
-          {/* Particle system with lifecycle */}
-          <CelestialStardustField
-            ref={stardustRef}
-            count={particleCount}
-            reduceMotion={reduceMotion}
-          />
+      <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 0, pointerEvents: 'none' }}>
+        <Canvas dpr={[1, 1.5]} shadows={false} camera={{ position: [0, 0, 5] }}>
+          <Suspense fallback={null}>
+            <CameraAnimator />
+            {/* Core background layers */}
+            <ArtNouveauNebula ref={nebulaMaterialRef} isMobile={isMobile} reduceMotion={reduceMotion} />
 
-          {/* Art Nouveau ornamental curves */}
-          <OrnamentalCurveNetwork
-            ref={curveNetworkRef}
-            count={curveCount}
-            reduceMotion={reduceMotion}
-          />
+            {/* Particle system with lifecycle */}
+            <CelestialStardustField
+              ref={stardustRef}
+              count={particleCount}
+              reduceMotion={reduceMotion}
+            />
 
-          {/* Corner flourishes and ornamental borders */}
-          <CornerFlourishes reduceMotion={reduceMotion} />
+            {/* Art Nouveau ornamental curves */}
+            <OrnamentalCurveNetwork
+              ref={curveNetworkRef}
+              count={curveCount}
+              reduceMotion={reduceMotion}
+            />
 
-          {/* Ambient animations - breathing, color cycling, shooting stars */}
-          <AmbientLifeSystem
-            nebulaMaterialRef={nebulaMaterialRef}
-            curveNetworkRef={curveNetworkRef}
-            stardustRef={stardustRef}
-            reduceMotion={reduceMotion}
-          />
+            {/* Corner flourishes and ornamental borders */}
+            <CornerFlourishes reduceMotion={reduceMotion} />
 
-          {/* Interactive choreography - parallax, deformation, ripples */}
-          {!reduceMotion && (
-            <InteractionOrchestrator
-              nebulaMaterial={nebulaMaterialRef}
+            {/* Ambient animations - breathing, color cycling, shooting stars */}
+            <AmbientLifeSystem
+              nebulaMaterialRef={nebulaMaterialRef}
               curveNetworkRef={curveNetworkRef}
               stardustRef={stardustRef}
+              reduceMotion={reduceMotion}
             />
-          )}
-        </Suspense>
-      </Canvas>
-    </div>
+
+            {/* Interactive choreography - parallax, deformation, ripples */}
+            {!reduceMotion && (
+              <InteractionOrchestrator
+                nebulaMaterial={nebulaMaterialRef}
+                curveNetworkRef={curveNetworkRef}
+                stardustRef={stardustRef}
+              />
+            )}
+          </Suspense>
+        </Canvas>
+      </div>
+    </>
   );
 };
 
