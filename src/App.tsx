@@ -40,7 +40,7 @@ const sectionVariants: Variants = {
 
 const MotionSection: React.FC<{ children: React.ReactNode, className?: string }> = ({ children, className }) => (
   <motion.section
-    className={`${className} bg-primary/10 backdrop-blur-sm border border-accent/10 rounded-lg p-8`}
+    className={`${className} bg-gradient-to-br from-black/40 via-slate-900/30 to-black/40 backdrop-blur-xl border border-accent/20 rounded-2xl p-8 shadow-2xl`}
     variants={sectionVariants}
     initial="hidden"
     whileInView="visible"
