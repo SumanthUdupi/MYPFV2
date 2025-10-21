@@ -83,9 +83,12 @@ const Hero: React.FC = () => {
       </motion.div>
 
       <motion.h1
-        className="font-display text-5xl sm:text-6xl md:text-8xl lg:text-9xl text-accent mb-6 z-10"
+        className="font-display text-5xl sm:text-6xl md:text-8xl lg:text-9xl text-accent mb-6 z-10 drop-shadow-2xl"
         variants={nameVariants}
-        style={{ textShadow: '0 0 15px rgba(196, 166, 98, 0.4)' }}
+        style={{
+          textShadow: '0 0 30px rgba(196, 166, 98, 0.6), 0 4px 20px rgba(0, 0, 0, 0.8)',
+          filter: 'drop-shadow(0 0 20px rgba(45, 212, 191, 0.3))'
+        }}
       >
         {name.split('').map((char, index) => (
           <motion.span key={`${char}-${index}`} className="inline-block" variants={letterVariants}>
@@ -94,8 +97,9 @@ const Hero: React.FC = () => {
         ))}
       </motion.h1>
       <motion.h2
-        className="font-sans text-base sm:text-lg md:text-xl lg:text-2xl max-w-4xl mx-auto z-10 text-text/80 tracking-widest uppercase"
+        className="font-sans text-base sm:text-lg md:text-xl lg:text-2xl max-w-4xl mx-auto z-10 text-white/90 tracking-widest uppercase drop-shadow-lg"
         variants={titleVariants}
+        style={{ textShadow: '0 2px 15px rgba(0, 0, 0, 0.8)' }}
       >
         {title}
       </motion.h2>
