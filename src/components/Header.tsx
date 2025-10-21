@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { ChevronsRight, X } from 'lucide-react';
 
@@ -11,6 +11,31 @@ const NavLink: React.FC<{ href: string; children: React.ReactNode; onClick: () =
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+
+    // In hero section -> always hidden
+    if (latest < window.innerHeight) {
+      setIsVisible(false);
+      return;
+    }
+
+    // Just scrolled past hero -> show
+    if (previous < window.innerHeight && latest >= window.innerHeight) {
+        setIsVisible(true);
+        return;
+    }
+
+    // Below hero -> hide on scroll down, show on scroll up
+    if (latest > previous) {
+        setIsVisible(false);
+    } else {
+        setIsVisible(true);
+    }
+  });
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -37,7 +62,15 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center p-6 text-text bg-background/80 backdrop-blur-sm">
+      <motion.header
+        variants={{
+          visible: { y: 0 },
+          hidden: { y: "-100%" },
+        }}
+        animate={!isVisible ? "hidden" : "visible"}
+        transition={{ duration: 0.35, ease: "easeInOut" }}
+        className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center p-6 text-text bg-background/80 backdrop-blur-sm"
+      >
         <motion.a
           href="#hero"
           className="font-display text-2xl text-accent"
@@ -57,7 +90,7 @@ const Header: React.FC = () => {
             <ChevronsRight size={28} />
           </button>
         </div>
-      </header>
+      </motion.header>
       <AnimatePresence>
         {isOpen && (
           <motion.div

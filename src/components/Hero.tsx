@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion, type Variants, useScroll, useTransform } from 'framer-motion';
 import { portfolioData } from '../../portfolioData';
 import Sunburst from '../assets/Sunburst';
+import LensFlare from './LensFlare';
 
 const Hero: React.FC = () => {
   const { name, title } = portfolioData;
@@ -33,12 +34,24 @@ const Hero: React.FC = () => {
       opacity: 1,
       filter: 'blur(0px)',
       transition: {
-        type: 'spring',
-        damping: 12,
-        stiffness: 100,
+        duration: 1.2,
+        ease: [0.6, 0.01, -0.05, 0.95]
       },
     },
   } as const;
+
+  const sunburstVariants: Variants = {
+    hidden: { opacity: 0, filter: 'blur(8px)' },
+    visible: {
+      opacity: 1,
+      filter: 'blur(0px)',
+      transition: {
+        duration: 1.2,
+        ease: [0.6, 0.01, -0.05, 0.95],
+        delay: 0.5
+      }
+    }
+  };
 
   const titleVariants: Variants = {
     hidden: { y: 20, opacity: 0 },
@@ -58,6 +71,16 @@ const Hero: React.FC = () => {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
+  const h1y = useTransform(scrollYProgress, [0, 1], ["0%", "80%"]);
+  const h2y = useTransform(scrollYProgress, [0, 1], ["0%", "95%"]);
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    const timer = setTimeout(() => {
+      document.body.style.overflow = 'auto';
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <motion.section
@@ -78,7 +101,14 @@ const Hero: React.FC = () => {
         style={{ scale, opacity }}
       />
 
-      <motion.div style={{ y }}>
+      <LensFlare />
+
+      <motion.div
+        style={{ y }}
+        variants={sunburstVariants}
+        animate={{ scale: [1, 1.02, 1] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+      >
         <Sunburst />
       </motion.div>
 
@@ -86,6 +116,7 @@ const Hero: React.FC = () => {
         className="font-sans text-5xl sm:text-6xl md:text-8xl lg:text-9xl text-accent mb-6 z-10 drop-shadow-2xl"
         variants={nameVariants}
         style={{
+          y: h1y,
           textShadow: '0 0 30px rgba(196, 166, 98, 0.6), 0 4px 20px rgba(0, 0, 0, 0.8)',
           filter: 'drop-shadow(0 0 20px rgba(45, 212, 191, 0.3))'
         }}
@@ -99,7 +130,7 @@ const Hero: React.FC = () => {
       <motion.h2
         className="font-sans text-base sm:text-lg md:text-xl lg:text-2xl max-w-4xl mx-auto z-10 text-white/90 tracking-widest uppercase drop-shadow-lg"
         variants={titleVariants}
-        style={{ textShadow: '0 2px 15px rgba(0, 0, 0, 0.8)' }}
+        style={{ y: h2y, textShadow: '0 2px 15px rgba(0, 0, 0, 0.8)' }}
       >
         {title}
       </motion.h2>
