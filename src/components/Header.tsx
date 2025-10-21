@@ -46,11 +46,11 @@ const Header: React.FC = () => {
           S.U.
         </motion.a>
         <nav className="hidden md:flex space-x-8">
-          <a href="#about" className="hover:text-accent transition-colors duration-300">About</a>
-          <a href="#skills" className="hover:text-accent transition-colors duration-300">Skills</a>
-          <a href="#experience" className="hover:text-accent transition-colors duration-300">Experience</a>
-          <a href="#key-projects" className="hover:text-accent transition-colors duration-300">Projects</a>
-          <a href="#contact" className="hover:text-accent transition-colors duration-300">Contact</a>
+          <a href="#about" className="hover:text-accent transition-colors duration-300 hover:drop-shadow-[0_0_10px_rgba(196,166,98,0.4)]">About</a>
+          <a href="#skills" className="hover:text-accent transition-colors duration-300 hover:drop-shadow-[0_0_10px_rgba(196,166,98,0.4)]">Skills</a>
+          <a href="#experience" className="hover:text-accent transition-colors duration-300 hover:drop-shadow-[0_0_10px_rgba(196,166,98,0.4)]">Experience</a>
+          <a href="#key-projects" className="hover:text-accent transition-colors duration-300 hover:drop-shadow-[0_0_10px_rgba(196,166,98,0.4)]">Projects</a>
+          <a href="#contact" className="hover:text-accent transition-colors duration-300 hover:drop-shadow-[0_0_10px_rgba(196,166,98,0.4)]">Contact</a>
         </nav>
         <div className="md:hidden">
           <button onClick={toggleMenu} className="p-2 focus:outline-none" aria-label="Open menu">
@@ -68,7 +68,7 @@ const Header: React.FC = () => {
             onClick={toggleMenu}
           >
             <motion.div
-              className="fixed top-0 right-0 h-full w-4/5 max-w-sm bg-[#1a1a1a] p-8 shadow-2xl"
+              className="fixed top-0 right-0 h-full w-4/5 max-w-sm bg-[#1a1a1a] p-8 shadow-2xl rounded-l-3xl"
               variants={menuVariants}
               initial="closed"
               animate="open"

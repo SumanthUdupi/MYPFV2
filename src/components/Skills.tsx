@@ -16,9 +16,8 @@ const SkillCategory: React.FC<{ category: string; skills: string[] }> = ({ categ
         {skills.map((skill, index) => (
           <motion.li
             key={skill}
-            className="bg-secondary text-text/90 px-4 py-2 border border-accent/20 font-sans text-base transition-all duration-300 active:bg-accent/10 active:border-accent active:text-accent"
-            style={{ clipPath: 'polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)' }}
-            variants={skillPillVariants}
+            className="bg-secondary/60 backdrop-blur px-4 py-2 rounded-full border border-accent/20 text-text/90 font-sans text-base shadow-[0_0_20px_rgba(196,166,98,0.08)] hover:shadow-[0_0_28px_rgba(196,166,98,0.25)] transition-all duration-500 active:bg-accent/10 active:border-accent active:text-accent"
+                        variants={skillPillVariants}
             custom={index}
             initial="hidden"
             whileInView="visible"
@@ -38,7 +37,7 @@ const Skills: React.FC = () => {
 
   return (
     <section id="skills" className="py-32">
-      <h2 className="font-display text-6xl text-accent text-center mb-6">Skills</h2>
+      <h2 className="font-sans text-6xl text-accent text-center mb-6">Skills</h2>
       <ArtDecoElement className="w-64 h-8 mx-auto text-accent/50 mb-16" />
       <motion.div 
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16 max-w-7xl mx-auto"

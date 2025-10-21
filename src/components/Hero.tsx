@@ -70,11 +70,11 @@ const Hero: React.FC = () => {
       style={{ perspective: "1000px" }}
     >
       <motion.div 
-        className="absolute inset-0 border-8 border-accent/50 pointer-events-none"
+        className="absolute inset-0 border-8 border-accent/50 pointer-events-none rounded-3xl"
         style={{ scale, opacity }}
       />
       <motion.div 
-        className="absolute inset-8 border-2 border-accent/50 pointer-events-none"
+        className="absolute inset-8 border-2 border-accent/50 pointer-events-none rounded-3xl"
         style={{ scale, opacity }}
       />
 
@@ -83,7 +83,7 @@ const Hero: React.FC = () => {
       </motion.div>
 
       <motion.h1
-        className="font-display text-5xl sm:text-6xl md:text-8xl lg:text-9xl text-accent mb-6 z-10 drop-shadow-2xl"
+        className="font-sans text-5xl sm:text-6xl md:text-8xl lg:text-9xl text-accent mb-6 z-10 drop-shadow-2xl"
         variants={nameVariants}
         style={{
           textShadow: '0 0 30px rgba(196, 166, 98, 0.6), 0 4px 20px rgba(0, 0, 0, 0.8)',
@@ -110,7 +110,7 @@ const Hero: React.FC = () => {
         transition={{ duration: 0.8, ease: 'easeOut', delay: 2 }}
         className="mt-12 z-10"
       >
-        <a href="#about" className="bg-accent text-background font-bold py-3 px-8 rounded-full hover:bg-secondary-accent transition-colors duration-300 text-lg shadow-lg shadow-accent/20">
+        <a href="#about" className="bg-accent text-background font-bold py-3 px-8 rounded-full hover:bg-secondary-accent transition-colors duration-500 text-lg shadow-lg shadow-accent/20 hover:shadow-accent/40 hover:shadow-2xl">
           Discover More
         </a>
       </motion.div>
