@@ -6,10 +6,11 @@ import vertexShader from './shaders/nebula.vert?raw';
 import fragmentShader from './shaders/nebula.frag?raw';
 
 interface ArtNouveauNebulaProps {
+  isMobile: boolean;
   reduceMotion: boolean;
 }
 
-const ArtNouveauNebula = forwardRef<THREE.ShaderMaterial, ArtNouveauNebulaProps>(({ reduceMotion }, ref) => {
+const ArtNouveauNebula = forwardRef<THREE.ShaderMaterial, ArtNouveauNebulaProps>(({ isMobile, reduceMotion }, ref) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const { size, camera } = useThree();
 
@@ -20,13 +21,14 @@ const ArtNouveauNebula = forwardRef<THREE.ShaderMaterial, ArtNouveauNebulaProps>
         uResolution: { value: new THREE.Vector2(size.width, size.height) },
         uMouse: { value: new THREE.Vector2(0, 0) },
         uReduceMotion: { value: reduceMotion },
+        uIsMobile: { value: isMobile },
       },
       vertexShader,
       fragmentShader,
       transparent: true,
       depthWrite: false,
     });
-  }, [reduceMotion, size.width, size.height]);
+  }, [reduceMotion, size.width, size.height, isMobile]);
 
   useEffect(() => {
     if (shaderMaterial) {
