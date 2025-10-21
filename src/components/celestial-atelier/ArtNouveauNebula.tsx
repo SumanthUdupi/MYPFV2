@@ -1,3 +1,4 @@
+
 import { useMemo, forwardRef, useEffect, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
@@ -5,43 +6,38 @@ import vertexShader from './shaders/nebula.vert?raw';
 import fragmentShader from './shaders/nebula.frag?raw';
 
 interface ArtNouveauNebulaProps {
-  isMobile: boolean;
   reduceMotion: boolean;
 }
 
-const ArtNouveauNebula = forwardRef<THREE.ShaderMaterial, ArtNouveauNebulaProps>(({ isMobile, reduceMotion }, ref) => {
+const ArtNouveauNebula = forwardRef<THREE.ShaderMaterial, ArtNouveauNebulaProps>(({ reduceMotion }, ref) => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const { camera, size } = useThree();
+  const { size, camera } = useThree();
 
   const shaderMaterial = useMemo(() => {
-    const material = new THREE.ShaderMaterial({
+    return new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0.0 },
         uResolution: { value: new THREE.Vector2(size.width, size.height) },
         uMouse: { value: new THREE.Vector2(0, 0) },
         uReduceMotion: { value: reduceMotion },
-        uIsMobile: { value: isMobile },
       },
       vertexShader,
       fragmentShader,
       transparent: true,
       depthWrite: false,
     });
-    if (ref && typeof ref !== 'function') {
-      ref.current = material;
-    }
-    return material;
-  }, [ref, reduceMotion, isMobile, size.width, size.height]);
+  }, [reduceMotion, size.width, size.height]);
 
   useEffect(() => {
     if (shaderMaterial) {
       shaderMaterial.uniforms.uResolution.value.set(size.width, size.height);
     }
-  }, [size.width, size.height, shaderMaterial]);
+  }, [size, shaderMaterial]);
 
-  useFrame(({ clock }) => {
+  useFrame(({ clock, mouse }) => {
     if (shaderMaterial && !reduceMotion) {
       shaderMaterial.uniforms.uTime.value = clock.getElapsedTime();
+      shaderMaterial.uniforms.uMouse.value.lerp(mouse, 0.05);
     }
   });
 
@@ -51,8 +47,9 @@ const ArtNouveauNebula = forwardRef<THREE.ShaderMaterial, ArtNouveauNebulaProps>
   const viewportWidth = viewportHeight * (size.width / size.height);
 
   return (
-    <mesh ref={meshRef} material={shaderMaterial} position={[0, 0, -2]} scale={[viewportWidth * 1.3, viewportHeight * 1.3, 1]}>
-      <planeGeometry args={[1, 1, 1, 1]} />
+    <mesh ref={meshRef} position={[0, 0, -10]} scale={[viewportWidth, viewportHeight, 1]}>
+      <planeGeometry args={[1, 1]} />
+      <primitive ref={ref} object={shaderMaterial} attach="material" />
     </mesh>
   );
 });

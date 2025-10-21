@@ -12,6 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@playwright/test": "^1.56.1",
     "@react-three/drei": "^10.7.6",
     "@react-three/fiber": "^9.4.0",
     "@types/three": "^0.180.0",

@@ -1,115 +1,73 @@
-import { useRef, useMemo } from 'react';
-import { useFrame } from '@react-three/fiber';
+
+import { useMemo } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
 interface CornerFlourishesProps {
   reduceMotion: boolean;
 }
 
-const CornerFlourishes: React.FC<CornerFlourishesProps> = ({ reduceMotion }) => {
-  const groupRef = useRef<THREE.Group>(null);
+const CornerFlourishes = ({ reduceMotion }: CornerFlourishesProps) => {
+  const { viewport } = useThree();
 
-  const createOrnateCurve = (startPos: THREE.Vector3, direction: number) => {
-    const curve = new THREE.CatmullRomCurve3([
-      startPos.clone(),
-      startPos.clone().add(new THREE.Vector3(direction * 0.8, 0.3, 0)),
-      startPos.clone().add(new THREE.Vector3(direction * 1.2, 0.8, 0)),
-      startPos.clone().add(new THREE.Vector3(direction * 1.5, 1.5, 0)),
-    ]);
-    return curve;
-  };
+  const material = useMemo(() => {
+    return new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0.0 },
+        uColor: { value: new THREE.Color('#c4a662') }
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uColor;
+        uniform float uTime;
+        varying vec2 vUv;
 
-  const corners = useMemo(() => {
-    return [
-      { pos: new THREE.Vector3(-5, 2.5, -2), dir: 1, name: 'topLeft' },
-      { pos: new THREE.Vector3(5, 2.5, -2), dir: -1, name: 'topRight' },
-      { pos: new THREE.Vector3(-5, -2.5, -2), dir: 1, name: 'bottomLeft' },
-      { pos: new THREE.Vector3(5, -2.5, -2), dir: -1, name: 'bottomRight' },
-    ];
+        float whiplash(vec2 p) {
+            return sin(p.x * 2.0 + p.y * 5.0 + uTime) * 0.5 + 0.5;
+        }
+
+        void main() {
+          float border = smoothstep(0.4, 0.5, vUv.x) * (1.0 - smoothstep(0.5, 0.6, vUv.x));
+          border *= smoothstep(0.4, 0.5, vUv.y) * (1.0 - smoothstep(0.5, 0.6, vUv.y));
+          float pattern = whiplash(vUv);
+          gl_FragColor = vec4(uColor, border * pattern * 0.2);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+    });
   }, []);
 
   useFrame(({ clock }) => {
-    if (groupRef.current && !reduceMotion) {
-      const time = clock.getElapsedTime();
-      let meshIndex = 0;
-
-      groupRef.current.traverse((child) => {
-        if (child instanceof THREE.Mesh && child.material) {
-          const material = child.material as THREE.MeshBasicMaterial;
-          if (material.opacity !== undefined) {
-            material.opacity = 0.12 + Math.sin(time * 0.5 + meshIndex) * 0.08;
-          }
-          child.rotation.z = Math.sin(time * 0.3 + meshIndex * 0.5) * 0.05;
-          meshIndex++;
-        }
-      });
+    if (!reduceMotion) {
+      material.uniforms.uTime.value = clock.getElapsedTime();
     }
   });
 
   return (
-    <group ref={groupRef}>
-      {corners.map((corner) => (
-        <group key={corner.name} position={[corner.pos.x, corner.pos.y, corner.pos.z]}>
-          {/* Primary ornamental curve */}
-          <mesh>
-            <tubeGeometry
-              args={[
-                createOrnateCurve(corner.pos, corner.dir),
-                12,
-                0.04,
-                8,
-                false,
-              ]}
-            />
-            <meshBasicMaterial
-              color="#fbbf24"
-              transparent
-              opacity={0.15}
-              wireframe={false}
-            />
-          </mesh>
-
-          {/* Decorative flourish nodes */}
-          <group>
-            {[0.25, 0.5, 0.75].map((t) => {
-              const curve = createOrnateCurve(corner.pos, corner.dir);
-              const point = curve.getPoint(t);
-              return (
-                <mesh key={`node-${t}`} position={[point.x, point.y, point.z]}>
-                  <sphereGeometry args={[0.08, 16, 16]} />
-                  <meshBasicMaterial
-                    color="#2dd4bf"
-                    transparent
-                    opacity={0.3}
-                  />
-                </mesh>
-              );
-            })}
-          </group>
-
-          {/* Botanical tendril accent */}
-          <mesh scale={0.6}>
-            <tubeGeometry
-              args={[
-                new THREE.CatmullRomCurve3([
-                  corner.pos.clone(),
-                  corner.pos.clone().add(new THREE.Vector3(corner.dir * 0.5, -0.3, 0)),
-                  corner.pos.clone().add(new THREE.Vector3(corner.dir * 0.9, -0.8, 0)),
-                ]),
-                10,
-                0.02,
-                6,
-                false,
-              ]}
-            />
-            <meshBasicMaterial
-              color="#9333ea"
-              transparent
-              opacity={0.1}
-            />
-          </mesh>
-        </group>
-      ))}
+    <group>
+      <mesh position={[-viewport.width / 2 + 1, viewport.height / 2 - 1, -5]} rotation={[0, 0, Math.PI / 4]}>
+        <planeGeometry args={[2, 2]} />
+        <primitive object={material} attach="material" />
+      </mesh>
+      <mesh position={[viewport.width / 2 - 1, viewport.height / 2 - 1, -5]} rotation={[0, 0, -Math.PI / 4]}>
+        <planeGeometry args={[2, 2]} />
+        <primitive object={material} attach="material" />
+      </mesh>
+      <mesh position={[-viewport.width / 2 + 1, -viewport.height / 2 + 1, -5]} rotation={[0, 0, (3 * Math.PI) / 4]}>
+        <planeGeometry args={[2, 2]} />
+        <primitive object={material} attach="material" />
+      </mesh>
+       <mesh position={[viewport.width / 2 - 1, -viewport.height / 2 + 1, -5]} rotation={[0, 0, (-3 * Math.PI) / 4]}>
+        <planeGeometry args={[2, 2]} />
+        <primitive object={material} attach="material" />
+      </mesh>
     </group>
   );
 };

@@ -39,7 +39,8 @@ function Particles({ count, color, size, isHero, isShootingStar }: { count: numb
     if (!mesh.current) return;
 
     particles.forEach((particle, i) => {
-      let { t, factor, speed, xFactor, yFactor, zFactor } = particle;
+      let { t } = particle;
+      const { factor, speed, xFactor, yFactor, zFactor } = particle;
       t = particle.t += speed;
       if (isShootingStar && t > 100) {
         particle.t = 0;
@@ -67,7 +68,7 @@ function Particles({ count, color, size, isHero, isShootingStar }: { count: numb
   });
 
   return (
-    <instancedMesh ref={mesh} args={[isHero ? CustomStar() : (null as any), null as any, count]}>
+    <instancedMesh ref={mesh} args={[isHero ? CustomStar() : undefined, undefined, count]}>
       {!isHero && <circleGeometry args={[size, 8]} />}
       <meshBasicMaterial color={color} transparent opacity={isHero ? 0.9 : 0.3} />
     </instancedMesh>

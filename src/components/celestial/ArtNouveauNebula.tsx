@@ -2,10 +2,8 @@ import { useRef, useMemo } from 'react';
 import { shaderMaterial } from '@react-three/drei';
 import { extend, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
-// @ts-ignore
-import vertexShader from './shaders/artnouveau.vert';
-// @ts-ignore
-import fragmentShader from './shaders/artnouveau.frag';
+import vertexShader from './shaders/artnouveau.vert?raw';
+import fragmentShader from './shaders/artnouveau.frag?raw';
 
 const ArtNouveauShaderMaterial = shaderMaterial(
   // Uniforms
@@ -26,7 +24,7 @@ const ArtNouveauShaderMaterial = shaderMaterial(
 extend({ ArtNouveauShaderMaterial });
 
 export function ArtNouveauNebula() {
-  const materialRef = useRef<any>(null);
+  const materialRef = useRef<THREE.ShaderMaterial>(null);
   const { size, viewport } = useThree();
 
   const uniforms = useMemo(
@@ -50,7 +48,7 @@ export function ArtNouveauNebula() {
   return (
     <mesh position={[0, 0, -10]}>
       <planeGeometry args={[viewport.width, viewport.height, 32, 32]} />
-      {/* @ts-ignore */}
+      {/* @ts-expect-error: artNouveauShaderMaterial is not a standard JSX element */}
       <artNouveauShaderMaterial ref={materialRef} uniforms={uniforms} />
     </mesh>
   );
