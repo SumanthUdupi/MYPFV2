@@ -31,10 +31,17 @@ const CornerFlourishes: React.FC<CornerFlourishesProps> = ({ reduceMotion }) => 
   useFrame(({ clock }) => {
     if (groupRef.current && !reduceMotion) {
       const time = clock.getElapsedTime();
-      groupRef.current.children.forEach((child, index) => {
-        const mesh = child as THREE.Mesh;
-        mesh.material.opacity = 0.12 + Math.sin(time * 0.5 + index) * 0.08;
-        mesh.rotation.z = Math.sin(time * 0.3 + index * 0.5) * 0.05;
+      let meshIndex = 0;
+
+      groupRef.current.traverse((child) => {
+        if (child instanceof THREE.Mesh && child.material) {
+          const material = child.material as THREE.MeshBasicMaterial;
+          if (material.opacity !== undefined) {
+            material.opacity = 0.12 + Math.sin(time * 0.5 + meshIndex) * 0.08;
+          }
+          child.rotation.z = Math.sin(time * 0.3 + meshIndex * 0.5) * 0.05;
+          meshIndex++;
+        }
       });
     }
   });
