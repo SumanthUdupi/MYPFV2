@@ -23,7 +23,7 @@ const CelestialAtelierBackground = () => {
       <Canvas dpr={[1, 1.5]} shadows={false} camera={{ position: [0, 0, 5], fov: 75 }}>
         <Suspense fallback={null}>
           {/* Core background layers */}
-          <ArtNouveauNebula ref={nebulaMaterialRef} isMobile={isMobile} reduceMotion={reduceMotion} />
+          <ArtNouveauNebula ref={nebulaMaterialRef} reduceMotion={reduceMotion} />
 
           {/* Particle system with lifecycle */}
           <CelestialStardustField
@@ -44,18 +44,18 @@ const CelestialAtelierBackground = () => {
 
           {/* Ambient animations - breathing, color cycling, shooting stars */}
           <AmbientLifeSystem
-            nebulaMaterialRef={nebulaMaterialRef}
-            curveNetworkRef={curveNetworkRef}
-            stardustRef={stardustRef}
+            nebulaMaterialRef={nebulaMaterialRef.current}
+            curveNetworkRef={curveNetworkRef.current}
+            stardustRef={stardustRef.current}
             reduceMotion={reduceMotion}
           />
 
           {/* Interactive choreography - parallax, deformation, ripples */}
           {!reduceMotion && (
             <InteractionOrchestrator
-              nebulaMaterial={nebulaMaterialRef}
-              curveNetworkRef={curveNetworkRef}
-              stardustRef={stardustRef}
+              nebulaMaterial={nebulaMaterialRef.current}
+              curveNetworkRef={curveNetworkRef.current}
+              stardustRef={stardustRef.current}
             />
           )}
         </Suspense>

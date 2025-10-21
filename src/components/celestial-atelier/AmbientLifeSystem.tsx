@@ -3,9 +3,9 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
 interface AmbientLifeSystemProps {
-  nebulaMaterialRef: React.RefObject<THREE.ShaderMaterial>;
-  curveNetworkRef: React.RefObject<THREE.Group>;
-  stardustRef: React.RefObject<THREE.Points>;
+  nebulaMaterialRef: THREE.ShaderMaterial | null;
+  curveNetworkRef: THREE.Group | null;
+  stardustRef: THREE.Points | null;
   reduceMotion: boolean;
 }
 
@@ -16,19 +16,19 @@ const AmbientLifeSystem = ({ nebulaMaterialRef, curveNetworkRef, stardustRef, re
     const time = clock.getElapsedTime();
 
     // Nebula breathing and color shifting
-    if (nebulaMaterialRef.current) {
-      nebulaMaterialRef.current.uniforms.uTime.value = time;
+    if (nebulaMaterialRef) {
+      nebulaMaterialRef.uniforms.uTime.value = time;
     }
 
     // Curve network undulation
-    if (curveNetworkRef.current) {
-        curveNetworkRef.current.rotation.y += Math.sin(time * 0.1) * 0.0001;
-        curveNetworkRef.current.rotation.x += Math.cos(time * 0.1) * 0.0001;
+    if (curveNetworkRef) {
+        curveNetworkRef.rotation.y += Math.sin(time * 0.1) * 0.0001;
+        curveNetworkRef.rotation.x += Math.cos(time * 0.1) * 0.0001;
     }
 
     // Particle drift and lifecycle
-    if (stardustRef.current) {
-        stardustRef.current.rotation.z += 0.0001;
+    if (stardustRef) {
+        stardustRef.rotation.z += 0.0001;
     }
   });
 

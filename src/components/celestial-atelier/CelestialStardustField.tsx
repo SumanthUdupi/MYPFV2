@@ -66,7 +66,7 @@ const CelestialStardustField = forwardRef<THREE.Points, CelestialStardustFieldPr
 
   useFrame(({ clock }) => {
     if (pointsRef.current && !reduceMotion) {
-      pointsRef.current.material.uniforms.uTime.value = clock.getElapsedTime();
+      (pointsRef.current.material as THREE.ShaderMaterial).uniforms.uTime.value = clock.getElapsedTime();
       pointsRef.current.rotation.y += 0.0001;
     }
   });
@@ -74,10 +74,10 @@ const CelestialStardustField = forwardRef<THREE.Points, CelestialStardustFieldPr
   return (
     <points ref={ref || pointsRef}>
       <bufferGeometry>
-        <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
-        <bufferAttribute attach="attributes-color" count={count} array={colors} itemSize={3} />
-        <bufferAttribute attach="attributes-size" count={count} array={sizes} itemSize={1} />
-        <bufferAttribute attach="attributes-type" count={count} array={types} itemSize={1} />
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} needsUpdate />
+        <bufferAttribute attach="attributes-color" args={[colors, 3]} needsUpdate />
+        <bufferAttribute attach="attributes-size" args={[sizes, 1]} needsUpdate />
+        <bufferAttribute attach="attributes-type" args={[types, 1]} needsUpdate />
       </bufferGeometry>
       <primitive object={shaderMaterial} attach="material" />
     </points>
