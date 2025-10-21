@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, forwardRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -14,8 +14,9 @@ interface CurveData {
   phase: number;
 }
 
-const OrnamentalCurveNetwork: React.FC<OrnamentalCurveNetworkProps> = ({ count, reduceMotion }) => {
-  const groupRef = useRef<THREE.Group>(null);
+const OrnamentalCurveNetwork = forwardRef<THREE.Group, OrnamentalCurveNetworkProps>(
+  ({ count, reduceMotion }, ref) => {
+    const groupRef = useRef<THREE.Group>(null);
 
   const curveData = useMemo(() => {
     const curves: CurveData[] = [];
@@ -155,8 +156,8 @@ const OrnamentalCurveNetwork: React.FC<OrnamentalCurveNetworkProps> = ({ count, 
     }
   });
 
-  return (
-    <group ref={groupRef}>
+    return (
+      <group ref={ref || groupRef}>
       {curveData.map((data, i) => {
         const points = data.curve.getPoints(64);
         const geometry = new THREE.TubeGeometry(data.curve, 64, 0.018, 8, false);
@@ -189,8 +190,11 @@ const OrnamentalCurveNetwork: React.FC<OrnamentalCurveNetworkProps> = ({ count, 
           </group>
         );
       })}
-    </group>
-  );
-};
+      </group>
+    );
+  }
+);
+
+OrnamentalCurveNetwork.displayName = 'OrnamentalCurveNetwork';
 
 export default OrnamentalCurveNetwork;
