@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, forwardRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Stars } from '@react-three/drei';
@@ -44,122 +44,126 @@ interface Particle {
   size: number;
 }
 
-const CelestialStardustField: React.FC<CelestialStardustFieldProps> = ({ count, reduceMotion }) => {
-  const jeweledStarsRef = useRef<THREE.Points>(null);
-  const particlesRef = useRef<Particle[]>([]);
-  const positionsRef = useRef<Float32Array | null>(null);
-  const colorsRef = useRef<Float32Array | null>(null);
-  const agesRef = useRef<Float32Array | null>(null);
-  const sizesRef = useRef<Float32Array | null>(null);
+const CelestialStardustField = forwardRef<THREE.Points, CelestialStardustFieldProps>(
+  ({ count, reduceMotion }, externalRef) => {
+    const jeweledStarsRef = useRef<THREE.Points>(null);
+    const particlesRef = useRef<Particle[]>([]);
+    const positionsRef = useRef<Float32Array | null>(null);
+    const colorsRef = useRef<Float32Array | null>(null);
+    const agesRef = useRef<Float32Array | null>(null);
+    const sizesRef = useRef<Float32Array | null>(null);
 
-  const [positions, colors, ages, sizes] = useMemo(() => {
-    const jeweledCount = Math.floor(count * 0.35);
-    const positions = new Float32Array(jeweledCount * 3);
-    const colors = new Float32Array(jeweledCount * 3);
-    const ages = new Float32Array(jeweledCount);
-    const sizes = new Float32Array(jeweledCount);
+    const [positions, colors, ages, sizes] = useMemo(() => {
+      const jeweledCount = Math.floor(count * 0.35);
+      const positions = new Float32Array(jeweledCount * 3);
+      const colors = new Float32Array(jeweledCount * 3);
+      const ages = new Float32Array(jeweledCount);
+      const sizes = new Float32Array(jeweledCount);
 
-    const colorPalette = [
-      new THREE.Color('#2dd4bf'),
-      new THREE.Color('#fbbf24'),
-      new THREE.Color('#9333ea'),
-      new THREE.Color('#1e40af'),
-    ];
+      const colorPalette = [
+        new THREE.Color('#2dd4bf'),
+        new THREE.Color('#fbbf24'),
+        new THREE.Color('#9333ea'),
+        new THREE.Color('#1e40af'),
+      ];
 
-    for (let i = 0; i < jeweledCount; i++) {
-      const i3 = i * 3;
-      positions[i3] = (Math.random() - 0.5) * 200;
-      positions[i3 + 1] = (Math.random() - 0.5) * 200;
-      positions[i3 + 2] = (Math.random() - 0.5) * 100 - 50;
+      for (let i = 0; i < jeweledCount; i++) {
+        const i3 = i * 3;
+        positions[i3] = (Math.random() - 0.5) * 200;
+        positions[i3 + 1] = (Math.random() - 0.5) * 200;
+        positions[i3 + 2] = (Math.random() - 0.5) * 100 - 50;
 
-      const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-      colors[i3] = color.r;
-      colors[i3 + 1] = color.g;
-      colors[i3 + 2] = color.b;
+        const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+        colors[i3] = color.r;
+        colors[i3 + 1] = color.g;
+        colors[i3 + 2] = color.b;
 
-      ages[i] = Math.random() * 0.5;
-      sizes[i] = Math.random() * 1.5 + 0.5;
-    }
-
-    positionsRef.current = positions;
-    colorsRef.current = colors;
-    agesRef.current = ages;
-    sizesRef.current = sizes;
-
-    return [positions, colors, ages, sizes];
-  }, [count]);
-
-  useFrame(({ clock }) => {
-    if (!reduceMotion && jeweledStarsRef.current) {
-      const time = clock.getElapsedTime();
-
-      if (jeweledStarsRef.current.material && 'uniforms' in jeweledStarsRef.current.material) {
-        const material = jeweledStarsRef.current.material as THREE.ShaderMaterial;
-        material.uniforms.uTime.value = time;
+        ages[i] = Math.random() * 0.5;
+        sizes[i] = Math.random() * 1.5 + 0.5;
       }
 
-      if (agesRef.current && colorsRef.current) {
-        for (let i = 0; i < agesRef.current.length; i++) {
-          agesRef.current[i] += 0.002;
+      positionsRef.current = positions;
+      colorsRef.current = colors;
+      agesRef.current = ages;
+      sizesRef.current = sizes;
 
-          if (agesRef.current[i] > 1.0) {
-            agesRef.current[i] = 0.0;
-          }
+      return [positions, colors, ages, sizes];
+    }, [count]);
 
-          const hueShift = Math.sin(time * 0.2 + i) * 0.1;
-          const baseColor = [
-            new THREE.Color('#2dd4bf'),
-            new THREE.Color('#fbbf24'),
-            new THREE.Color('#9333ea'),
-            new THREE.Color('#1e40af'),
-          ][i % 4];
+    useFrame(({ clock }) => {
+      if (!reduceMotion && jeweledStarsRef.current) {
+        const time = clock.getElapsedTime();
 
-          const i3 = i * 3;
-          colorsRef.current[i3] = baseColor.r * (1.0 + hueShift);
-          colorsRef.current[i3 + 1] = baseColor.g * (1.0 + hueShift);
-          colorsRef.current[i3 + 2] = baseColor.b * (1.0 + hueShift);
+        if (jeweledStarsRef.current.material && 'uniforms' in jeweledStarsRef.current.material) {
+          const material = jeweledStarsRef.current.material as THREE.ShaderMaterial;
+          material.uniforms.uTime.value = time;
         }
 
-        (jeweledStarsRef.current.geometry.getAttribute('color') as THREE.BufferAttribute).needsUpdate = true;
-        (jeweledStarsRef.current.geometry.getAttribute('age') as THREE.BufferAttribute).needsUpdate = true;
+        if (agesRef.current && colorsRef.current) {
+          for (let i = 0; i < agesRef.current.length; i++) {
+            agesRef.current[i] += 0.002;
+
+            if (agesRef.current[i] > 1.0) {
+              agesRef.current[i] = 0.0;
+            }
+
+            const hueShift = Math.sin(time * 0.2 + i) * 0.1;
+            const baseColor = [
+              new THREE.Color('#2dd4bf'),
+              new THREE.Color('#fbbf24'),
+              new THREE.Color('#9333ea'),
+              new THREE.Color('#1e40af'),
+            ][i % 4];
+
+            const i3 = i * 3;
+            colorsRef.current[i3] = baseColor.r * (1.0 + hueShift);
+            colorsRef.current[i3 + 1] = baseColor.g * (1.0 + hueShift);
+            colorsRef.current[i3 + 2] = baseColor.b * (1.0 + hueShift);
+          }
+
+          (jeweledStarsRef.current.geometry.getAttribute('color') as THREE.BufferAttribute).needsUpdate = true;
+          (jeweledStarsRef.current.geometry.getAttribute('age') as THREE.BufferAttribute).needsUpdate = true;
+        }
       }
-    }
-  });
+    });
 
-  return (
-    <>
-      <Stars
-        radius={100}
-        depth={50}
-        count={Math.floor(count * 0.55)}
-        factor={4}
-        saturation={0}
-        fade
-        speed={reduceMotion ? 0 : 1}
-      />
-
-      <points ref={jeweledStarsRef}>
-        <bufferGeometry>
-          <bufferAttribute attach="attributes-position" args={[positions, 3]} />
-          <bufferAttribute attach="attributes-color" args={[colors, 3]} />
-          <bufferAttribute attach="attributes-age" args={[ages, 1]} />
-          <bufferAttribute attach="attributes-size" args={[sizes, 1]} />
-        </bufferGeometry>
-        <shaderMaterial
-          uniforms={{ uTime: { value: 0.0 } }}
-          vertexShader={vertexShader}
-          fragmentShader={fragmentShader}
-          transparent
-          blending={THREE.AdditiveBlending}
-          depthWrite={false}
-          vertexColors
+    return (
+      <>
+        <Stars
+          radius={100}
+          depth={50}
+          count={Math.floor(count * 0.55)}
+          factor={4}
+          saturation={0}
+          fade
+          speed={reduceMotion ? 0 : 1}
         />
-      </points>
 
-      <HeroStars count={Math.floor(count * 0.1)} reduceMotion={reduceMotion} />
-    </>
-  );
-};
+        <points ref={externalRef || jeweledStarsRef}>
+          <bufferGeometry>
+            <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+            <bufferAttribute attach="attributes-color" args={[colors, 3]} />
+            <bufferAttribute attach="attributes-age" args={[ages, 1]} />
+            <bufferAttribute attach="attributes-size" args={[sizes, 1]} />
+          </bufferGeometry>
+          <shaderMaterial
+            uniforms={{ uTime: { value: 0.0 } }}
+            vertexShader={vertexShader}
+            fragmentShader={fragmentShader}
+            transparent
+            blending={THREE.AdditiveBlending}
+            depthWrite={false}
+            vertexColors
+          />
+        </points>
+
+        <HeroStars count={Math.floor(count * 0.1)} reduceMotion={reduceMotion} />
+      </>
+    );
+  }
+);
+
+CelestialStardustField.displayName = 'CelestialStardustField';
 
 interface HeroStarsProps {
   count: number;
