@@ -1,7 +1,6 @@
 import { useMemo, useRef, forwardRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { Stars } from '@react-three/drei';
 
 const vertexShader = `
   attribute float size;
@@ -22,11 +21,16 @@ const fragmentShader = `
   varying float vAge;
   uniform float uTime;
   void main() {
+    vec2 c = gl_PointCoord - 0.5;
+    float r2 = dot(c, c);
+    float mask = smoothstep(0.25, 0.24, r2);
+    if (mask <= 0.0) discard;
+
     float twinkle = sin(uTime * 2.0 + gl_FragCoord.x * 0.1) * 0.5 + 0.5;
     float fade = 1.0 - vAge;
     float strength = twinkle * 0.6 + 0.4;
     float glow = exp(-vAge * 2.0) * 0.3;
-    gl_FragColor = vec4(vColor, strength * fade + glow);
+    gl_FragColor = vec4(vColor, (strength * fade + glow) * mask);
   }
 `;
 
@@ -54,7 +58,7 @@ const CelestialStardustField = forwardRef<THREE.Points, CelestialStardustFieldPr
     const sizesRef = useRef<Float32Array | null>(null);
 
     const [positions, colors, ages, sizes] = useMemo(() => {
-      const jeweledCount = Math.floor(count * 0.35);
+      const jeweledCount = Math.floor(count * 0.45);
       const positions = new Float32Array(jeweledCount * 3);
       const colors = new Float32Array(jeweledCount * 3);
       const ages = new Float32Array(jeweledCount);
@@ -127,17 +131,41 @@ const CelestialStardustField = forwardRef<THREE.Points, CelestialStardustFieldPr
       }
     });
 
+    // Base subtle circular starfield
+    const baseCount = Math.floor(count * 0.55);
+    const basePositions = new Float32Array(baseCount * 3);
+    const baseColors = new Float32Array(baseCount * 3);
+    const baseAges = new Float32Array(baseCount);
+    const baseSizes = new Float32Array(baseCount);
+    for (let i = 0; i < baseCount; i++) {
+      const i3 = i * 3;
+      basePositions[i3] = (Math.random() - 0.5) * 300;
+      basePositions[i3 + 1] = (Math.random() - 0.5) * 300;
+      basePositions[i3 + 2] = (Math.random() - 0.5) * 150 - 75;
+      baseColors[i3] = 1.0; baseColors[i3 + 1] = 1.0; baseColors[i3 + 2] = 1.0;
+      baseAges[i] = Math.random();
+      baseSizes[i] = Math.random() * 1.2 + 0.3;
+    }
+
     return (
       <>
-        <Stars
-          radius={100}
-          depth={50}
-          count={Math.floor(count * 0.55)}
-          factor={4}
-          saturation={0}
-          fade
-          speed={reduceMotion ? 0 : 1}
-        />
+        <points>
+          <bufferGeometry>
+            <bufferAttribute attach="attributes-position" args={[basePositions, 3]} />
+            <bufferAttribute attach="attributes-color" args={[baseColors, 3]} />
+            <bufferAttribute attach="attributes-age" args={[baseAges, 1]} />
+            <bufferAttribute attach="attributes-size" args={[baseSizes, 1]} />
+          </bufferGeometry>
+          <shaderMaterial
+            uniforms={{ uTime: { value: 0.0 } }}
+            vertexShader={vertexShader}
+            fragmentShader={fragmentShader}
+            transparent
+            blending={THREE.AdditiveBlending}
+            depthWrite={false}
+            vertexColors
+          />
+        </points>
 
         <points ref={externalRef || jeweledStarsRef}>
           <bufferGeometry>
@@ -194,18 +222,7 @@ const HeroStars: React.FC<HeroStarsProps> = ({ count, reduceMotion }) => {
   }, [count]);
 
   const starGeometry = useMemo(() => {
-    const shape = new THREE.Shape();
-    const size = 0.5;
-    shape.moveTo(0, size);
-    shape.lineTo(size * 0.2, size * 0.2);
-    shape.lineTo(size, 0);
-    shape.lineTo(size * 0.2, -size * 0.2);
-    shape.lineTo(0, -size);
-    shape.lineTo(-size * 0.2, -size * 0.2);
-    shape.lineTo(-size, 0);
-    shape.lineTo(-size * 0.2, size * 0.2);
-    shape.lineTo(0, size);
-    return new THREE.ShapeGeometry(shape);
+    return new THREE.SphereGeometry(0.4, 8, 8);
   }, []);
 
   const dummy = useMemo(() => new THREE.Object3D(), []);

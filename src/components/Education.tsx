@@ -17,16 +17,15 @@ const TimelineItem: React.FC<{
       <div className="w-1/2 flex-shrink-0">
         <motion.div
           variants={itemVariants}
-          className={`p-8 bg-secondary border-2 border-accent/20 h-full ${isLeft ? 'text-right' : 'text-left'}`}
-          style={{ clipPath: 'polygon(0 20px, 20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%)' }}
+          className={`p-8 bg-secondary/70 backdrop-blur border border-accent/20 rounded-2xl shadow-[0_0_24px_rgba(196,166,98,0.08)] h-full ${isLeft ? 'text-right' : 'text-left'}`}
         >
           <p className="font-sans text-sm text-text/60 mb-2 tracking-widest">{item.year}</p>
-          <h3 className="font-display text-2xl text-accent mb-2">{item.degree}</h3>
+          <h3 className="font-sans text-2xl text-accent mb-2">{item.degree}</h3>
           <p className="font-sans text-md text-secondary-accent">{item.institution}</p>
         </motion.div>
       </div>
       <div className="w-24 flex-shrink-0 flex justify-center items-center">
-        <div className="w-4 h-4 bg-accent transform rotate-45" />
+        <div className="w-3 h-3 bg-accent rounded-full shadow-[0_0_12px_rgba(196,166,98,0.6)]" />
       </div>
       <div className="w-1/2 flex-shrink-0" />
     </div>
@@ -38,7 +37,7 @@ const Education: React.FC = () => {
 
   return (
     <section id="education" className="py-32">
-      <h2 className="font-display text-6xl text-accent text-center mb-6">Education</h2>
+      <h2 className="font-sans text-6xl text-accent text-center mb-6">Education</h2>
       <ArtDecoElement className="w-64 h-8 mx-auto text-accent/50 mb-24" />
       <div className="relative max-w-7xl mx-auto">
         <motion.div

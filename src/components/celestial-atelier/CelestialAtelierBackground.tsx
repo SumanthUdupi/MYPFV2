@@ -19,8 +19,8 @@ const CelestialAtelierBackground = () => {
   const curveCount = isMobile ? 4 : 10;
 
   return (
-    <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: -1 }}>
-      <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
+    <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 0, pointerEvents: 'none' }}>
+      <Canvas dpr={[1, 1.5]} shadows={false} camera={{ position: [0, 0, 5], fov: 75 }}>
         <Suspense fallback={null}>
           {/* Core background layers */}
           <ArtNouveauNebula ref={nebulaMaterialRef} isMobile={isMobile} reduceMotion={reduceMotion} />

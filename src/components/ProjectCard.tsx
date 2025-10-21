@@ -41,19 +41,18 @@ const ProjectCard: React.FC<{ project: typeof portfolioData.keyProjects[0] | typ
       className="relative h-full group block"
     >
       <motion.div
-        style={{ 
+        style={{
           rotateX: isTouchDevice ? 0 : rotateX,
-          rotateY: isTouchDevice ? 0 : rotateY,
-          clipPath: 'polygon(0 25px, 25px 0, 100% 0, 100% calc(100% - 25px), calc(100% - 25px) 100%, 0 100%)' 
+          rotateY: isTouchDevice ? 0 : rotateY
         }}
-        className="bg-secondary p-8 h-full flex flex-col border-2 border-transparent group-hover:border-accent/50 transition-all duration-300"
+        className="bg-secondary/70 backdrop-blur p-8 h-full flex flex-col border border-accent/20 rounded-2xl shadow-[0_0_24px_rgba(196,166,98,0.08)] hover:shadow-[0_0_36px_rgba(196,166,98,0.25)] transition-all duration-500"
         whileHover={!isTouchDevice ? {
           y: -10,
           boxShadow: "0 25px 50px -12px rgba(196, 166, 98, 0.25)",
         } : {}}
         whileTap={{ scale: isTouchDevice ? 0.95 : 1 }}
       >
-        <h3 className="font-display text-2xl text-accent mb-3 flex items-center justify-between">
+        <h3 className="font-sans text-2xl text-accent mb-3 flex items-center justify-between">
           {project.title}
           <ExternalLink className="w-5 h-5 text-text/50 group-hover:text-accent transition-colors" />
         </h3>
@@ -63,7 +62,7 @@ const ProjectCard: React.FC<{ project: typeof portfolioData.keyProjects[0] | typ
         {'tags' in project && (
           <div className="flex flex-wrap gap-2 mt-6">
             {project.tags.map((tag, i) => (
-              <span key={i} className="bg-background text-secondary-accent text-sm px-3 py-1 font-sans tracking-widest uppercase">
+              <span key={i} className="bg-background/60 backdrop-blur text-secondary-accent text-sm px-3 py-1 font-sans tracking-widest uppercase rounded-full border border-accent/20">
                 {tag}
               </span>
             ))}

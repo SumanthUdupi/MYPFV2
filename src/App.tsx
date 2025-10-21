@@ -40,7 +40,7 @@ const sectionVariants: Variants = {
 
 const MotionSection: React.FC<{ children: React.ReactNode, className?: string }> = ({ children, className }) => (
   <motion.section
-    className={`${className} bg-gradient-to-br from-black/40 via-slate-900/30 to-black/40 backdrop-blur-xl border border-accent/20 rounded-2xl p-8 shadow-2xl`}
+    className={`${className} rounded-3xl p-8 bg-black/10 backdrop-blur-sm shadow-[0_0_24px_rgba(0,0,0,0.15)]`}
     variants={sectionVariants}
     initial="hidden"
     whileInView="visible"
@@ -59,11 +59,11 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen overflow-x-hidden font-body text-text app-perspective bg-black relative">
+    <div className="min-h-screen overflow-x-hidden font-body text-text app-perspective bg-transparent relative">
       <CelestialAtelierBackground />
       <Header />
       {/* Cinematic overlay for better text readability */}
-      <div className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
+      <div className="fixed inset-0 pointer-events-none z-10 bg-gradient-to-b from-black/20 via-transparent to-black/25" />
       <AnimatePresence mode="wait">
         {loading ? (
           <Loader />
@@ -71,7 +71,7 @@ const App: React.FC = () => {
           <>
             <PageTransition />
             <motion.main
-              className="relative px-4 sm:px-8 md:px-16 lg:px-24 z-10"
+              className="relative px-4 sm:px-8 md:px-16 lg:px-24 z-20"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}

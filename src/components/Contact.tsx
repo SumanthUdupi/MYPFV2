@@ -7,7 +7,7 @@ import ArtDecoElement from './ArtDecoElement';
 const ContactInfo: React.FC<{ icon: React.ReactNode; text: string; href?: string }> = ({ icon, text, href }) => {
   const content = (
     <div className="flex items-center gap-4">
-      <div className="w-12 h-12 bg-secondary border-2 border-accent/30 flex items-center justify-center" style={{ clipPath: 'polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%)' }}>
+      <div className="w-12 h-12 bg-secondary/60 backdrop-blur border border-accent/30 rounded-full flex items-center justify-center shadow-[0_0_16px_rgba(196,166,98,0.15)]">
         {icon}
       </div>
       <span className="font-sans text-lg text-text/90 group-hover:text-accent transition-colors duration-300">{text}</span>
@@ -32,8 +32,7 @@ const SocialIcon: React.FC<{ href: string; children: React.ReactNode }> = ({ hre
     rel="noopener noreferrer"
     whileHover={{ scale: 1.1, y: -5 }}
     transition={{ type: 'spring', stiffness: 300 }}
-    className="relative w-20 h-20 bg-secondary border-2 border-accent/30 flex items-center justify-center text-4xl text-secondary-accent hover:text-accent transition-colors duration-300"
-    style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}
+    className="relative w-20 h-20 bg-secondary/60 backdrop-blur border border-accent/30 rounded-full flex items-center justify-center text-4xl text-secondary-accent hover:text-accent transition-colors duration-300 shadow-[0_0_20px_rgba(196,166,98,0.12)] hover:shadow-[0_0_28px_rgba(196,166,98,0.25)]"
   >
     {children}
   </motion.a>
@@ -51,7 +50,7 @@ const Contact: React.FC = () => {
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 1 }}
     >
-      <h2 className="font-display text-6xl text-accent mb-6">Get In Touch</h2>
+      <h2 className="font-sans text-6xl text-accent mb-6">Get In Touch</h2>
       <ArtDecoElement className="w-64 h-8 mx-auto text-accent/50 mb-12" />
       <p className="font-sans text-xl text-text/80 max-w-3xl mx-auto mb-16">
         I'm currently open to new opportunities. Feel free to reach out.
