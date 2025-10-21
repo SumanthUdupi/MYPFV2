@@ -4,6 +4,7 @@ uniform float uTime;
 uniform vec2 uResolution;
 uniform vec2 uMouse;
 uniform bool uReduceMotion;
+uniform float uScroll;
 
 varying vec2 vUv;
 
@@ -68,6 +69,12 @@ void main() {
         // Increased brightness and contribution of each layer
         nebula += mix(color1, color2, f) * f * (1.0 / 5.0) * (0.4 + fi * 0.2);
     }
+
+    // Scroll-driven color temperature shift
+    vec3 coolColor = vec3(0.2, 0.4, 0.8);  // Cool blue/purple
+    vec3 warmColor = vec3(1.0, 0.8, 0.3);  // Warm gold
+    nebula *= mix(coolColor, warmColor, uScroll);
+
 
     // Add mouse interaction
     if (!uReduceMotion) {

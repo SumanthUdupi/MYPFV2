@@ -54,6 +54,7 @@ const CelestialStardustField = forwardRef<THREE.Points, CelestialStardustFieldPr
     return new THREE.ShaderMaterial({
         uniforms: {
             uTime: { value: 0.0 },
+            uMouse: { value: new THREE.Vector2(0, 0) },
         },
         vertexShader,
         fragmentShader,
@@ -64,9 +65,11 @@ const CelestialStardustField = forwardRef<THREE.Points, CelestialStardustFieldPr
     });
   }, []);
 
-  useFrame(({ clock }) => {
+  useFrame(({ clock, mouse }) => {
     if (pointsRef.current && pointsRef.current.material instanceof THREE.ShaderMaterial && !reduceMotion) {
-      pointsRef.current.material.uniforms.uTime.value = clock.getElapsedTime();
+      const material = pointsRef.current.material;
+      material.uniforms.uTime.value = clock.getElapsedTime();
+      material.uniforms.uMouse.value.lerp(mouse, 0.05);
       pointsRef.current.rotation.y += 0.0001;
     }
   });
