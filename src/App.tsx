@@ -13,7 +13,8 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
 import PageTransition from './components/PageTransition';
-import NebulaPotential from './components/nebula/NebulaPotential.tsx';
+// import NebulaPotential from './components/nebula/NebulaPotential.tsx';
+import CelestialAtelierBackground from './components/celestial-atelier/CelestialAtelierBackground.tsx';
 import Header from './components/Header';
 
 const sectionVariants: Variants = {
@@ -60,7 +61,8 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen overflow-x-hidden font-body text-text app-perspective">
       <Header />
-      <NebulaPotential />
+      <CelestialAtelierBackground />
+      {/* <NebulaPotential /> */}
       <AnimatePresence mode="wait">
         {loading ? (
           <Loader />
