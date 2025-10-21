@@ -8,6 +8,7 @@ import CornerFlourishes from './CornerFlourishes';
 import AmbientLifeSystem from './AmbientLifeSystem';
 import useMedia from '../../hooks/useMedia';
 import * as THREE from 'three';
+import CameraAnimator from './CameraAnimator';
 
 const CelestialAtelierBackground = () => {
   const nebulaMaterialRef = useRef<THREE.ShaderMaterial>(null);
@@ -20,8 +21,9 @@ const CelestialAtelierBackground = () => {
 
   return (
     <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 0, pointerEvents: 'none' }}>
-      <Canvas dpr={[1, 1.5]} shadows={false} camera={{ position: [0, 0, 5], fov: 75 }}>
+      <Canvas dpr={[1, 1.5]} shadows={false} camera={{ position: [0, 0, 5] }}>
         <Suspense fallback={null}>
+          <CameraAnimator />
           {/* Core background layers */}
           <ArtNouveauNebula ref={nebulaMaterialRef} isMobile={isMobile} reduceMotion={reduceMotion} />
 
