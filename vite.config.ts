@@ -6,5 +6,8 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     base: mode === 'production' ? '/MYPFV4/' : '/',
+    server: {
+      port: 3000,
+    },
   }
 })

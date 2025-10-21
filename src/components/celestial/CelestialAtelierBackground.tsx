@@ -7,7 +7,7 @@ import { OrnamentalCurveNetwork } from './OrnamentalCurveNetwork';
 import { AmbientLifeSystem } from './AmbientLifeSystem';
 import { CornerFlourishes } from './CornerFlourishes';
 
-export function CelestialAtelierBackground() {
+export function CelestialAtelierBackground({ scrollYProgress }: { scrollYProgress: any }) {
   return (
     <div 
       style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, background: 'linear-gradient(to bottom, #0a0e27, #000000)' }}
@@ -15,7 +15,7 @@ export function CelestialAtelierBackground() {
       <Canvas camera={{ position: [0, 0, 5] }}>
         <Suspense fallback={null}>
             <CelestialStardustField />
-            <ArtNouveauNebula />
+            <ArtNouveauNebula scrollYProgress={scrollYProgress} />
             <OrnamentalCurveNetwork />
             <CornerFlourishes />
             <AmbientLifeSystem />
