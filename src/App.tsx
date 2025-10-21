@@ -59,10 +59,11 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen overflow-x-hidden font-body text-text app-perspective">
-      <Header />
+    <div className="min-h-screen overflow-x-hidden font-body text-text app-perspective bg-black relative">
       <CelestialAtelierBackground />
-      {/* <NebulaPotential /> */}
+      <Header />
+      {/* Cinematic overlay for better text readability */}
+      <div className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
       <AnimatePresence mode="wait">
         {loading ? (
           <Loader />
@@ -70,7 +71,7 @@ const App: React.FC = () => {
           <>
             <PageTransition />
             <motion.main
-              className="relative px-4 sm:px-8 md:px-16 lg:px-24"
+              className="relative px-4 sm:px-8 md:px-16 lg:px-24 z-10"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
