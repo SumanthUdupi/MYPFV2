@@ -1,11 +1,7 @@
-
-// Art Nouveau Nebula Fragment Shader
-
-#ifdef GL_ES
+#version 300 es
 precision mediump float;
-#endif
 
-varying vec2 vUv;
+in vec2 vUv;
 
 uniform float u_time;
 uniform vec2 u_resolution;
@@ -15,6 +11,8 @@ uniform float u_ripple_time;
 uniform vec3 u_color1;
 uniform vec3 u_color2;
 uniform vec3 u_color3;
+
+out vec4 fragColor;
 
 // 2D Random function
 float random(vec2 st) {
@@ -77,5 +75,5 @@ void main() {
     color += glow * 0.1;
 
     // Final color with alpha
-    gl_FragColor = vec4(color, smoothstep(0.2, 0.7, nebula));
+    fragColor = vec4(color, smoothstep(0.2, 0.7, nebula));
 }

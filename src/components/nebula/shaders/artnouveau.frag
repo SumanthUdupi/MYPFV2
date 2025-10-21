@@ -1,5 +1,6 @@
+#version 300 es
 precision mediump float;
-varying vec2 vUv;
+in vec2 vUv;
 uniform float u_time;
 uniform vec2 u_resolution;
 uniform vec2 u_mouse;
@@ -7,6 +8,8 @@ uniform vec3 u_baseA;
 uniform vec3 u_baseB;
 uniform vec3 u_jewel;
 uniform float u_timeScale;
+
+out vec4 fragColor;
 
 // Hash / noise helpers
 float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1,311.7))) * 43758.5453123); }
@@ -83,5 +86,5 @@ void main(){
   float md = 1.0 - smoothstep(0.0, 0.6, length(uv - m * 0.4));
   col += vec3(0.9,0.8,1.0) * md * 0.06;
 
-  gl_FragColor = vec4(col, alpha * 0.95);
+  fragColor = vec4(col, alpha * 0.95);
 }
