@@ -23,7 +23,7 @@ const ArtNouveauShaderMaterial = shaderMaterial(
 
 extend({ ArtNouveauShaderMaterial });
 
-export function ArtNouveauNebula() {
+export function ArtNouveauNebula({ scrollYProgress }: { scrollYProgress: any }) {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const { size, viewport } = useThree();
 
@@ -41,7 +41,7 @@ export function ArtNouveauNebula() {
 
   useFrame((state) => {
     if (materialRef.current) {
-      materialRef.current.uniforms.u_time.value = state.clock.getElapsedTime();
+      materialRef.current.uniforms.u_time.value = state.clock.getElapsedTime() + scrollYProgress * 10.0;
     }
   });
 
