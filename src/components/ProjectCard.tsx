@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useMotionValue, useTransform, type Variants } from 'framer-motion';
 import { portfolioData } from '../../portfolioData';
+import { ExternalLink } from 'lucide-react';
 
 const ProjectCard: React.FC<{ project: typeof portfolioData.keyProjects[0] | typeof portfolioData.personalProjects[0] }> = ({ project }) => {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
@@ -14,7 +15,7 @@ const ProjectCard: React.FC<{ project: typeof portfolioData.keyProjects[0] | typ
   const rotateX = useTransform(y, [0, 400], [10, -10]);
   const rotateY = useTransform(x, [0, 400], [-10, 10]);
 
-  function handleMouse(event: React.MouseEvent<HTMLDivElement>) {
+  function handleMouse(event: React.MouseEvent<HTMLAnchorElement>) {
     const rect = event.currentTarget.getBoundingClientRect();
     x.set(event.clientX - rect.left);
     y.set(event.clientY - rect.top);
@@ -26,7 +27,10 @@ const ProjectCard: React.FC<{ project: typeof portfolioData.keyProjects[0] | typ
   };
 
   return (
-    <motion.div
+    <motion.a
+      href={project.link}
+      target="_blank"
+      rel="noopener noreferrer"
       style={{ perspective: 600 }}
       onMouseMove={!isTouchDevice ? handleMouse : undefined}
       onMouseLeave={!isTouchDevice ? () => {
@@ -34,7 +38,7 @@ const ProjectCard: React.FC<{ project: typeof portfolioData.keyProjects[0] | typ
         y.set(200);
       } : undefined}
       variants={cardVariants}
-      className="relative h-full group"
+      className="relative h-full group block"
     >
       <motion.div
         style={{ 
@@ -49,21 +53,24 @@ const ProjectCard: React.FC<{ project: typeof portfolioData.keyProjects[0] | typ
         } : {}}
         whileTap={{ scale: isTouchDevice ? 0.95 : 1 }}
       >
-        <h3 className="font-display text-2xl text-accent mb-3">{project.title}</h3>
+        <h3 className="font-display text-2xl text-accent mb-3 flex items-center justify-between">
+          {project.title}
+          <ExternalLink className="w-5 h-5 text-text/50 group-hover:text-accent transition-colors" />
+        </h3>
         <p className="font-sans text-text/80 text-base leading-relaxed flex-grow">
           {project.description}
         </p>
         {'tags' in project && (
           <div className="flex flex-wrap gap-2 mt-6">
             {project.tags.map((tag, i) => (
-              <span key={i} className="bg-background text-secondary-accent text-xs px-3 py-1 font-sans tracking-widest uppercase">
+              <span key={i} className="bg-background text-secondary-accent text-sm px-3 py-1 font-sans tracking-widest uppercase">
                 {tag}
               </span>
             ))}
           </div>
         )}
       </motion.div>
-    </motion.div>
+    </motion.a>
   );
 };
 

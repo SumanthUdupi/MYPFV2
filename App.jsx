@@ -1,3 +1,4 @@
+import { CelestialAtelierBackground } from "./src/components/celestial/CelestialAtelierBackground";
 import { Hero } from "./components/Hero";
 import { ProjectCard } from "./components/ProjectCard";
 
@@ -22,6 +23,7 @@ const projects = [
 function App() {
   return (
     <main>
+      <CelestialAtelierBackground />
       <Hero />
 
       <section className="container mx-auto px-4 py-20">

@@ -99,6 +99,17 @@ const Hero: React.FC = () => {
       >
         {title}
       </motion.h2>
+
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: 'easeOut', delay: 2 }}
+        className="mt-12 z-10"
+      >
+        <a href="#about" className="bg-accent text-background font-bold py-3 px-8 rounded-full hover:bg-secondary-accent transition-colors duration-300 text-lg shadow-lg shadow-accent/20">
+          Discover More
+        </a>
+      </motion.div>
       
       <motion.div 
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/3 h-1 bg-accent/30"

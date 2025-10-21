@@ -15,11 +15,13 @@ export interface PortfolioData {
   keyProjects: {
     title: string;
     description: string;
+    link?: string;
   }[];
   personalProjects: {
     title: string;
     description: string;
     tags: string[];
+    link?: string;
   }[];
   education: {
     degree: string;
@@ -82,40 +84,48 @@ export const portfolioData: PortfolioData = {
   keyProjects: [
     {
       title: "EHS Platform for GRI & SASB Compliance",
-      description: "Led end-to-end business analysis for a scalable EHS platform, ensuring compliance with GRI and SASB standards and reducing client audit prep time by 40%."
+      description: "Led end-to-end business analysis for a scalable EHS platform, ensuring compliance with GRI and SASB standards and reducing client audit prep time by 40%.",
+      link: "#"
     },
     {
       title: "Volvo PPAP & PACCAR Non-Conformity Modules",
-      description: "Gathered and documented requirements for Volvo's PPAP and PACCAR's Non-Conformity modules, streamlining lab test data workflows and enhancing supplier compliance reporting."
+      description: "Gathered and documented requirements for Volvo's PPAP and PACCAR's Non-Conformity modules, streamlining lab test data workflows and enhancing supplier compliance reporting.",
+      link: "#"
     },
     {
       title: "Executive Dashboards for ESG & Risk",
-      description: "Developed interactive dashboards in Power BI to track process performance metrics across ESG, CAPA, and risk modules, improving executive reporting accuracy."
+      description: "Developed interactive dashboards in Power BI to track process performance metrics across ESG, CAPA, and risk modules, improving executive reporting accuracy.",
+      link: "#"
     },
     {
       title: "OEM API Integration for Automated Syncing",
-      description: "Authored detailed API requirements for OEM integration with third-party systems, automating PPAP, product lifecycle and test result syncing across clients like Volvo, PACCAR and Trex."
+      description: "Authored detailed API requirements for OEM integration with third-party systems, automating PPAP, product lifecycle and test result syncing across clients like Volvo, PACCAR and Trex.",
+      link: "#"
     },
     {
       title: "AI/ML in Compliance Risk Modules",
-      description: "Spearheaded business analysis for integrating AI/ML models into compliance risk modules, improving early risk detection accuracy by 20%."
+      description: "Spearheaded business analysis for integrating AI/ML models into compliance risk modules, improving early risk detection accuracy by 20%.",
+      link: "#"
     }
   ],
   personalProjects: [
     {
       title: "Project Alpha",
       description: "A brief description of Project Alpha.",
-      tags: ["React", "Node.js", "MongoDB"]
+      tags: ["React", "Node.js", "MongoDB"],
+      link: "#"
     },
     {
       title: "Project Beta",
       description: "A brief description of Project Beta.",
-      tags: ["Python", "Flask", "SQLAlchemy"]
+      tags: ["Python", "Flask", "SQLAlchemy"],
+      link: "#"
     },
     {
       title: "Project Gamma",
       description: "A brief description of Project Gamma.",
-      tags: ["TypeScript", "Next.js", "GraphQL"]
+      tags: ["TypeScript", "Next.js", "GraphQL"],
+      link: "#"
     }
   ],
   education: [

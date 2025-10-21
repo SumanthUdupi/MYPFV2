@@ -16,7 +16,7 @@ const SkillCategory: React.FC<{ category: string; skills: string[] }> = ({ categ
         {skills.map((skill, index) => (
           <motion.li
             key={skill}
-            className="bg-secondary text-text/90 px-4 py-2 border border-accent/20 font-sans text-sm transition-all duration-300 hover:bg-accent/10 hover:border-accent hover:text-accent"
+            className="bg-secondary text-text/90 px-4 py-2 border border-accent/20 font-sans text-base transition-all duration-300 active:bg-accent/10 active:border-accent active:text-accent"
             style={{ clipPath: 'polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)' }}
             variants={skillPillVariants}
             custom={index}

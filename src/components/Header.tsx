@@ -53,7 +53,7 @@ const Header: React.FC = () => {
           <a href="#contact" className="hover:text-accent transition-colors duration-300">Contact</a>
         </nav>
         <div className="md:hidden">
-          <button onClick={toggleMenu} className="p-2 focus:outline-none">
+          <button onClick={toggleMenu} className="p-2 focus:outline-none" aria-label="Open menu">
             <ChevronsRight size={28} />
           </button>
         </div>
@@ -68,7 +68,7 @@ const Header: React.FC = () => {
             onClick={toggleMenu}
           >
             <motion.div
-              className="fixed top-0 right-0 h-full w-64 bg-[#1a1a1a] p-8 shadow-2xl"
+              className="fixed top-0 right-0 h-full w-4/5 max-w-sm bg-[#1a1a1a] p-8 shadow-2xl"
               variants={menuVariants}
               initial="closed"
               animate="open"
