@@ -3,9 +3,9 @@ import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
 interface InteractionOrchestratorProps {
-  nebulaMaterial: React.RefObject<THREE.ShaderMaterial>;
-  curveNetworkRef: React.RefObject<THREE.Group>;
-  stardustRef: React.RefObject<THREE.Points>;
+  nebulaMaterial: React.RefObject<THREE.ShaderMaterial | null>;
+  curveNetworkRef: React.RefObject<THREE.Group | null>;
+  stardustRef: React.RefObject<THREE.Points | null>;
 }
 
 const InteractionOrchestrator = ({ nebulaMaterial, curveNetworkRef, stardustRef }: InteractionOrchestratorProps) => {
