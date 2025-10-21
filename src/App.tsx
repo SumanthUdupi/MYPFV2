@@ -63,7 +63,7 @@ const App: React.FC = () => {
       <CelestialAtelierBackground />
       <Header />
       {/* Cinematic overlay for better text readability */}
-      <div className="fixed inset-0 pointer-events-none z-10 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
+      <div className="fixed inset-0 pointer-events-none z-10 bg-gradient-to-b from-black/20 via-transparent to-black/25" />
       <AnimatePresence mode="wait">
         {loading ? (
           <Loader />
