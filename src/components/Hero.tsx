@@ -63,7 +63,7 @@ const Hero: React.FC = () => {
     <motion.section
       ref={ref}
       id="hero"
-      className="relative flex flex-col items-center justify-center h-screen text-center text-text overflow-hidden bg-background"
+      className="relative flex flex-col items-center justify-center h-screen text-center text-text overflow-hidden"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
