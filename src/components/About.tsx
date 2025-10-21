@@ -26,7 +26,7 @@ const About: React.FC = () => {
     >
       <CinematicScroll intensity={0.2}>
         <motion.h2 
-          className="font-display text-5xl sm:text-6xl text-accent mb-6"
+          className="font-sans text-5xl sm:text-6xl text-accent mb-6"
           initial={{ y: 40, opacity: 0, filter: "blur(10px)" }}
           whileInView={{ y: 0, opacity: 1, filter: "blur(0px)" }}
           viewport={{ once: true }}
